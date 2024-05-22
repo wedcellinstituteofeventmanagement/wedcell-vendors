@@ -156,7 +156,7 @@
   align-items: start;
   justify-content: start;
   background-size: 100%;
-  background: url("../../public/dashBoardAssets/dashboardVendorCardBackground.svg");
+  background: url("https://wedcell.s3.ap-south-1.amazonaws.com/vendors/dashBoardAssets/dashboardVendorCardBackground.svg");
   background-repeat: no-repeat;
   box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
