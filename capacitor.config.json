@@ -1,0 +1,11 @@
+{
+  "appId": "vendors.wedcell.com",
+  "appName": "Wedcell Business",
+  "webDir": "out",
+  "server": {
+    "androidScheme": "https"
+  },
+  "ios": {
+    "contentInset": "automatic"
+  }
+}
