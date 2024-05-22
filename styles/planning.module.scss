@@ -211,16 +211,16 @@
 }
 .mainName .Name {
   font-size: 35px;
-  font-family: 'Ledger';
+  font-family: "Ledger";
 }
 .mainName .weddingdate {
   font-size: 18px;
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
 }
 .editBtn {
   padding: 2px 30px;
   height: fit-content;
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
   background: none;
   border: 2px solid #db3672;
   font-size: 19px;
@@ -236,7 +236,7 @@
   align-items: center;
   gap: 5px;
   font-size: 19px;
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
 }
 .servicesnumb {
   font-weight: 600;
@@ -253,7 +253,7 @@
   margin-top: 30px;
   display: flex;
   flex-direction: column;
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
   font-size: 23px;
   margin-bottom: 40px;
 }
@@ -321,7 +321,7 @@
 }
 .VendorManagerspan {
   font-size: 30px;
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
   font-weight: 500;
 }
 .vendorBokkedSpan {
@@ -489,7 +489,7 @@
   }
   .changePhoto {
     font-size: 16px;
-    font-family: 'Ledger';
+    font-family: "Ledger";
     padding: 11px 20px;
     border-radius: 18px;
     background-color: #82818161;
@@ -522,14 +522,14 @@
     font-size: 23px;
     font-weight: 600;
     color: white;
-    font-family: 'Ledger';
+    font-family: "Ledger";
     letter-spacing: 2px;
   }
   .maindate {
     font-size: 18px;
     font-weight: 600;
     color: white;
-    font-family: 'Ledger';
+    font-family: "Ledger";
     letter-spacing: 2px;
   }
   .uploadPhoto {
@@ -539,7 +539,7 @@
     transform: translateX(-50%);
     color: white;
     font-size: 18px;
-    font-family: 'Ledger';
+    font-family: "Ledger";
     font-weight: 600;
     border: 2px solid white;
     border-radius: 5px;
@@ -568,7 +568,7 @@
   }
   .statusdiv span {
     font-size: 18px;
-    font-family: 'Ledger';
+    font-family: "Ledger";
     padding-bottom: 10px;
   }
   .statusdiv {
@@ -593,7 +593,7 @@
     border-radius: 10px;
     margin-bottom: 20px;
     padding: 13px;
-    font-family: 'Ledger';
+    font-family: "Ledger";
   }
   .allservicesNumber {
     font-size: 17px;
@@ -639,7 +639,7 @@
     font-size: 18px;
     color: white;
     border-radius: 14px;
-    font-family: 'Ledger';
+    font-family: "Ledger";
   }
   .Allthemeroyal {
     background-color: #fb8949;
@@ -667,7 +667,7 @@
   .quickInvitesdiv span {
     font-size: 15px;
     color: #868686;
-    font-family: 'Ledger';
+    font-family: "Ledger";
     text-decoration: underline;
   }
   .CardDiv {
@@ -685,7 +685,7 @@
   width: 100%;
   justify-content: center;
   align-items: center;
-  font-family: 'Poppins';
+  font-family: "Poppins";
 }
 .mysideImage {
   display: flex;
@@ -800,7 +800,7 @@
 .VendorManagerDiv {
   display: flex;
   flex-direction: column;
-  font-family: 'Ledger';
+  font-family: "Ledger";
 }
 
 .VendorManagerhead {
@@ -2137,11 +2137,11 @@
   display: flex;
   flex-direction: column;
   width: 90%;
-  font-family: 'Ledger';
+  font-family: "Ledger";
 }
 .indexPageGuestlisdivSpan {
   font-size: 30px;
-  font-family: 'Monteserat';
+  font-family: "Monteserat";
   margin-bottom: 30px;
 }
 .graphDivindex {
@@ -2160,7 +2160,7 @@
   font-size: 18px;
   font-weight: 600;
   color: #db3672;
-  font-family: 'Ledger';
+  font-family: "Ledger";
   cursor: pointer;
 }
 .indexBudgetPlannerDiv {
@@ -2239,7 +2239,7 @@
 }
 .invitesname1 {
   font-size: 40px;
-  font-family: 'Playfair Display';
+  font-family: "Playfair Display";
   font-weight: 400;
   text-align: center;
 }
@@ -2269,7 +2269,7 @@
 }
 .storyFirstDivhead {
   font-size: 55px;
-  font-family: 'Playfair Display';
+  font-family: "Playfair Display";
   font-weight: 400;
   font-size: 50px;
 }
@@ -2293,7 +2293,7 @@
 }
 .storySecDivhead {
   font-size: 55px;
-  font-family: 'Playfair Display';
+  font-family: "Playfair Display";
   font-weight: 400;
   line-break: anywhere;
   font-size: 45px;
@@ -2324,7 +2324,7 @@
   align-items: center;
   justify-content: center;
   margin-top: 40px;
-  background-image: url('/images/webp/image 648.webp');
+  background-image: url("/images/webp/image 648.webp");
   padding: 40px 0px;
 }
 .inviteListCarddiv {
@@ -2353,7 +2353,7 @@
   border-radius: 50px;
 }
 .inviteListcardtitle {
-  font-family: 'Ledger';
+  font-family: "Ledger";
   font-size: 23px;
 }
 .invitecardDate {
@@ -2386,7 +2386,7 @@
 }
 .willyouAttendimgspan {
   font-size: 35px;
-  font-family: 'Playfair Display';
+  font-family: "Playfair Display";
   font-weight: 400;
 }
 .willyouAttendimgspanname {
@@ -2505,7 +2505,7 @@
   position: absolute;
   right: 10px;
   font-size: 30px;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: "Courier New", Courier, monospace;
   cursor: pointer;
 }
 .seemoreX img {
@@ -2982,7 +2982,7 @@
     width: 50%;
     object-fit: cover;
     &::before {
-      content: '';
+      content: "";
       background: white !important;
       width: 100%;
       height: 100%;
@@ -3001,7 +3001,7 @@
     );
     position: absolute;
     &::before {
-      content: '';
+      content: "";
       background: linear-gradient(
         89.47deg,
         #b6255a -19.28%,
@@ -3025,7 +3025,7 @@
     justify-content: center;
     gap: 5px;
     border: none;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
     font-size: 16px;
     font-weight: 600;
     line-height: 24px;
@@ -3067,7 +3067,7 @@
     transform: translate(-50%, -50%);
     .daysLeft {
       color: white;
-      font-family: 'Poppins', sans-serif;
+      font-family: "Poppins", sans-serif;
       font-size: 16px;
       font-weight: 600;
       line-height: 24px;
@@ -3103,7 +3103,7 @@
       }
       &:last-child > .numbers {
         &::after {
-          content: '';
+          content: "";
         }
       }
     }
@@ -3114,7 +3114,7 @@
       height: 72.12px;
       border-radius: 14.42px;
       color: #630000;
-      font-family: 'Poppins', sans-serif;
+      font-family: "Poppins", sans-serif;
       font-size: 28.85px;
       font-weight: 700;
       line-height: 43.27px;
@@ -3133,10 +3133,10 @@
         color: white;
       }
       &::after {
-        content: ':';
+        content: ":";
         position: absolute;
         right: -17px;
-        font-family: 'Poppins', sans-serif;
+        font-family: "Poppins", sans-serif;
         font-size: 28.85px;
         font-weight: 500;
         line-height: 37.33px;
@@ -3166,7 +3166,7 @@
       margin-bottom: 10px;
       .mainName {
         .weddingdate {
-          font-family: 'Poppins', sans-serif;
+          font-family: "Poppins", sans-serif;
           font-size: 14px;
           font-weight: 500;
           line-height: 21px;
@@ -3190,7 +3190,7 @@
         .quickInvites {
         }
         .Name {
-          font-family: 'Poppins', sans-serif;
+          font-family: "Poppins", sans-serif;
           font-size: 24px;
           font-weight: 600;
           line-height: 36px;
@@ -3226,7 +3226,7 @@
           }
         }
         .quickInvites {
-          font-family: 'Poppins', sans-serif;
+          font-family: "Poppins", sans-serif;
           font-size: 14px;
           font-weight: 500;
           line-height: 24px;
@@ -3240,7 +3240,7 @@
         }
       }
       &:nth-child(2) {
-        font-family: 'Poppins', sans-serif;
+        font-family: "Poppins", sans-serif;
         font-size: 16px;
         font-weight: 600;
         line-height: 24px;
@@ -3273,7 +3273,7 @@
         display: flex;
         flex-direction: column;
         .servicesname {
-          font-family: 'Poppins', sans-serif;
+          font-family: "Poppins", sans-serif;
           font-size: 16.95px;
           font-weight: 400;
           letter-spacing: -0.4688980281352997px;
@@ -3288,7 +3288,7 @@
           }
         }
         .servicesoutof {
-          font-family: 'Poppins', sans-serif;
+          font-family: "Poppins", sans-serif;
           font-size: 24.22px;
           font-weight: 700;
           letter-spacing: -0.6698543429374695px;
@@ -3394,7 +3394,7 @@
           gap: 10px;
           align-items: center;
           > :nth-child(1) {
-            font-family: 'Poppins', sans-serif;
+            font-family: "Poppins", sans-serif;
             font-size: 14px;
             width: 124px;
             font-weight: 600;
@@ -3403,7 +3403,7 @@
             color: #828282;
           }
           > :nth-child(2) {
-            font-family: 'Poppins', sans-serif;
+            font-family: "Poppins", sans-serif;
             font-size: 16px;
             font-weight: 600;
             line-height: 27px;
@@ -3466,7 +3466,7 @@
           }
         }
         > :nth-child(2) {
-          font-family: 'Poppins', sans-serif;
+          font-family: "Poppins", sans-serif;
           font-size: 13.8px;
           font-weight: 600;
           line-height: 20.7px;
@@ -3505,7 +3505,7 @@
       display: flex;
       text-align: start;
       width: 100%;
-      font-family: 'Poppins', sans-serif;
+      font-family: "Poppins", sans-serif;
       font-size: 16px;
       font-weight: 700;
       line-height: 19.5px;
@@ -3575,7 +3575,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-family: 'Poppins', sans-serif;
+      font-family: "Poppins", sans-serif;
       font-size: 24px;
       font-weight: 600;
       line-height: 36px;
@@ -3591,7 +3591,7 @@
           gap: 4px;
         }
         .DownloadAndPrint {
-          font-family: 'Poppins', sans-serif;
+          font-family: "Poppins", sans-serif;
           font-size: 16px;
           font-weight: 600;
           line-height: 24px;
@@ -3617,7 +3617,7 @@
         margin-top: -5px;
       }
       span {
-        font-family: 'Poppins', sans-serif;
+        font-family: "Poppins", sans-serif;
         font-size: 14px;
         font-weight: 500;
         line-height: 21px;
@@ -3627,7 +3627,7 @@
           font-size: 12px;
         }
         b {
-          font-family: 'Poppins', sans-serif;
+          font-family: "Poppins", sans-serif;
           font-size: 14px;
           font-weight: 600;
           line-height: 21px;
@@ -3647,7 +3647,7 @@
     .btnRightdiv {
       > button {
         width: 200px;
-        font-family: 'Poppins', sans-serif;
+        font-family: "Poppins", sans-serif;
         font-size: 14px;
         font-weight: 600;
         line-height: 24px;
@@ -3682,7 +3682,7 @@
       margin-left: -20px;
       border-bottom: 1px solid #00000029;
       padding: 15px 20px;
-      font-family: 'Poppins', sans-serif;
+      font-family: "Poppins", sans-serif;
       font-size: 18px;
       font-weight: 600;
       line-height: 13.26px;
@@ -3696,7 +3696,7 @@
         color: #b6255a !important;
       }
       > span {
-        font-family: 'Poppins', sans-serif;
+        font-family: "Poppins", sans-serif;
         font-size: 14px;
         font-weight: 400;
         line-height: 24px;
@@ -3715,7 +3715,7 @@
       margin-left: -20px;
       border-bottom: 1px solid #00000029;
       padding: 15px 20px;
-      font-family: 'Poppins', sans-serif;
+      font-family: "Poppins", sans-serif;
       font-size: 18px;
       font-weight: 600;
       line-height: 13.26px;
@@ -3730,7 +3730,7 @@
       }
       display: flex;
       align-items: center;
-      font-family: 'Poppins', sans-serif;
+      font-family: "Poppins", sans-serif;
       font-size: 14px;
       font-weight: 400;
       line-height: 24px;
@@ -3756,7 +3756,7 @@
       gap: 0px;
     }
     .monthName {
-      font-family: 'Poppins', sans-serif;
+      font-family: "Poppins", sans-serif;
       font-size: 24px;
       font-weight: 600;
       letter-spacing: -0.14000000059604645px;
@@ -3776,7 +3776,7 @@
       .listdiv {
         padding: 10px 20px;
         .shortListSpan {
-          font-family: 'Poppins', sans-serif;
+          font-family: "Poppins", sans-serif;
           font-size: 16px;
           font-weight: 400;
           line-height: 24px;
@@ -3785,7 +3785,7 @@
           color: #252f40;
         }
         .shortlistDue {
-          font-family: 'Poppins', sans-serif;
+          font-family: "Poppins", sans-serif;
           font-size: 12px;
           font-weight: 400;
           line-height: 24px;
@@ -3807,7 +3807,7 @@
       display: flex;
       justify-content: center;
       background: #b6255a;
-      font-family: 'Poppins', sans-serif;
+      font-family: "Poppins", sans-serif;
       font-size: 18px;
       font-weight: 600;
       line-height: 27px;
@@ -3855,7 +3855,7 @@
         transform: scale(1.1);
       }
       .backBkgrd {
-        font-family: 'Poppins', sans-serif;
+        font-family: "Poppins", sans-serif;
         font-size: 20px;
         font-weight: 600;
         line-height: 21px;
@@ -3869,7 +3869,7 @@
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow: hidden;
-      font-family: 'Poppins', sans-serif;
+      font-family: "Poppins", sans-serif;
       font-size: 18px;
       font-weight: 600;
       line-height: 27px;
@@ -3880,7 +3880,7 @@
       padding: 0px;
       align-items: center;
       padding: 10px 0px;
-      font-family: 'Poppins', sans-serif;
+      font-family: "Poppins", sans-serif;
       font-size: 14px;
       font-weight: 600;
       line-height: 21px;
@@ -3889,7 +3889,7 @@
       text-align: left;
       color: #b6255a;
       > :nth-child(1) {
-        font-family: 'Poppins', sans-serif;
+        font-family: "Poppins", sans-serif;
         font-size: 18px;
         font-weight: 600;
         line-height: 27px;
@@ -3897,7 +3897,7 @@
         color: #222222;
       }
       > :nth-child(2) {
-        font-family: 'Poppins', sans-serif;
+        font-family: "Poppins", sans-serif;
         font-size: 14px;
         font-weight: 600;
         line-height: 21px;
@@ -3919,7 +3919,7 @@
   }
 }
 .PageHeadersvendor {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-size: 22px;
   margin-bottom: 20px !important;
   display: flex;
@@ -3966,7 +3966,7 @@
         width: 100%;
       }
       transition: all ease 0.3s;
-      font-family: 'Poppins', sans-serif;
+      font-family: "Poppins", sans-serif;
       font-size: 16px;
       font-weight: 600;
       line-height: 24px;
@@ -4027,7 +4027,7 @@
           width: 100%;
           padding: 15px;
           text-align: center;
-          font-family: 'Poppins', sans-serif;
+          font-family: "Poppins", sans-serif;
           font-size: 22px;
           font-weight: 600;
           line-height: 33px;
@@ -4050,7 +4050,7 @@
             gap: 10px;
             width: 100%;
             span {
-              font-family: 'Poppins', sans-serif;
+              font-family: "Poppins", sans-serif;
               font-size: 16px;
               font-weight: 500;
               line-height: 27px;
@@ -4151,7 +4151,7 @@
       }
     }
     .BudgetPlannerpayemntDetailspan {
-      font-family: 'Poppins', sans-serif;
+      font-family: "Poppins", sans-serif;
       font-size: 24px;
       font-weight: 500;
       text-align: left;
@@ -4174,7 +4174,7 @@
           }
           article {
             > :nth-child(1) {
-              font-family: 'Poppins', sans-serif;
+              font-family: "Poppins", sans-serif;
               font-size: 18px;
               font-weight: 500;
               line-height: 27px;
@@ -4186,7 +4186,7 @@
               }
             }
             > :nth-child(2) {
-              font-family: 'Poppins', sans-serif;
+              font-family: "Poppins", sans-serif;
               font-size: 18px;
               font-weight: 600;
               line-height: 27px;
@@ -4222,7 +4222,7 @@
             border-bottom: 1px solid #ebeff2;
             gap: 10px;
             > span {
-              font-family: 'Poppins', sans-serif;
+              font-family: "Poppins", sans-serif;
               font-size: 15px;
               font-weight: 500;
               line-height: 27px;
@@ -4243,7 +4243,7 @@
                 input {
                   width: 100%;
                   border: none;
-                  font-family: 'Poppins', sans-serif;
+                  font-family: "Poppins", sans-serif;
                   font-size: 16px;
                   font-weight: 500;
                   letter-spacing: 0.01em;
@@ -4296,7 +4296,7 @@
               width: 200px;
               padding: 5px;
               border-radius: 30px;
-              font-family: 'Poppins', sans-serif;
+              font-family: "Poppins", sans-serif;
               font-size: 14px;
               font-weight: 600;
               line-height: 24px;
@@ -4311,7 +4311,7 @@
               width: 100px;
               padding: 5px;
               border-radius: 30px;
-              font-family: 'Poppins', sans-serif;
+              font-family: "Poppins", sans-serif;
               font-size: 14px;
               font-weight: 600;
               line-height: 24px;
@@ -4324,7 +4324,7 @@
             background: #ffe7e7;
             border-bottom: 1px solid #ffe7e7;
             > :nth-child(1) {
-              font-family: 'Poppins', sans-serif;
+              font-family: "Poppins", sans-serif;
               font-size: 16px;
               font-weight: 500;
               line-height: 24px;
@@ -4353,14 +4353,14 @@
   color: white !important;
 }
 .payemntOnesecspan {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-size: 22px;
   font-weight: 500;
   line-height: 30.71px;
   text-align: left;
 }
 .payemntOnesecspanEvent {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-size: 16px;
   font-weight: 500;
   line-height: 24px;
@@ -4426,7 +4426,7 @@
 }
 .payemntOnesec {
   .payemntOnesecspanRup1 {
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
     font-size: 22px;
     font-weight: 500;
     line-height: 30.71px;
@@ -4434,7 +4434,7 @@
     color: #333333;
   }
   .payemntOnesecspanEvent1 {
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
     font-size: 14px;
     font-weight: 500;
     line-height: 24px;
@@ -4459,7 +4459,7 @@
     text-align: center;
     padding: 20px;
     margin-top: -32px;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
     font-size: 18px;
     font-weight: 700;
     line-height: 20px;
@@ -4470,7 +4470,7 @@
     gap: 10px !important;
     margin-top: 10px !important;
     > span {
-      font-family: 'Poppins', sans-serif;
+      font-family: "Poppins", sans-serif;
       font-size: 14px;
       font-weight: 400;
       line-height: 12px;
@@ -4485,7 +4485,7 @@
       border: 0.5px solid #e5e5e5;
       border-radius: 6px;
       padding: 6px;
-      font-family: 'Poppins', sans-serif;
+      font-family: "Poppins", sans-serif;
       font-size: 16px;
       font-weight: 400;
       line-height: 20px;
@@ -4505,7 +4505,7 @@
 .MessageDivs {
   display: flex;
   flex-direction: column;
-  font-family: 'Ledger';
+  font-family: "Ledger";
   .VendorManagerBody1 {
     gap: 0px;
     height: fit-content;
@@ -4533,7 +4533,7 @@
           align-items: start;
           .todoBtn {
             > span {
-              font-family: 'Poppins', sans-serif;
+              font-family: "Poppins", sans-serif;
               font-size: 14px;
               font-weight: 400;
               line-height: 21px;
@@ -4546,13 +4546,13 @@
             border-radius: 12px;
           }
           .vendnamemes {
-            font-family: 'Poppins', sans-serif;
+            font-family: "Poppins", sans-serif;
             font-size: 14px;
             font-weight: 500;
             line-height: 21px;
             text-align: left;
             .vendcont {
-              font-family: 'Poppins', sans-serif;
+              font-family: "Poppins", sans-serif;
               font-size: 12px;
               font-weight: 400;
               line-height: 18px;
@@ -4581,7 +4581,7 @@
           align-items: center;
           @media (max-width: 900px) {
             position: fixed;
-            top: 0px;
+            top: env(safe-area-inset-top);
             width: 100%;
             z-index: 201 !important;
             background-color: #b6255a;
@@ -4590,7 +4590,7 @@
           }
 
           > span {
-            font-family: 'Poppins', sans-serif;
+            font-family: "Poppins", sans-serif;
             font-size: 20px;
             font-weight: 400;
             line-height: 30px;
@@ -4603,7 +4603,7 @@
           }
           > p {
             margin: 0;
-            font-family: 'Poppins', sans-serif;
+            font-family: "Poppins", sans-serif;
             font-size: 25px;
             font-weight: 500;
             line-height: 20px;
@@ -4630,7 +4630,7 @@
             border-radius: 12px;
             width: 100%;
             padding: 8px 20px;
-            font-family: 'Poppins', sans-serif;
+            font-family: "Poppins", sans-serif;
             font-size: 14px;
             font-weight: 400;
             line-height: 21px;
@@ -4653,7 +4653,7 @@
         @media (max-width: 900px) {
           position: fixed;
           padding: 10px 10px;
-          top: 0px;
+          top: env(safe-area-inset-top);
           width: 100%;
           z-index: 201;
           border-radius: 0px 0px 12px 12px !important;
@@ -4676,7 +4676,7 @@
           }
         }
         .messageheadname {
-          font-family: 'Poppins', sans-serif;
+          font-family: "Poppins", sans-serif;
           font-size: 20px;
           font-weight: 400;
           text-align: left;
@@ -4685,7 +4685,7 @@
             color: white;
           }
           .memberonline {
-            font-family: 'Poppins', sans-serif;
+            font-family: "Poppins", sans-serif;
             font-size: 12px;
             font-weight: 500;
             text-align: left;
@@ -4703,7 +4703,7 @@
           background: #615ef01a;
           padding: 5px 10px;
           border-radius: 6px;
-          font-family: 'Poppins', sans-serif;
+          font-family: "Poppins", sans-serif;
           font-size: 16px;
           font-weight: 600;
           line-height: 20px;
@@ -4743,7 +4743,7 @@
           border: 2px solid #e2e8f0;
           border-radius: 12px;
           padding: 10px 20px;
-          font-family: 'Poppins', sans-serif;
+          font-family: "Poppins", sans-serif;
           font-size: 14px;
           font-weight: 400;
           line-height: 21px;
@@ -4766,7 +4766,7 @@
   padding: 7px 13px 7px 25px;
   background: #b6255a;
   border-radius: 12px;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-size: 14px;
   font-weight: 400;
   line-height: 21px;
@@ -4778,7 +4778,7 @@
   background: #f1f1f1;
 
   border-radius: 12px;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-size: 14px;
   font-weight: 400;
   line-height: 21px;
@@ -4795,7 +4795,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
     font-size: 13px;
     font-weight: 400;
     line-height: 21px;
@@ -4848,7 +4848,7 @@
     background: #b6255a;
     padding: 14px;
     > span {
-      content: 'X';
+      content: "X";
       position: absolute;
       right: 20px;
       cursor: pointer;
