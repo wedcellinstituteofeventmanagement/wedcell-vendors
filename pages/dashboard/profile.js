@@ -1,11 +1,11 @@
-import { PlusOutlined } from '@ant-design/icons';
-import Header from '../../Components/Dashboard/Header';
-import Sidebar from '../../Components/Dashboard/Sidebar';
-import { Modal as AntdModal, Upload } from 'antd';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import Styles from '../../styles/Dashboard/Dashboard.module.css';
-import { useEffect, useState } from 'react';
+import { PlusOutlined } from "@ant-design/icons";
+import Header from "../../Components/Dashboard/Header";
+import Sidebar from "../../Components/Dashboard/Sidebar";
+import { Modal as AntdModal, Upload } from "antd";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Styles from "../../styles/Dashboard/Dashboard.module.css";
+import { useEffect, useState } from "react";
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -18,37 +18,45 @@ const getBase64 = (file) =>
 import {
   Box,
   Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   FormLabel,
   Grid,
   Modal,
   TextField,
   Typography,
-} from '@mui/material';
-import AlertDialog from '../../Components/common/AlertDialogue';
-import { useRouter } from 'next/router';
-import Colors from '../../constants/colors';
-import axios from 'axios';
-import { PROXY } from '../../config';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectUser, user } from '../../redux/reducer/appEssentials';
-import Layout from '../../Components/Dashboard/layout';
-import VendorProfile from '../../Components/Dashboard/VendorProfile';
-import VenueProfile from '../../Components/Dashboard/VenueProfile';
-import compressAndAppendFiles from '../../Components/compressAndAppendFiles';
+} from "@mui/material";
+import AlertDialog from "../../Components/common/AlertDialogue";
+import { useRouter } from "next/router";
+import Colors from "../../constants/colors";
+import axios from "axios";
+import { PROXY } from "../../config";
+import { useDispatch, useSelector } from "react-redux";
+import { selectUser, user } from "../../redux/reducer/appEssentials";
+import Layout from "../../Components/Dashboard/layout";
+import VendorProfile from "../../Components/Dashboard/VendorProfile";
+import VenueProfile from "../../Components/Dashboard/VenueProfile";
+import compressAndAppendFiles from "../../Components/compressAndAppendFiles";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
   width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
+  bgcolor: "background.paper",
+  border: "2px solid #000",
   boxShadow: 24,
   p: 4,
 };
 
 const ProfileScreenTemplate = () => {
+  const [deleteAlert, setDeleteAlaert] = useState(false);
+
   const globleuser = useSelector(selectUser);
   const dispatch = useDispatch();
 
@@ -62,7 +70,7 @@ const ProfileScreenTemplate = () => {
 
   useEffect(() => {
     if (!globleuser) {
-      router.push('/');
+      router.push("/");
     }
 
     setRole(globleuser.data);
@@ -73,49 +81,49 @@ const ProfileScreenTemplate = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [Alert, SetAlert] = useState({
     visible: false,
-    title: '',
-    message: '',
+    title: "",
+    message: "",
   });
   const [profilePic, setProfilePic] = useState([]);
-  const [profilePicLink, setProfilePicLink] = useState('');
+  const [profilePicLink, setProfilePicLink] = useState("");
   const [coverPic, setCoverPic] = useState([]);
   const [coverPicLink, setCoverPicLink] = useState([]);
-  const [email, setEmail] = useState('');
-  const [Phone, setPhone] = useState('');
-  const [currentPass, setCurrentPass] = useState('');
-  const [Password, setPassword] = useState('');
-  const [Password2, setPassword2] = useState('');
+  const [email, setEmail] = useState("");
+  const [Phone, setPhone] = useState("");
+  const [currentPass, setCurrentPass] = useState("");
+  const [Password, setPassword] = useState("");
+  const [Password2, setPassword2] = useState("");
   const [User, setUser] = useState([]);
   const [loading, setLoading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const [verifyFor, setVerifyFor] = useState('mobile');
-  const [otp, setOtp] = useState('');
+  const [verifyFor, setVerifyFor] = useState("mobile");
+  const [otp, setOtp] = useState("");
   ``;
-  const [confirmOTP, setConfirmOTP] = useState('');
+  const [confirmOTP, setConfirmOTP] = useState("");
 
-  const [commonAlert, setCommonAlert] = useState({ open: false, msg: '' });
+  const [commonAlert, setCommonAlert] = useState({ open: false, msg: "" });
 
   const [studentData, setStudenData] = useState({
-    name: '',
-    company_name: '',
-    email: '',
-    mobile: '',
-    profile_pic: '',
-    company_address: '',
+    name: "",
+    company_name: "",
+    email: "",
+    mobile: "",
+    profile_pic: "",
+    company_address: "",
     cover_pic: [],
-    shipping_address: '',
-    city: '',
+    shipping_address: "",
+    city: "",
     is_email_verified: false,
     is_mobile_verified: false,
   });
 
   const [previewOpen, setPreviewOpen] = useState(false);
-  const [previewImage, setPreviewImage] = useState('');
-  const [previewTitle, setPreviewTitle] = useState('');
+  const [previewImage, setPreviewImage] = useState("");
+  const [previewTitle, setPreviewTitle] = useState("");
   const setDefaultImages = (url, uid) => {
     return {
       uid,
-      status: 'done',
+      status: "done",
       url,
     };
   };
@@ -128,7 +136,7 @@ const ProfileScreenTemplate = () => {
     setPreviewImage(file.url || file.preview);
     setPreviewOpen(true);
     setPreviewTitle(
-      file.name || file.url.substring(file.url.lastIndexOf('/') + 1)
+      file.name || file.url.substring(file.url.lastIndexOf("/") + 1)
     );
   };
 
@@ -149,7 +157,7 @@ const ProfileScreenTemplate = () => {
     </div>
   );
   useEffect(() => {
-    if (globleuser?.role === 'ShopNow') {
+    if (globleuser?.role === "ShopNow") {
       setStudenData({
         ...studentData,
         name: role?.name,
@@ -206,32 +214,32 @@ const ProfileScreenTemplate = () => {
 
   const handleCommonAlertClose = (e) => {
     e.preventDefault();
-    setCommonAlert({ open: false, msg: '' });
+    setCommonAlert({ open: false, msg: "" });
   };
 
   const updatePassword = async () => {
     if (!currentPass) {
-      alert('please enter current Password');
+      alert("please enter current Password");
       return;
     }
     if (!Password) {
-      alert('please enter new Password');
+      alert("please enter new Password");
       return;
     }
     if (!Password2) {
-      alert('please re-enter new Password');
+      alert("please re-enter new Password");
       return;
     }
     if (Password !== Password2) {
-      alert('new passwords are not same');
+      alert("new passwords are not same");
       return;
     }
     if (Password === currentPass) {
-      alert('new passwords should be different from old Password');
+      alert("new passwords should be different from old Password");
       return;
     }
     try {
-      if (globleuser?.role === 'ShopNow') {
+      if (globleuser?.role === "ShopNow") {
         const data = await axios.put(
           `${PROXY}/shopnowuser/updatewithpass`,
           {
@@ -245,10 +253,10 @@ const ProfileScreenTemplate = () => {
           }
         );
         if (data.data.success) {
-          alert('password changed successfully');
-          setCurrentPass('');
-          setPassword('');
-          setPassword2('');
+          alert("password changed successfully");
+          setCurrentPass("");
+          setPassword("");
+          setPassword2("");
         }
       } else {
         const data = await axios.patch(
@@ -265,7 +273,7 @@ const ProfileScreenTemplate = () => {
           }
         );
         if (data.data.success) {
-          alert('password changed successfully');
+          alert("password changed successfully");
         }
       }
     } catch (error) {
@@ -273,7 +281,7 @@ const ProfileScreenTemplate = () => {
         alert(error?.response?.data?.error?.message);
         return;
       } else {
-        alert('Something went wrong');
+        alert("Something went wrong");
       }
     }
   };
@@ -282,7 +290,7 @@ const ProfileScreenTemplate = () => {
     try {
       const form = new FormData();
       let data;
-      if (globleuser?.role === 'ShopNow') {
+      if (globleuser?.role === "ShopNow") {
         data = {
           name: studentData.name,
           company_name: studentData.company_name,
@@ -319,7 +327,7 @@ const ProfileScreenTemplate = () => {
         };
       }
 
-      form.append('data', JSON.stringify(data));
+      form.append("data", JSON.stringify(data));
       // profilePic &&
       //   profilePic.forEach((item, key) => {
       //     form.append("profile", item.originFileObj);
@@ -328,12 +336,12 @@ const ProfileScreenTemplate = () => {
       //   coverPic.forEach((item, key) => {
       //     form.append("cover", item.originFileObj);
       //   });
-      await compressAndAppendFiles(coverPic, form, 'cover');
-      await compressAndAppendFiles(profilePic, form, 'profile');
+      await compressAndAppendFiles(coverPic, form, "cover");
+      await compressAndAppendFiles(profilePic, form, "profile");
 
-      form.append('profilelink', profilePicLink);
-      form.append('coverlink', JSON.stringify(coverPicLink));
-      if (globleuser?.role === 'ShopNow') {
+      form.append("profilelink", profilePicLink);
+      form.append("coverlink", JSON.stringify(coverPicLink));
+      if (globleuser?.role === "ShopNow") {
         const res = await axios.put(`${PROXY}/shopnowuser/update`, form, {
           headers: {
             authorization: globleuser?.data?.token,
@@ -342,17 +350,17 @@ const ProfileScreenTemplate = () => {
         if (res) {
           (res.data.data.token = role?.token),
             localStorage.setItem(
-              'wedcell',
+              "wedcell",
               JSON.stringify({
                 ...res.data,
               })
             );
           setLoading(false);
-          alert('updated Succesfully');
+          alert("updated Succesfully");
           res.data.data.token = globleuser?.data?.token;
           dispatch(user(res.data));
-          localStorage.setItem('wedcell', JSON.stringify(res.data));
-          router.push('/dashboard/sellersdashboard');
+          localStorage.setItem("wedcell", JSON.stringify(res.data));
+          router.push("/dashboard/sellersdashboard");
           // location.reload(true);
         }
       } else {
@@ -364,23 +372,23 @@ const ProfileScreenTemplate = () => {
         if (res) {
           (res.data.data.token = role?.token),
             localStorage.setItem(
-              'wedcell',
+              "wedcell",
               JSON.stringify({
                 ...res.data,
               })
             );
           setLoading(false);
-          alert('updated Succesfully');
+          alert("updated Succesfully");
           res.data.data.token = globleuser?.data?.token;
           dispatch(user(res.data));
-          localStorage.setItem('wedcell', JSON.stringify(res.data));
-          router.push('/dashboard');
+          localStorage.setItem("wedcell", JSON.stringify(res.data));
+          router.push("/dashboard");
           // location.reload(true);
         }
       }
     } catch (error) {
       setLoading(false);
-      console.error('rr', error);
+      console.error("rr", error);
       alert(error?.response?.data?.error?.message);
     }
   };
@@ -393,12 +401,12 @@ const ProfileScreenTemplate = () => {
     ) {
       return true;
     }
-    alert('You have entered an invalid email address!');
+    alert("You have entered an invalid email address!");
     return false;
   }
 
   const SendMobileOTP = async (type) => {
-    if (type === 'sent') {
+    if (type === "sent") {
       if (!isMobileOtpSent.status) {
         const persisOtpData = {};
         try {
@@ -415,14 +423,14 @@ const ProfileScreenTemplate = () => {
             }, 300000);
             persisOtpData.timeOut = timeout;
             setIsMobileOtpSent(persisOtpData);
-            alert('otp Sent Successfuly');
+            alert("otp Sent Successfuly");
           }
         } catch (error) {
           console.error(
             `🚀 ~ file: profile.jsx:352 ~ SendMobileOTP ~ error:`,
             error
           );
-          alert('error occured while sending otp');
+          alert("error occured while sending otp");
         }
       }
     } else {
@@ -442,14 +450,14 @@ const ProfileScreenTemplate = () => {
             ...isMobileOtpSent,
             timeOut: timeout,
           });
-          alert('otp re-Sent Successfuly');
+          alert("otp re-Sent Successfuly");
         }
       } catch (error) {
         console.error(
           `🚀 ~ file: profile.jsx:352 ~ SendMobileOTP ~ error:`,
           error
         );
-        alert('error occured while sending otp');
+        alert("error occured while sending otp");
       }
     }
     setModalVisible(true);
@@ -457,10 +465,10 @@ const ProfileScreenTemplate = () => {
 
   const VerifyOTP = async (type) => {
     if (!otp.length) {
-      alert('please neter otp');
+      alert("please neter otp");
       return;
     }
-    if (type === 'mobile') {
+    if (type === "mobile") {
       const response = await axios.post(`${PROXY}/otp/verify`, {
         mobile: studentData.mobile,
         otp,
@@ -481,13 +489,13 @@ const ProfileScreenTemplate = () => {
         role.student.mobile = studentData.mobile;
         setRole(role);
         localStorage.setItem(
-          'wedcell',
+          "wedcell",
           JSON.stringify({
             student: role.student,
             token: role.token,
           })
         );
-        alert('mobile verify succesfully');
+        alert("mobile verify succesfully");
         location.reload(true);
       }
     }
@@ -503,74 +511,74 @@ const ProfileScreenTemplate = () => {
         })
         .then((res) => {
           if (res.data.error) {
-            alert('');
+            alert("");
           }
 
           if (res.data.message) {
-            alert('OTP sent to your email address');
+            alert("OTP sent to your email address");
           }
           setConfirmOTP(res.data.otp);
-          setVerifyFor('email');
+          setVerifyFor("email");
           setModalVisible(true);
-          alert('OTP sent');
+          alert("OTP sent");
         })
         .catch((e) => {
           setLoading(false);
-          console.error('Someting Went Wrong', e);
-          alert('OTP not sent:', e.message);
+          console.error("Someting Went Wrong", e);
+          alert("OTP not sent:", e.message);
         });
     }
   };
 
   const errorr = () =>
-    toast.error('image cant be uploaded with size bigger then 500kb', {
-      position: 'top-right',
+    toast.error("image cant be uploaded with size bigger then 500kb", {
+      position: "top-right",
       autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: 'light',
+      theme: "light",
     });
   const uploadErrorr = () =>
-    toast.error('Somethimg went wrong please try again', {
-      position: 'top-right',
+    toast.error("Somethimg went wrong please try again", {
+      position: "top-right",
       autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: 'light',
+      theme: "light",
     });
   const uploadSucsess = () =>
-    toast.success('Uploading done Successfully', {
-      position: 'top-right',
+    toast.success("Uploading done Successfully", {
+      position: "top-right",
       autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: 'light',
+      theme: "light",
     });
   const editSucsess = () =>
-    toast.success('Edit done Successfully', {
-      position: 'top-right',
+    toast.success("Edit done Successfully", {
+      position: "top-right",
       autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: 'light',
+      theme: "light",
     });
 
   const VerifyEmailOTP = async () => {};
 
   const handleChangeCover = ({ fileList: newFileList, file }) => {
-    if (file.status !== 'removed') {
+    if (file.status !== "removed") {
       setCoverPic(newFileList);
     } else {
       const data = newFileList
@@ -582,7 +590,7 @@ const ProfileScreenTemplate = () => {
   };
 
   const handleChangeProfile = ({ fileList: newFileList, file }) => {
-    if (file.status !== 'removed') {
+    if (file.status !== "removed") {
       if (file.size / 1028 <= 500) {
         setProfilePic(newFileList);
       } else {
@@ -590,23 +598,23 @@ const ProfileScreenTemplate = () => {
       }
     } else {
       setProfilePic(newFileList);
-      setProfilePicLink('');
+      setProfilePicLink("");
     }
   };
 
   return (
     <Layout>
-      {globleuser?.role === 'Vendor' ? (
+      {globleuser?.role === "Vendor" ? (
         <VendorProfile></VendorProfile>
-      ) : globleuser?.role === 'Venue' ? (
+      ) : globleuser?.role === "Venue" ? (
         <VenueProfile></VenueProfile>
       ) : (
         <>
           <Modal
             open={modalVisible}
             onClose={() => setModalVisible(false)}
-            aria-labelledby='modal-modal-title'
-            aria-describedby='modal-modal-description'
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
           >
             <Box sx={style}>
               <Box sx={styles.centeredBox}>
@@ -619,34 +627,31 @@ const ProfileScreenTemplate = () => {
                     floatOnFocus
                     value={otp}
                     onChange={(e) => setOtp(e.target.value)}
-                    placeholder='OTP'
-                    type='number'
+                    placeholder="OTP"
+                    type="number"
                     style={{
-                      marginBottom: '10px',
+                      marginBottom: "10px",
                     }}
                   />
-                  <Box onClick={() => SendMobileOTP('re-sent')}>
+                  <Box onClick={() => SendMobileOTP("re-sent")}>
                     <Typography
-                      sx={{ color: Colors.primary, fontWeight: 'bold' }}
+                      sx={{ color: Colors.primary, fontWeight: "bold" }}
                     >
                       Resend OTP
                     </Typography>
                   </Box>
                   <Box
                     sx={{
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                      marginTop: '15px',
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      marginTop: "15px",
                     }}
                   >
-                    <Button
-                      variant='text'
-                      onClick={() => VerifyOTP('mobile')}
-                    >
+                    <Button variant="text" onClick={() => VerifyOTP("mobile")}>
                       Confirm
                     </Button>
                     <Button
-                      variant='text'
+                      variant="text"
                       onClick={() => setModalVisible(false)}
                     >
                       Cancel
@@ -656,19 +661,19 @@ const ProfileScreenTemplate = () => {
               </Box>
             </Box>
           </Modal>
-          <div style={{ width: '95%' }}>
-            <div className='form-container'>
-              <h4 className='mb-4'>Company Info</h4>
+          <div style={{ width: "95%" }}>
+            <div className="form-container">
+              <h4 className="mb-4">Company Info</h4>
 
               <TextField
-                variant='outlined'
-                margin='normal'
+                variant="outlined"
+                margin="normal"
                 fullWidth
                 required
-                id='name'
+                id="name"
                 textNumSpace
                 minLength={1}
-                label='Name'
+                label="Name"
                 value={studentData?.name}
                 onChange={(text) => {
                   setStudenData({
@@ -678,14 +683,14 @@ const ProfileScreenTemplate = () => {
                 }}
               />
               <TextField
-                variant='outlined'
-                margin='normal'
+                variant="outlined"
+                margin="normal"
                 fullWidth
                 required
-                id='company_name'
+                id="company_name"
                 textNumSpace
                 minLength={1}
-                label='Company Name'
+                label="Company Name"
                 value={studentData?.company_name}
                 onChange={(text) => {
                   setStudenData({
@@ -695,14 +700,14 @@ const ProfileScreenTemplate = () => {
                 }}
               />
               <TextField
-                variant='outlined'
-                margin='normal'
+                variant="outlined"
+                margin="normal"
                 fullWidth
                 required
-                id='email'
+                id="email"
                 textNumSpace
                 minLength={1}
-                label='Email'
+                label="Email"
                 value={studentData?.email}
                 onChange={(text) => {
                   setStudenData({
@@ -712,7 +717,7 @@ const ProfileScreenTemplate = () => {
                 }}
               />
               {role?.is_email_verified ? (
-                <Typography sx={{ color: 'green', marginBottom: 1 }}>
+                <Typography sx={{ color: "green", marginBottom: 1 }}>
                   Verified
                 </Typography>
               ) : (
@@ -720,7 +725,7 @@ const ProfileScreenTemplate = () => {
                   <Typography
                     sx={{
                       color: Colors.primary,
-                      fontWeight: 'bold',
+                      fontWeight: "bold",
                       marginBottom: 1,
                     }}
                   >
@@ -729,15 +734,15 @@ const ProfileScreenTemplate = () => {
                 </Box>
               )}
               <TextField
-                type='number'
-                variant='outlined'
-                margin='normal'
+                type="number"
+                variant="outlined"
+                margin="normal"
                 fullWidth
                 required
-                id='phone'
+                id="phone"
                 textNumSpace
                 minLength={1}
-                label='Phone'
+                label="Phone"
                 value={studentData?.mobile}
                 onChange={(text) => {
                   setStudenData({
@@ -754,15 +759,15 @@ const ProfileScreenTemplate = () => {
                 }}
               />
               {role?.is_mobile_verified ? (
-                <Typography sx={{ color: 'green', marginBottom: 1 }}>
+                <Typography sx={{ color: "green", marginBottom: 1 }}>
                   Verified
                 </Typography>
               ) : (
-                <Box onClick={() => SendMobileOTP('sent')}>
+                <Box onClick={() => SendMobileOTP("sent")}>
                   <Typography
                     sx={{
                       color: Colors.primary,
-                      fontWeight: 'bold',
+                      fontWeight: "bold",
                       marginBottom: 1,
                     }}
                   >
@@ -772,19 +777,16 @@ const ProfileScreenTemplate = () => {
               )}
               <Grid
                 container
-                direction={'row'}
-                alignItems={'center'}
-                justifyContent={'center'}
+                direction={"row"}
+                alignItems={"center"}
+                justifyContent={"center"}
               >
-                <Grid
-                  item
-                  xs={3}
-                >
-                  <FormLabel id='currentlyEmployed'>Profile Images</FormLabel>
+                <Grid item xs={3}>
+                  <FormLabel id="currentlyEmployed">Profile Images</FormLabel>
                   <br />
                   <br />
                   <Upload
-                    listType='picture-card'
+                    listType="picture-card"
                     fileList={profilePic}
                     onPreview={handlePreview}
                     onChange={handleChangeProfile}
@@ -792,15 +794,12 @@ const ProfileScreenTemplate = () => {
                     {profilePic.length >= 1 ? null : uploadButton}
                   </Upload>
                 </Grid>
-                <Grid
-                  item
-                  xs={9}
-                >
-                  <FormLabel id='currentlyEmployed'>Cover Images</FormLabel>
+                <Grid item xs={9}>
+                  <FormLabel id="currentlyEmployed">Cover Images</FormLabel>
                   <br />
                   <br />
                   <Upload
-                    listType='picture-card'
+                    listType="picture-card"
                     fileList={coverPic}
                     onPreview={handlePreview}
                     onChange={handleChangeCover}
@@ -811,24 +810,24 @@ const ProfileScreenTemplate = () => {
               </Grid>
               <br />
               <FormLabel
-                id='currentlyEmployed'
-                style={{ fontSize: '17px', marginBottom: '12PX' }}
+                id="currentlyEmployed"
+                style={{ fontSize: "17px", marginBottom: "12PX" }}
               >
                 Company Address
               </FormLabel>
-              <div className='col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12'>
+              <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                 <TextField
-                  variant='outlined'
-                  margin='normal'
+                  variant="outlined"
+                  margin="normal"
                   fullWidth
                   required
                   multiline
                   rows={3}
-                  id='Company Address...'
+                  id="Company Address..."
                   textNumSpace
                   InputLabelProps={{ shrink: true }}
                   minLength={1}
-                  label='Company Address...'
+                  label="Company Address..."
                   value={studentData?.company_address}
                   onChange={(text) => {
                     setStudenData({
@@ -839,26 +838,26 @@ const ProfileScreenTemplate = () => {
                 />
               </div>
               <FormLabel
-                id='currentlyEmployed'
+                id="currentlyEmployed"
                 style={{
-                  fontSize: '17px',
-                  marginBottom: '12PX',
-                  marginTop: '15px',
+                  fontSize: "17px",
+                  marginBottom: "12PX",
+                  marginTop: "15px",
                 }}
               >
                 Warehouse Address
               </FormLabel>
-              <div className='col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12'>
+              <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                 <TextField
-                  variant='outlined'
-                  margin='normal'
+                  variant="outlined"
+                  margin="normal"
                   fullWidth
                   required
-                  id='address'
+                  id="address"
                   textNumSpace
                   InputLabelProps={{ shrink: true }}
                   minLength={1}
-                  label='Adderess 1'
+                  label="Adderess 1"
                   value={studentData?.address1}
                   onChange={(text) => {
                     setStudenData({
@@ -868,17 +867,17 @@ const ProfileScreenTemplate = () => {
                   }}
                 />
               </div>
-              <div className='col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12'>
+              <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                 <TextField
-                  variant='outlined'
-                  margin='normal'
+                  variant="outlined"
+                  margin="normal"
                   fullWidth
                   required
-                  id='address'
+                  id="address"
                   textNumSpace
                   minLength={1}
                   InputLabelProps={{ shrink: true }}
-                  label='Adderess 2'
+                  label="Adderess 2"
                   value={studentData?.address2}
                   onChange={(text) => {
                     setStudenData({
@@ -888,17 +887,17 @@ const ProfileScreenTemplate = () => {
                   }}
                 />
               </div>
-              <div className='col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12'>
+              <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                 <TextField
-                  variant='outlined'
-                  margin='normal'
+                  variant="outlined"
+                  margin="normal"
                   fullWidth
                   required
-                  id='address'
+                  id="address"
                   textNumSpace
                   minLength={1}
                   InputLabelProps={{ shrink: true }}
-                  label='Landmark'
+                  label="Landmark"
                   value={studentData?.landmark}
                   onChange={(text) => {
                     setStudenData({
@@ -908,18 +907,18 @@ const ProfileScreenTemplate = () => {
                   }}
                 />
               </div>
-              <div className='row'>
-                <div className='col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6'>
+              <div className="row">
+                <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
                   <TextField
-                    variant='outlined'
-                    margin='normal'
+                    variant="outlined"
+                    margin="normal"
                     fullWidth
                     required
-                    id='address'
+                    id="address"
                     textNumSpace
                     minLength={1}
                     InputLabelProps={{ shrink: true }}
-                    label='State'
+                    label="State"
                     value={studentData?.state}
                     onChange={(text) => {
                       setStudenData({
@@ -929,17 +928,17 @@ const ProfileScreenTemplate = () => {
                     }}
                   />
                 </div>
-                <div className='col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6'>
+                <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
                   <TextField
                     value={studentData?.country}
-                    variant='outlined'
-                    margin='normal'
+                    variant="outlined"
+                    margin="normal"
                     fullWidth
                     required
-                    id='address'
+                    id="address"
                     textNumSpace
                     minLength={1}
-                    label='Country'
+                    label="Country"
                     InputLabelProps={{ shrink: true }}
                     onChange={(text) => {
                       setStudenData({
@@ -950,19 +949,19 @@ const ProfileScreenTemplate = () => {
                   />
                 </div>
               </div>
-              <div className='row'>
-                <div className='col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6'>
+              <div className="row">
+                <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
                   <TextField
                     value={studentData?.city}
-                    variant='outlined'
-                    margin='normal'
+                    variant="outlined"
+                    margin="normal"
                     fullWidth
                     required
-                    id='address'
+                    id="address"
                     textNumSpace
                     minLength={1}
                     InputLabelProps={{ shrink: true }}
-                    label='City'
+                    label="City"
                     onChange={(text) => {
                       setStudenData({
                         ...studentData,
@@ -971,16 +970,16 @@ const ProfileScreenTemplate = () => {
                     }}
                   />
                 </div>
-                <div className='col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6'>
+                <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
                   <TextField
-                    variant='outlined'
-                    margin='normal'
+                    variant="outlined"
+                    margin="normal"
                     fullWidth
                     required
-                    id='address'
+                    id="address"
                     textNumSpace
                     minLength={1}
-                    label='Pincode'
+                    label="Pincode"
                     InputLabelProps={{ shrink: true }}
                     value={studentData?.pincode}
                     onChange={(text) => {
@@ -993,60 +992,171 @@ const ProfileScreenTemplate = () => {
                 </div>
               </div>
 
-              <Button
-                fullWidth
-                onClick={updateProfile}
-              >
+              <Button fullWidth onClick={updateProfile}>
                 Update Profile
               </Button>
-              <TextField
-                variant='outlined'
-                margin='normal'
-                fullWidth
-                required
-                id='currentPassword'
-                textNumSpace
-                minLength={1}
-                label='Current Password'
-                value={currentPass}
-                onChange={(text) => {
-                  setCurrentPass(text.target.value);
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "12px",
+                  width: "100%",
+                  padding: "20px 0px",
+                  margin: "20px 30px",
                 }}
-              />
-              <TextField
-                variant='outlined'
-                margin='normal'
-                fullWidth
-                required
-                id='newPassword'
-                textNumSpace
-                minLength={1}
-                label='New Password'
-                value={Password}
-                onChange={(text) => {
-                  setPassword(text.target.value);
+                onClick={() => {
+                  setDeleteAlaert(true);
                 }}
-              />
-              <TextField
-                variant='outlined'
-                margin='normal'
-                fullWidth
-                required
-                id='newPasswordTwo'
-                textNumSpace
-                minLength={1}
-                label='Re-Type New Password'
-                value={Password2}
-                onChange={(text) => {
-                  setPassword2(text.target.value);
-                }}
-              />
-              <Button
-                fullWidth
-                onClick={updatePassword}
               >
-                Update Password
-              </Button>
+                <FontAwesomeIcon
+                  style={{
+                    height: "24px",
+                  }}
+                  icon={["fa", "fa-trash"]}
+                  color="#BB2131"
+                ></FontAwesomeIcon>
+                <h1
+                  style={{
+                    fontFamily: "Poppins",
+                    fontSize: "16px",
+                    fontWeight: "400",
+                    lineHeight: "20px",
+                    textAlign: "left",
+                    color: "#BB2131",
+                    padding: "0px",
+                    margin: "0px",
+                  }}
+                >
+                  delete Account
+                </h1>
+              </div>
+              <Dialog
+                open={deleteAlert}
+                onClose={() => {
+                  setDeleteAlaert(false);
+                }}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle
+                  id="alert-dialog-title"
+                  style={{
+                    background: " #B6255A",
+                    color: "white",
+                    textAlign: "center",
+                  }}
+                >
+                  <span
+                    style={{
+                      fontFamily: "Poppins",
+                      fontSize: "18px",
+                      fontWeight: "400",
+                      lineHeight: "20px",
+                      textAlign: "center",
+                      color: "#ffffff",
+                      padding: "0px",
+                      margin: "0px",
+                    }}
+                  >
+                    Delete Account
+                  </span>
+                </DialogTitle>
+                <DialogContent
+                  style={{
+                    textAlign: "center",
+                    marginTop: "10px",
+                  }}
+                >
+                  <DialogContentText id="alert-dialog-description">
+                    <span
+                      style={{
+                        fontFamily: "Poppins",
+                        fontSize: "16px",
+                        fontWeight: "600",
+                        lineHeight: "20px",
+                        textAlign: "center",
+                        color: "#000000",
+                        padding: "0px",
+                        margin: "0px",
+                      }}
+                    >
+                      Are you sure ?
+                    </span>
+                    <br></br>
+                    <span
+                      style={{
+                        fontFamily: "Poppins",
+                        fontSize: "16px",
+                        fontWeight: "400",
+                        lineHeight: "20px",
+                        textAlign: "center",
+                        color: "#000000",
+                        padding: "0px",
+                        margin: "0px",
+                      }}
+                    >
+                      Once you confirm, all of your account data will be
+                      permanently deleted.
+                    </span>
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    width: "100%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Button
+                    style={{
+                      background: " #B6255A",
+                      color: "white",
+                      textAlign: "center",
+                    }}
+                    onClick={() => {
+                      setDeleteAlaert(false);
+                    }}
+                    color="primary"
+                  >
+                    cancel
+                  </Button>
+                  <Button
+                    style={{
+                      background: " #B6255A",
+                      color: "white",
+                      textAlign: "center",
+                    }}
+                    onClick={async () => {
+                      const res = await axios.delete(
+                        `${PROXY}/shopnowuser/delete/${globleuser.data._id}`,
+                        {
+                          headers: {
+                            authorization: globleuser.data.token,
+                          },
+                        }
+                      );
+                      console.log("🚀 ~ onClick={ ~ res:", res);
+                      if (res.data.success) {
+                        alert(
+                          "we are sad to let you go\nuser deleted successfully"
+                        );
+                        dispatch(user(undefined));
+                        localStorage.removeItem("wedcell");
+                        localStorage.removeItem("role");
+                        localStorage.setItem("wedcellIsLoged", "");
+                        router.push("/");
+                      }
+                    }}
+                    color="primary"
+                  >
+                    Confirm
+                  </Button>
+                </DialogActions>
+              </Dialog>
               {/* <Input
               variant="outlined"
               margin="normal"
@@ -1091,10 +1201,7 @@ const ProfileScreenTemplate = () => {
               {/* <button className="primary-sm-btn">Submit</button> */}
             </div>
           </div>
-          <AlertDialog
-            open={commonAlert.open}
-            onClose={handleCommonAlertClose}
-          >
+          <AlertDialog open={commonAlert.open} onClose={handleCommonAlertClose}>
             {commonAlert.msg}
           </AlertDialog>
 
@@ -1105,15 +1212,15 @@ const ProfileScreenTemplate = () => {
             onCancel={handleCancel}
           >
             <img
-              alt='example'
+              alt="example"
               style={{
-                width: '100%',
+                width: "100%",
               }}
               src={previewImage}
             />
           </AntdModal>
           <ToastContainer
-            position='top-right'
+            position="top-right"
             autoClose={3000}
             hideProgressBar={false}
             newestOnTop={false}
@@ -1122,7 +1229,7 @@ const ProfileScreenTemplate = () => {
             pauseOnFocusLoss
             draggable
             pauseOnHover
-            theme='light'
+            theme="light"
           />
         </>
       )}
@@ -1135,18 +1242,18 @@ export default ProfileScreenTemplate;
 const styles = {
   centeredView: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     marginTop: 22,
   },
   modalView: {
-    width: '80%',
+    width: "80%",
     margin: 20,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderRadius: 20,
     padding: 35,
     // alignItems: 'center',
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
@@ -1161,19 +1268,19 @@ const styles = {
     elevation: 2,
   },
   buttonOpen: {
-    backgroundColor: '#F194FF',
+    backgroundColor: "#F194FF",
   },
   buttonClose: {
-    backgroundColor: '#2196F3',
+    backgroundColor: "#2196F3",
   },
   textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
   },
   modalText: {
-    marginBottom: '20px',
-    fontSize: '24px',
-    textAlign: 'start',
+    marginBottom: "20px",
+    fontSize: "24px",
+    textAlign: "start",
   },
 };

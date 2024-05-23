@@ -60,7 +60,11 @@ const Header = ({ setHeaderHeight, setShow }) => {
               cursor: "pointer",
             }}
           >
-            <img src="/images/logo copy.jpeg" width={100} height={30}></img>
+            <img
+              src="https://wedcell.s3.ap-south-1.amazonaws.com/vendors/images/logo copy.jpeg"
+              width={100}
+              height={30}
+            ></img>
             {/* <Image src="https://wedcell.s3.ap-south-1.amazonaws.com/vendors/images/logo copy.jpeg" width={100} height={30} objectFit="contain" /> */}
           </div>
         </Link>

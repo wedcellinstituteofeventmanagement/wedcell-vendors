@@ -1,8 +1,8 @@
-import { PlusOutlined } from '@ant-design/icons';
-import { Modal, Upload } from 'antd';
-import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
+import { PlusOutlined } from "@ant-design/icons";
+import { Modal, Upload } from "antd";
+import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
 
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from "react";
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -11,18 +11,23 @@ const getBase64 = (file) =>
     reader.onerror = (error) => reject(error);
   });
 // import Styles from "../../styles/Editlist.module.css";
-import Styles from '../../styles/Editlist.module.css';
-import axios from 'axios';
+import Styles from "../../styles/Editlist.module.css";
+import axios from "axios";
 
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 
 // import { PROXY } from "../../config";
-import { PROXY } from '../../config';
+import { PROXY } from "../../config";
 
-import { RiDeleteBin6Line } from 'react-icons/ri';
+import { RiDeleteBin6Line } from "react-icons/ri";
 // import { ImageDelete } from "../Helpers/FileHandlers";
 import {
   Checkbox,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   FormControl,
   FormControlLabel,
   FormGroup,
@@ -31,137 +36,138 @@ import {
   Radio,
   RadioGroup,
   Select,
-} from '@mui/material';
-import InputLabel from '@mui/material/InputLabel';
-import { Box, Button, Grid, TextField, Typography } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+} from "@mui/material";
+import InputLabel from "@mui/material/InputLabel";
+import { Box, Button, Grid, TextField, Typography } from "@mui/material";
+import { makeStyles } from "@mui/styles";
 
-import { Spinner } from 'react-bootstrap';
+import { Spinner } from "react-bootstrap";
 
-import { useDispatch, useSelector } from 'react-redux';
-import { selectUser, user } from '../../redux/reducer/appEssentials';
-import compressAndAppendFiles from '../compressAndAppendFiles';
-import MuiPhoneNumber from 'material-ui-phone-number';
-import { ToastContainer } from 'react-toastify';
-import { profileforVendorVal } from '../../yupValidations/SignupValidation';
-import Steps from '../Steps';
+import { useDispatch, useSelector } from "react-redux";
+import { selectUser, user } from "../../redux/reducer/appEssentials";
+import compressAndAppendFiles from "../compressAndAppendFiles";
+import MuiPhoneNumber from "material-ui-phone-number";
+import { ToastContainer } from "react-toastify";
+import { profileforVendorVal } from "../../yupValidations/SignupValidation";
+import Steps from "../Steps";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const useStyles = makeStyles((theme) => ({
   chip: {
     margin: 0.5,
   },
   form: {
-    width: '100%',
+    width: "100%",
     marginTop: 1,
   },
   submit: {
     margin: 3,
   },
   imageList: {
-    flexWrap: 'nowrap',
+    flexWrap: "nowrap",
     // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
-    transform: 'translateZ(0)',
+    transform: "translateZ(0)",
   },
   title: {
-    color: 'black',
+    color: "black",
   },
   titleBar: {
     background:
-      'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
+      "linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)",
   },
 }));
 const cities = [
-  'Mumbai',
-  'Pune',
-  'Delhi',
-  'Jaipur',
-  'Goa',
-  'Udaipur',
-  'Agra',
-  'Noida',
-  'Gurgaon',
-  'Ranchi',
-  'Patna',
-  'Bangalore',
-  'Hyderabad',
-  'Ahmedabad',
-  'Chennai',
-  'Kolkata',
-  'Surat',
-  'Lucknow',
-  'Kanpur',
-  'Nagpur',
-  'Indore',
-  'Thane',
-  'Bhopal',
-  'Visakhapatnam',
-  'Vadodara',
-  'Ghaziabad',
-  'Ludhiana',
-  'Nashik',
-  'Meerut',
-  'Rajkot',
-  'Varanasi',
-  'Srinagar',
-  'Aurangabad',
-  'Dhanbad',
-  'Amritsar',
-  'Allahabad',
-  'Gwalior',
-  'Jabalpur',
-  'Coimbatore',
-  'Vijayawada',
-  'Jodhpur',
-  'Raipur',
-  'Kota',
-  'Chandigarh',
-  'Guwahati',
-  'Mysore',
-  'Bareilly',
-  'Aligarh',
-  'Moradabad',
-  'Jalandhar',
-  'Bhuba',
-  'Gorakhpur',
-  'Bikaner',
-  'Saharanpur',
-  'Jamshedpur',
-  'Bhilai',
-  'Cuttack',
-  'Firozabad',
-  'Kochi',
-  'Dehradun',
-  'Durgapur',
-  'Ajmer',
-  'Siliguri',
-  'Gaya',
-  'Tirupati',
-  'Mathura',
-  'Bilaspur',
-  'Haridwar',
-  'Gandhinagar',
-  'Shimla',
-  'Gangtok',
-  'Nainital',
-  'Jaisalmer',
-  'Indor',
-  'Rishikesh',
-  'kaushali',
-  'Pushkar',
-  'Kerala',
-  'Jim Corbet',
-  'Mussoorie',
-  'Faridabad',
-  'Dubai',
-  'Thailand',
-  'Srilanka',
-  'Bali',
-  'Canada',
-  'Maldives',
-  'Vietnam',
-  'Cambodia',
-  'Philippine',
-  'Malaysia',
+  "Mumbai",
+  "Pune",
+  "Delhi",
+  "Jaipur",
+  "Goa",
+  "Udaipur",
+  "Agra",
+  "Noida",
+  "Gurgaon",
+  "Ranchi",
+  "Patna",
+  "Bangalore",
+  "Hyderabad",
+  "Ahmedabad",
+  "Chennai",
+  "Kolkata",
+  "Surat",
+  "Lucknow",
+  "Kanpur",
+  "Nagpur",
+  "Indore",
+  "Thane",
+  "Bhopal",
+  "Visakhapatnam",
+  "Vadodara",
+  "Ghaziabad",
+  "Ludhiana",
+  "Nashik",
+  "Meerut",
+  "Rajkot",
+  "Varanasi",
+  "Srinagar",
+  "Aurangabad",
+  "Dhanbad",
+  "Amritsar",
+  "Allahabad",
+  "Gwalior",
+  "Jabalpur",
+  "Coimbatore",
+  "Vijayawada",
+  "Jodhpur",
+  "Raipur",
+  "Kota",
+  "Chandigarh",
+  "Guwahati",
+  "Mysore",
+  "Bareilly",
+  "Aligarh",
+  "Moradabad",
+  "Jalandhar",
+  "Bhuba",
+  "Gorakhpur",
+  "Bikaner",
+  "Saharanpur",
+  "Jamshedpur",
+  "Bhilai",
+  "Cuttack",
+  "Firozabad",
+  "Kochi",
+  "Dehradun",
+  "Durgapur",
+  "Ajmer",
+  "Siliguri",
+  "Gaya",
+  "Tirupati",
+  "Mathura",
+  "Bilaspur",
+  "Haridwar",
+  "Gandhinagar",
+  "Shimla",
+  "Gangtok",
+  "Nainital",
+  "Jaisalmer",
+  "Indor",
+  "Rishikesh",
+  "kaushali",
+  "Pushkar",
+  "Kerala",
+  "Jim Corbet",
+  "Mussoorie",
+  "Faridabad",
+  "Dubai",
+  "Thailand",
+  "Srilanka",
+  "Bali",
+  "Canada",
+  "Maldives",
+  "Vietnam",
+  "Cambodia",
+  "Philippine",
+  "Malaysia",
 ];
 
 const CategotiesList = [
@@ -174,430 +180,432 @@ const CategotiesList = [
   //   subCategories: [],
   // },
   {
-    name: 'Food',
+    name: "Food",
     subCategories: [
-      'Chaat Counter',
-      'Fruit Counter',
-      'Catering services',
-      'Pan Counter',
-      'Cake',
-      'Bar Tenders',
+      "Chaat Counter",
+      "Fruit Counter",
+      "Catering services",
+      "Pan Counter",
+      "Cake",
+      "Bar Tenders",
     ],
   },
   {
-    name: 'Invites & Gifts',
-    subCategories: ['Invitation Card', 'Invitation Gift'],
+    name: "Invites & Gifts",
+    subCategories: ["Invitation Card", "Invitation Gift"],
   },
   {
-    name: 'Music & Dance',
+    name: "Music & Dance",
     subCategories: [
-     'Anchor',
-        'Artist management services',
-        'Choreographer',
-        'Singer',
-        'DJ',
-        'Ghodi & Baggi',
-        'Band Baja',
-        'Dhol',
-        'Live band',
-        'DJ based Band',
-        'Male & Female Singer',
-        'Dance Troupe',
+      "Anchor",
+      "Artist management services",
+      "Choreographer",
+      "Singer",
+      "DJ",
+      "Ghodi & Baggi",
+      "Band Baja",
+      "Dhol",
+      "Live band",
+      "DJ based Band",
+      "Male & Female Singer",
+      "Dance Troupe",
     ],
   },
   {
-    name: 'Pandit Jee',
+    name: "Pandit Jee",
     subCategories: [],
   },
   {
-    name: 'Makeup',
-    subCategories: ['Bridal Makeup', 'Groom Makeup', 'Family Makeup'],
+    name: "Makeup",
+    subCategories: ["Bridal Makeup", "Groom Makeup", "Family Makeup"],
   },
   {
-    name: 'Mehndi',
-    subCategories: ['Bride Mehndi', 'Family Member Mehndi'],
+    name: "Mehndi",
+    subCategories: ["Bride Mehndi", "Family Member Mehndi"],
   },
   {
-    name: 'Photographers',
+    name: "Photographers",
     subCategories: [
-      'Cinema/Video',
-      'Album',
-      'Collage Maker',
-      'Drone',
-      'Pre Wedding Shoot',
+      "Cinema/Video",
+      "Album",
+      "Collage Maker",
+      "Drone",
+      "Pre Wedding Shoot",
     ],
   },
   {
-    name: 'Planning & Decor',
-    subCategories: ['Wedding Decor', 'Celebrities Management'],
+    name: "Planning & Decor",
+    subCategories: ["Wedding Decor", "Celebrities Management"],
   },
 ];
 
 const CategoryDefault = {
-  'Planning & Decor': [
+  "Planning & Decor": [
     {
-      name: 'Wedding Décor',
-      value: '',
+      name: "Wedding Décor",
+      value: "",
     },
     {
-      name: 'Ring Ceremony Décor',
-      value: '',
+      name: "Ring Ceremony Décor",
+      value: "",
     },
     {
-      name: 'Reception Décor',
-      value: '',
+      name: "Reception Décor",
+      value: "",
     },
     {
-      name: 'Mehndi Décor',
-      value: '',
+      name: "Mehndi Décor",
+      value: "",
     },
     {
-      name: 'Haldi Decor',
-      value: '',
+      name: "Haldi Decor",
+      value: "",
     },
     {
-      name: 'Rokka Ceremony decor',
-      value: '',
+      name: "Rokka Ceremony decor",
+      value: "",
     },
     {
-      name: 'Birthday Décor',
-      value: '',
+      name: "Birthday Décor",
+      value: "",
     },
     {
-      name: 'Anniversary Décor',
-      value: '',
+      name: "Anniversary Décor",
+      value: "",
     },
   ],
   Photographers: [
     {
-      name: 'Wedding',
-      value: '',
+      name: "Wedding",
+      value: "",
     },
     {
-      name: 'Ring Ceremony',
-      value: '',
+      name: "Ring Ceremony",
+      value: "",
     },
     {
-      name: 'Reception',
-      value: '',
+      name: "Reception",
+      value: "",
     },
     {
-      name: 'Mehndi',
-      value: '',
+      name: "Mehndi",
+      value: "",
     },
     {
-      name: 'Haldi',
-      value: '',
+      name: "Haldi",
+      value: "",
     },
     {
-      name: 'Rokka Ceremony',
-      value: '',
+      name: "Rokka Ceremony",
+      value: "",
     },
     {
-      name: 'Birthday',
-      value: '',
+      name: "Birthday",
+      value: "",
     },
     {
-      name: 'Anniversary',
-      value: '',
+      name: "Anniversary",
+      value: "",
     },
     {
-      name: 'Pre Wedding Shoots ',
-      value: '',
+      name: "Pre Wedding Shoots ",
+      value: "",
     },
     {
-      name: 'Portfolio Shoots ',
-      value: '',
+      name: "Portfolio Shoots ",
+      value: "",
     },
     {
-      name: 'Model Shoots ',
-      value: '',
+      name: "Model Shoots ",
+      value: "",
     },
   ],
   Mehndi: [
     {
-      name: 'Bride Mehndi',
-      value: '',
+      name: "Bride Mehndi",
+      value: "",
     },
     {
-      name: 'Family Mehndi',
-      value: '',
+      name: "Family Mehndi",
+      value: "",
     },
   ],
   Makeup: [
     {
-      name: 'Bride Makeup',
-      value: '',
+      name: "Bride Makeup",
+      value: "",
     },
     {
-      name: 'Family Makeup',
-      value: '',
+      name: "Family Makeup",
+      value: "",
     },
   ],
-  'Pandit Jee': [],
+  "Pandit Jee": [],
   Venue: [
     {
-      name: 'Veg Menu',
-      value: '',
+      name: "Veg Menu",
+      value: "",
     },
     {
-      name: 'Non Veg Menu',
-      value: '',
+      name: "Non Veg Menu",
+      value: "",
     },
     {
-      name: 'Hi-Tea',
-      value: '',
+      name: "Hi-Tea",
+      value: "",
     },
     {
-      name: 'Flat Lunch',
-      value: '',
+      name: "Flat Lunch",
+      value: "",
     },
     {
-      name: 'Breakfast',
-      value: '',
+      name: "Breakfast",
+      value: "",
     },
     {
-      name: 'Restaurent Lunch/Dinner',
-      value: '',
+      name: "Restaurent Lunch/Dinner",
+      value: "",
     },
   ],
 };
 const SubCategoryDefault = {
-  'Invitation Gift': [
+  "Invitation Gift": [
     {
-      name: 'Invitation Card ',
-      value: '',
+      name: "Invitation Card ",
+      value: "",
     },
     {
-      name: 'Special Gift Hamper',
-      value: '',
-    },
-  ],
-  'Celebrities Management': [
-    {
-      name: 'Local Singer ',
-      value: '',
-    },
-    {
-      name: 'Bollywood Singer ',
-      value: '',
-    },
-    {
-      name: 'Punjabi Singer ',
-      value: '',
-    },
-    {
-      name: 'Bollywood Actor ',
-      value: '',
-    },
-    {
-      name: 'Bollywood Actress ',
-      value: '',
+      name: "Special Gift Hamper",
+      value: "",
     },
   ],
-  'Chaat Counter': [
+  "Celebrities Management": [
     {
-      name: 'Per Chat Counter ',
-      value: '',
+      name: "Local Singer ",
+      value: "",
+    },
+    {
+      name: "Bollywood Singer ",
+      value: "",
+    },
+    {
+      name: "Punjabi Singer ",
+      value: "",
+    },
+    {
+      name: "Bollywood Actor ",
+      value: "",
+    },
+    {
+      name: "Bollywood Actress ",
+      value: "",
     },
   ],
-  'Pan Counter': [
+  "Chaat Counter": [
     {
-      name: 'Basic Pan Counter',
-      value: '',
-    },
-    {
-      name: 'Special Pan Counter ',
-      value: '',
+      name: "Per Chat Counter ",
+      value: "",
     },
   ],
-  'Invitation Card': [
+  "Pan Counter": [
     {
-      name: 'Invitation Card',
-      value: '',
+      name: "Basic Pan Counter",
+      value: "",
     },
     {
-      name: 'Designer Invitation Card',
-      value: '',
-    },
-  ],
-  'Catering services': [
-    {
-      name: 'Veg Per Plat',
-      value: '',
-    },
-    {
-      name: 'Non Veg Per Plat ',
-      value: '',
-    },
-    {
-      name: 'Flat Lunch ',
-      value: '',
-    },
-    {
-      name: 'Hi-Tea',
-      value: '',
-    },
-    {
-      name: 'Breakfast ',
-      value: '',
+      name: "Special Pan Counter ",
+      value: "",
     },
   ],
-  'Fruit Counter': [
+  "Invitation Card": [
     {
-      name: 'Indian Fruits ',
-      value: '',
+      name: "Invitation Card",
+      value: "",
     },
     {
-      name: 'Imported Fruits ',
-      value: '',
+      name: "Designer Invitation Card",
+      value: "",
+    },
+  ],
+  "Catering services": [
+    {
+      name: "Veg Per Plat",
+      value: "",
+    },
+    {
+      name: "Non Veg Per Plat ",
+      value: "",
+    },
+    {
+      name: "Flat Lunch ",
+      value: "",
+    },
+    {
+      name: "Hi-Tea",
+      value: "",
+    },
+    {
+      name: "Breakfast ",
+      value: "",
+    },
+  ],
+  "Fruit Counter": [
+    {
+      name: "Indian Fruits ",
+      value: "",
+    },
+    {
+      name: "Imported Fruits ",
+      value: "",
     },
   ],
   Cake: [
     {
-      name: 'Normal Cake ',
-      value: '',
+      name: "Normal Cake ",
+      value: "",
     },
     {
-      name: 'Celebrity Cake ',
-      value: '',
+      name: "Celebrity Cake ",
+      value: "",
     },
     {
-      name: 'Designer Cake ',
-      value: '',
+      name: "Designer Cake ",
+      value: "",
     },
     {
-      name: 'Hanging Cake ',
-      value: '',
+      name: "Hanging Cake ",
+      value: "",
     },
   ],
-  'Bar Tenders': [
+  "Bar Tenders": [
     {
-      name: 'Indian Male Bar Tender ',
-      value: '',
+      name: "Indian Male Bar Tender ",
+      value: "",
     },
     {
-      name: 'Indian Female Bar Tender ',
-      value: '',
+      name: "Indian Female Bar Tender ",
+      value: "",
     },
     {
-      name: 'Russian Male Bar Tender ',
-      value: '',
+      name: "Russian Male Bar Tender ",
+      value: "",
     },
     {
-      name: 'Russian  Female Bar Tender ',
-      value: '',
+      name: "Russian  Female Bar Tender ",
+      value: "",
     },
   ],
   Anchor: [
     {
-      name: 'Wedding Achoring ',
-      value: '',
+      name: "Wedding Achoring ",
+      value: "",
     },
     {
-      name: 'Travel',
-      value: '',
+      name: "Travel",
+      value: "",
     },
     {
-      name: 'Stay',
-      value: '',
+      name: "Stay",
+      value: "",
     },
     {
-      name: 'Food',
-      value: '',
+      name: "Food",
+      value: "",
     },
   ],
   Choreographer: [
     {
-      name: 'Wedding Choregrapher ',
-      value: '',
+      name: "Wedding Choregrapher ",
+      value: "",
     },
     {
-      name: 'Travel',
-      value: '',
+      name: "Travel",
+      value: "",
     },
     {
-      name: 'Stay',
-      value: '',
+      name: "Stay",
+      value: "",
     },
     {
-      name: 'Food',
-      value: '',
+      name: "Food",
+      value: "",
     },
   ],
   DJ: [
     {
-      name: 'DJ Player',
-      value: '',
+      name: "DJ Player",
+      value: "",
     },
     {
-      name: 'Noraml DJ',
-      value: '',
+      name: "Noraml DJ",
+      value: "",
     },
     {
-      name: 'DJ With LED Screen & Perfomance Stage',
-      value: '',
+      name: "DJ With LED Screen & Perfomance Stage",
+      value: "",
     },
   ],
-  'Ghodi & Baggi': [
+  "Ghodi & Baggi": [
     {
-      name: 'Ghodi ',
-      value: '',
+      name: "Ghodi ",
+      value: "",
     },
     {
-      name: 'Baggi',
-      value: '',
+      name: "Baggi",
+      value: "",
     },
   ],
   Dhol: [
     {
-      name: 'Local Dhol',
-      value: '',
+      name: "Local Dhol",
+      value: "",
     },
     {
-      name: 'Artist Dhol',
-      value: '',
+      name: "Artist Dhol",
+      value: "",
     },
   ],
 };
 
 const CategotiesListVenue = [
   {
-    name: 'Hotel',
+    name: "Hotel",
     subCategories: [],
   },
   {
-    name: 'Resort',
+    name: "Resort",
     subCategories: [],
   },
   {
-    name: 'Farm House',
+    name: "Farm House",
     subCategories: [],
   },
   {
-    name: 'Banquet Hall',
+    name: "Banquet Hall",
     subCategories: [],
   },
   {
-    name: 'Lawn',
+    name: "Lawn",
     subCategories: [],
   },
   {
-    name: 'Destination Wedding',
+    name: "Destination Wedding",
     subCategories: [],
   },
 ];
 
 const VendorProfile = ({ query }) => {
-  const [secondNumbers, setSecondNumbers] = useState(['']);
+  const [deleteAlert, setDeleteAlaert] = useState(false);
+
+  const [secondNumbers, setSecondNumbers] = useState([""]);
   const errorr = () => {};
 
   const uploadErrorr = () => {};
   const uploadSucsess = () => {};
   const editSucsess = () => {};
   const [previewOpen, setPreviewOpen] = useState(false);
-  const [previewImage, setPreviewImage] = useState('');
-  const [previewTitle, setPreviewTitle] = useState('');
+  const [previewImage, setPreviewImage] = useState("");
+  const [previewTitle, setPreviewTitle] = useState("");
   let [fileListMain, setFileListMain] = useState([]);
   const [fileListAlbum, setFileListAlbum] = useState([]);
   const [fileListBrochure, setFileListBrochure] = useState([]);
@@ -609,25 +617,25 @@ const VendorProfile = ({ query }) => {
   const [menuImageDefault, setMenuImagedefault] = useState([]);
   const [galleryImageDefault, setGalleryImagedefault] = useState([]);
   const [additional, setAdditional] = useState({
-    booking_amount: '',
-    parking: '',
+    booking_amount: "",
+    parking: "",
     rental_cost_per_plate: false,
-    primary_venue_type: '',
-    year_of_start: '',
-    special_feature: '',
-    veg_starting_price: '',
-    nov_veg_starting_price: '',
+    primary_venue_type: "",
+    year_of_start: "",
+    special_feature: "",
+    veg_starting_price: "",
+    nov_veg_starting_price: "",
     venue_type: [],
-    rooms_in_accomodation: '',
-    basic_starting_price: '',
-    policy_on_catering: '',
-    policy_on_decor: '',
-    policy_on_dj: '',
-    policy_on_alcohol: '',
-    minimum_decor_price: '',
-    policy_on_decor: '',
-    policy_cancellation: '',
-    minimum_advanced_booking: '',
+    rooms_in_accomodation: "",
+    basic_starting_price: "",
+    policy_on_catering: "",
+    policy_on_decor: "",
+    policy_on_dj: "",
+    policy_on_alcohol: "",
+    minimum_decor_price: "",
+    policy_on_decor: "",
+    policy_cancellation: "",
+    minimum_advanced_booking: "",
   });
 
   const [state, setState] = React.useState({
@@ -658,28 +666,28 @@ const VendorProfile = ({ query }) => {
     });
     setTypeFilter(newArr);
   };
-  const [currentPass, setCurrentPass] = useState('');
-  const [Password, setPassword] = useState('');
-  const [Password2, setPassword2] = useState('');
+  const [currentPass, setCurrentPass] = useState("");
+  const [Password, setPassword] = useState("");
+  const [Password2, setPassword2] = useState("");
   const updatePassword = async () => {
     if (!currentPass) {
-      alert('please enter current Password');
+      alert("please enter current Password");
       return;
     }
     if (!Password) {
-      alert('please enter new Password');
+      alert("please enter new Password");
       return;
     }
     if (!Password2) {
-      alert('please re-enter new Password');
+      alert("please re-enter new Password");
       return;
     }
     if (Password !== Password2) {
-      alert('new passwords are not same');
+      alert("new passwords are not same");
       return;
     }
     if (Password === currentPass) {
-      alert('new passwords should be different from old Password');
+      alert("new passwords should be different from old Password");
       return;
     }
     try {
@@ -696,17 +704,17 @@ const VendorProfile = ({ query }) => {
         }
       );
       if (data.data.success) {
-        alert('password changed successfully');
-        setCurrentPass('');
-        setPassword('');
-        setPassword2('');
+        alert("password changed successfully");
+        setCurrentPass("");
+        setPassword("");
+        setPassword2("");
       }
     } catch (error) {
       if (error?.response?.data?.error?.message) {
         alert(error?.response?.data?.error?.message);
         return;
       } else {
-        alert('Something went wrong');
+        alert("Something went wrong");
       }
     }
   };
@@ -718,12 +726,12 @@ const VendorProfile = ({ query }) => {
     setPreviewImage(file.url || file.preview);
     setPreviewOpen(true);
     setPreviewTitle(
-      file.name || file.url.substring(file.url.lastIndexOf('/') + 1)
+      file.name || file.url.substring(file.url.lastIndexOf("/") + 1)
     );
   };
 
   const handleChangeMain = ({ fileList: newFileList, file }) => {
-    if (file.status !== 'removed') {
+    if (file.status !== "removed") {
       if (file.size / 1028 <= 50000000000000) {
         setFileListMain(newFileList);
       } else {
@@ -738,7 +746,7 @@ const VendorProfile = ({ query }) => {
   //   .filter((data) => data.url)
   //   .map((data) => data.url);
   const handleChangeBrochure = ({ fileList: newFileList, file }) => {
-    if (file.status !== 'removed') {
+    if (file.status !== "removed") {
       if (file.size / 1028 <= 50000000000000) {
         setFileListBrochure(newFileList);
       } else {
@@ -751,7 +759,7 @@ const VendorProfile = ({ query }) => {
   };
 
   const handleChangeGallery = ({ fileList: newFileList, file }) => {
-    if (file.status !== 'removed') {
+    if (file.status !== "removed") {
       if (file.size / 1028 <= 50000000000000) {
         setFileListGallery(newFileList);
       } else {
@@ -767,7 +775,7 @@ const VendorProfile = ({ query }) => {
   };
 
   const handleChangeMenu = ({ fileList: newFileList, file }) => {
-    if (file.status !== 'removed') {
+    if (file.status !== "removed") {
       if (file.size / 1028 <= 50000000000000) {
         setFileListMenu(newFileList);
       } else {
@@ -783,7 +791,7 @@ const VendorProfile = ({ query }) => {
   };
 
   const handleChangeAlbum = ({ fileList: newFileList, file }, key) => {
-    if (file.status !== 'removed') {
+    if (file.status !== "removed") {
       if (file.size / 1028 <= 50000000000000) {
         fileListAlbum[key].value = newFileList;
         setFileListAlbum([...fileListAlbum]);
@@ -811,44 +819,44 @@ const VendorProfile = ({ query }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const editable = true;
-  const [status, setStatus] = useState(editable ? 'Edit' : 'Submit');
+  const [status, setStatus] = useState(editable ? "Edit" : "Submit");
   const [config, setConfig] = useState();
   const [uploading, setUploading] = useState(false);
   const [disable, setDisable] = useState(false);
-  const [vidLinks, setVidLinks] = useState(['']);
-  const [amenities, setAmenities] = useState([{ name: '', min: '', max: '' }]);
-  const [plans, setPlans] = useState([{ name: '', value: '' }]);
-  const [features, setFeatures] = useState([{ name: '', value: false }]);
+  const [vidLinks, setVidLinks] = useState([""]);
+  const [amenities, setAmenities] = useState([{ name: "", min: "", max: "" }]);
+  const [plans, setPlans] = useState([{ name: "", value: "" }]);
+  const [features, setFeatures] = useState([{ name: "", value: false }]);
   const [deleting, setDeleting] = useState(false);
   const [allowedVendors, setAllowedVendors] = useState([
-    { name: 'Decor', value: false },
-    { name: 'DJ', value: false },
-    { name: 'Cake', value: false },
-    { name: 'Liquor', value: false },
-    { name: 'Pan Counter', value: false },
+    { name: "Decor", value: false },
+    { name: "DJ", value: false },
+    { name: "Cake", value: false },
+    { name: "Liquor", value: false },
+    { name: "Pan Counter", value: false },
   ]);
   const globleuser = useSelector(selectUser);
   const [form, setForm] = useState({
-    name: '',
-    category: '',
-    subCategory: '',
-    company_name: '',
-    description: '',
-    contactEmail: '',
-    contactPhone: '',
-    price: '',
+    name: "",
+    category: "",
+    subCategory: "",
+    company_name: "",
+    description: "",
+    contactEmail: "",
+    contactPhone: "",
+    price: "",
 
-    password: '',
-    termsandconditions: '',
-    address: '',
-    state: '',
-    city: '',
-    zipcode: '',
-    country: '',
+    password: "",
+    termsandconditions: "",
+    address: "",
+    state: "",
+    city: "",
+    zipcode: "",
+    country: "",
 
     secondNumbers: [],
-    plans: [{ name: '', value: '' }],
-    vidLinks: [''],
+    plans: [{ name: "", value: "" }],
+    vidLinks: [""],
   });
   const classes = useStyles();
   // const { width } = useWindowDimensions();
@@ -863,7 +871,7 @@ const VendorProfile = ({ query }) => {
   const setDefaultImages = (url, uid) => {
     return {
       uid,
-      status: 'done',
+      status: "done",
       url,
     };
   };
@@ -948,7 +956,7 @@ const VendorProfile = ({ query }) => {
     setIsLoading(true);
     const editable = true;
 
-    if (localStorage.getItem('wedcell') !== null) {
+    if (localStorage.getItem("wedcell") !== null) {
       const config = {
         headers: {
           authorization: globleuser?.data?.token,
@@ -960,11 +968,11 @@ const VendorProfile = ({ query }) => {
       getdata();
     } else {
       setForm({
-        name: '',
-        category: '',
-        type: '',
-        city: '',
-        address: '',
+        name: "",
+        category: "",
+        type: "",
+        city: "",
+        address: "",
         images: [],
         albums: [],
         brochure: [],
@@ -995,54 +1003,54 @@ const VendorProfile = ({ query }) => {
         fileListAlbum,
         fileListMenu,
         price:
-          form.category !== 'Hotel' && form.category !== 'Resort'
-            ? '1'
+          form.category !== "Hotel" && form.category !== "Resort"
+            ? "1"
             : form.price,
       });
 
       const formData = new FormData();
       // additional &&
       //   formData.append("additionalDetails", JSON.stringify(additional));
-      form.name && formData.append('name', form.name);
-      form.category && formData.append('category', form.category);
-      form.subCategory && formData.append('subCategory', form.subCategory);
-      form.password && formData.append('password', form.password);
-      form.company_name && formData.append('company_name', form.company_name);
-      form.zipcode && formData.append('zipcode', form.zipcode);
-      form.city && formData.append('city', form.city);
-      form.country && formData.append('country', form.country);
-      form.state && formData.append('state', form.state);
-      form.address && formData.append('address', form.address);
+      form.name && formData.append("name", form.name);
+      form.category && formData.append("category", form.category);
+      form.subCategory && formData.append("subCategory", form.subCategory);
+      form.password && formData.append("password", form.password);
+      form.company_name && formData.append("company_name", form.company_name);
+      form.zipcode && formData.append("zipcode", form.zipcode);
+      form.city && formData.append("city", form.city);
+      form.country && formData.append("country", form.country);
+      form.state && formData.append("state", form.state);
+      form.address && formData.append("address", form.address);
       // form.city && formData.append("city", form.city);
       // form.address && formData.append("address", form.address);
       // form.vendorId && formData.append("vendorId", form.vendorId);
-      form.description && formData.append('description', form.description);
-      form.contactEmail && formData.append('contactEmail', form.contactEmail);
-      form.contactPhone && formData.append('contactPhone', form.contactPhone);
+      form.description && formData.append("description", form.description);
+      form.contactEmail && formData.append("contactEmail", form.contactEmail);
+      form.contactPhone && formData.append("contactPhone", form.contactPhone);
       // form.zipcode && formData.append("zipcode", form.zipcode);
       form.price &&
         formData.append(
-          'price',
+          "price",
           /^\d+$/.test(form.price) ? parseInt(form.price) : 0
         );
       form.termsandconditions &&
-        formData.append('termsandconditions', form.termsandconditions);
+        formData.append("termsandconditions", form.termsandconditions);
       form.secondNumbers &&
-        formData.append('secondNumbers', JSON.stringify(form.secondNumbers));
-      form.plans && formData.append('plans', JSON.stringify(form.plans));
+        formData.append("secondNumbers", JSON.stringify(form.secondNumbers));
+      form.plans && formData.append("plans", JSON.stringify(form.plans));
       form.vidLinks &&
-        formData.append('vidLinks', JSON.stringify(form.vidLinks));
-      editable && formData.append('_id', form._id);
+        formData.append("vidLinks", JSON.stringify(form.vidLinks));
+      editable && formData.append("_id", form._id);
       // form.vendorId && formData.append("vendorId", JSON.stringify(form.vendorId));
-      fileListAlbum && formData.append('album', JSON.stringify(fileListAlbum));
-      mainImageDefault && formData.append('mainLink', mainImageDefault);
+      fileListAlbum && formData.append("album", JSON.stringify(fileListAlbum));
+      mainImageDefault && formData.append("mainLink", mainImageDefault);
       galleryImageDefault &&
-        formData.append('galleryLink', JSON.stringify(galleryImageDefault));
+        formData.append("galleryLink", JSON.stringify(galleryImageDefault));
       albumImageDefault &&
-        formData.append('albumLink', JSON.stringify(albumImageDefault));
+        formData.append("albumLink", JSON.stringify(albumImageDefault));
 
       brochureImageDefault &&
-        formData.append('brochureLink', brochureImageDefault);
+        formData.append("brochureLink", brochureImageDefault);
 
       if (fileListAlbum) {
         await Promise.all(
@@ -1051,35 +1059,35 @@ const VendorProfile = ({ query }) => {
           })
         );
       }
-      await compressAndAppendFiles(fileListGallery, formData, 'gallery');
-      await compressAndAppendFiles(fileListMain, formData, 'main');
-      await compressAndAppendFiles(fileListBrochure, formData, 'brochure');
+      await compressAndAppendFiles(fileListGallery, formData, "gallery");
+      await compressAndAppendFiles(fileListMain, formData, "main");
+      await compressAndAppendFiles(fileListBrochure, formData, "brochure");
 
-      editable && formData.append('_id', form._id);
+      editable && formData.append("_id", form._id);
       // form.vendorId && formData.append("vendorId", JSON.stringify(form.vendorId));
 
-      setStatus('Wait....Uploading');
+      setStatus("Wait....Uploading");
 
       if (editable) {
         axios
           .put(`${PROXY}/vendoruser/update`, formData, config)
           .then((res) => {
-            setStatus('Edit Done');
+            setStatus("Edit Done");
             setUploading(false);
             editSucsess();
             res.data.data.token = globleuser?.data?.token;
             dispatch(user(res.data));
-            localStorage.setItem('wedcell', JSON.stringify(res.data));
-            alert('Update Successful');
+            localStorage.setItem("wedcell", JSON.stringify(res.data));
+            alert("Update Successful");
             setTimeout(() => {
               // location.reload();
-              router.push('/dashboard');
-              setStatus('Edit');
+              router.push("/dashboard");
+              setStatus("Edit");
             }, 3000);
           })
           .catch((e) => {
             console.error(e.message);
-            setStatus('Error Occured');
+            setStatus("Error Occured");
             uploadErrorr();
             setUploading(false);
           });
@@ -1087,20 +1095,20 @@ const VendorProfile = ({ query }) => {
         axios
           .post(`${PROXY}/item/create`, formData, config)
           .then((res) => {
-            setStatus('All Done');
+            setStatus("All Done");
             setUploading(false);
             uploadSucsess();
             setTimeout(() => {
-              setStatus('Submit');
+              setStatus("Submit");
               // location.reload();
-              router.push('/dashboard');
+              router.push("/dashboard");
             }, 3000);
             // location.reload();
-            router.push('/dashboard');
+            router.push("/dashboard");
           })
           .catch((e) => {
             console.error(e.message);
-            setStatus('Error Occured');
+            setStatus("Error Occured");
             uploadErrorr();
             setUploading(false);
           });
@@ -1110,34 +1118,28 @@ const VendorProfile = ({ query }) => {
       console.log(`🚀 ~ addHandler ~ e:`, e);
     }
   };
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState("");
   const handleChangeNumber = (newValue, country) => {
     setValue(newValue);
-    setForm({ ...form, contactPhone: newValue.replace(/[^\d]/g, '') });
+    setForm({ ...form, contactPhone: newValue.replace(/[^\d]/g, "") });
   };
   const [currStep, setCurrentStep] = useState(1);
 
   return (
-    <div
-      className='bg-white py-2'
-      style={{ width: '100%' }}
-    >
+    <div className="bg-white py-2" style={{ width: "100%" }}>
       <div
-        style={{ alignItems: 'center', gap: '15px' }}
-        className='form-title d-flex flex-column align-item-center'
+        style={{ alignItems: "center", gap: "15px" }}
+        className="form-title d-flex flex-column align-item-center"
       >
-        <h5 style={{ color: '#b6255a' }}>Vendor Registration</h5>
-        <Steps
-          totalSteps={5}
-          currStep={currStep}
-        ></Steps>
+        <h5 style={{ color: "#b6255a" }}>Vendor Registration</h5>
+        <Steps totalSteps={5} currStep={currStep}></Steps>
       </div>
       <div className={Styles.form_container}>
         <ToastContainer />
         {currStep === 1 ? (
           <div className={Styles.borders}>
             <span>Listing</span>
-            <div className='col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12'>
+            <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
               <div className={Styles.category_section}>
                 <br></br>
                 <TextField
@@ -1145,67 +1147,61 @@ const VendorProfile = ({ query }) => {
                   onChange={(e) => {
                     setForm({ ...form, name: e.target.value });
                   }}
-                  type='text'
+                  type="text"
                   value={form?.name}
-                  label='Name of Listing'
+                  label="Name of Listing"
                 />
               </div>
             </div>
-            <div className='row'>
-              <div className='col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6'>
+            <div className="row">
+              <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
                 <div className={Styles.category_section}>
                   <br></br>
-                  <InputLabel id='demo-simple-select-helper-label12'>
+                  <InputLabel id="demo-simple-select-helper-label12">
                     Category
                   </InputLabel>
                   <Select
                     fullWidth
-                    labelId='demo-simple-select-helper-label12'
+                    labelId="demo-simple-select-helper-label12"
                     onChange={(e) => {
                       const formm = {};
                       console.log(
-                        '🚀 ~ getdata ~ e.target.value:',
+                        "🚀 ~ getdata ~ e.target.value:",
                         e.target.value
                       );
                       formm.category = e.target.value;
                       if (CategoryDefault[e.target.value] !== undefined) {
                         formm.plans = CategoryDefault[e.target.value];
-                        form.subCategory = '';
+                        form.subCategory = "";
                       } else {
-                        formm.plans = [{ name: '', value: '' }];
-                        form.subCategory = '';
+                        formm.plans = [{ name: "", value: "" }];
+                        form.subCategory = "";
                       }
                       setForm({ ...form, ...formm });
                     }}
-                    id='category'
+                    id="category"
                     value={form?.category}
                   >
-                    <MenuItem
-                      value={''}
-                      disabled
-                    >
+                    <MenuItem value={""} disabled>
                       --select--
                     </MenuItem>
                     {CategotiesList?.map((list, key) => (
-                      <MenuItem
-                        key={list.name}
-                        value={list.name}
-                      >
+                      <MenuItem key={list.name} value={list.name}>
                         {list.name}
                       </MenuItem>
                     ))}
                   </Select>
                 </div>
               </div>
-              <div className='col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6'>
+              <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
                 <div className={Styles.category_section}>
                   <br></br>
-                  <InputLabel id='demo-simple-select-helper-label123'>
+                  <InputLabel id="demo-simple-select-helper-label123">
                     SubCategory
                   </InputLabel>
                   <Select
                     fullWidth
-                    labelId='demo-simple-select-helper-label123'
+                    labelId="demo-simple-select-helper-label123"
                     onChange={(e) => {
                       const formm = {};
                       formm.subCategory = e.target.value;
@@ -1213,49 +1209,43 @@ const VendorProfile = ({ query }) => {
                       if (SubCategoryDefault[e.target.value] !== undefined) {
                         formm.plans = SubCategoryDefault[e.target.value];
                       } else {
-                        formm.plans = [{ name: '', value: '' }];
+                        formm.plans = [{ name: "", value: "" }];
                       }
                       setForm({ ...form, ...formm });
                     }}
                     value={form?.subCategory}
                   >
-                    <MenuItem
-                      value={''}
-                      disabled
-                    >
+                    <MenuItem value={""} disabled>
                       --select--
                     </MenuItem>
 
                     {CategotiesList.map((list) =>
                       form?.category === list.name
                         ? list.subCategories.map((sub) => (
-                            <MenuItem
-                              key={sub}
-                              value={sub}
-                            >
+                            <MenuItem key={sub} value={sub}>
                               {sub}
                             </MenuItem>
                           ))
-                        : ''
+                        : ""
                     )}
                   </Select>
                 </div>
               </div>
             </div>
-            <div className='row'>
-              <div className='col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6'>
+            <div className="row">
+              <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
                 <br></br>
                 <TextField
                   fullWidth
                   onChange={(e) => {
                     setForm({ ...form, description: e.target.value });
                   }}
-                  type='text'
+                  type="text"
                   value={form?.description}
-                  label='Description / About'
+                  label="Description / About"
                 />
               </div>
-              <div className='col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6'>
+              <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
                 <div className={Styles.category_section}>
                   <br></br>
                   <TextField
@@ -1264,36 +1254,36 @@ const VendorProfile = ({ query }) => {
                       setForm({ ...form, contactEmail: e.target.value });
                     }}
                     required
-                    type='text'
+                    type="text"
                     value={form?.contactEmail}
-                    label='Contact Email'
+                    label="Contact Email"
                   />
                 </div>
               </div>
             </div>
-            <div className='row'>
-              <div className='col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-3'>
+            <div className="row">
+              <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 mb-3">
                 <br></br>
                 <MuiPhoneNumber
                   value={value}
-                  id='outlined-basic'
-                  label='Mobile No'
-                  variant='outlined'
+                  id="outlined-basic"
+                  label="Mobile No"
+                  variant="outlined"
                   fullWidth
-                  defaultCountry={'in'}
+                  defaultCountry={"in"}
                   onChange={handleChangeNumber}
                   onlyCountries={[
-                    'ae',
-                    'in',
-                    'th',
-                    'lk',
-                    'id',
-                    'ca',
-                    'mv',
-                    'vn',
-                    'kh',
-                    'ph',
-                    'my',
+                    "ae",
+                    "in",
+                    "th",
+                    "lk",
+                    "id",
+                    "ca",
+                    "mv",
+                    "vn",
+                    "kh",
+                    "ph",
+                    "my",
                   ]}
                 />
                 {/* <TextField
@@ -1312,9 +1302,9 @@ const VendorProfile = ({ query }) => {
               Second Contact
               <span
                 className={Styles.plus}
-                style={{ fontSize: '17px', marginLeft: '5px' }}
+                style={{ fontSize: "17px", marginLeft: "5px" }}
                 onClick={() => {
-                  const newArr = '';
+                  const newArr = "";
                   const dummy = form;
                   dummy.secondNumbers.push(newArr);
                   setForm({ ...dummy });
@@ -1323,16 +1313,16 @@ const VendorProfile = ({ query }) => {
                 +
               </span>
             </span>
-            <div className='col-12'>
+            <div className="col-12">
               <br></br>
 
               {form?.secondNumbers?.map((data, key) => {
                 return (
                   <div
-                    style={{ display: 'flex', alignItems: 'center' }}
-                    className='mt-2'
+                    style={{ display: "flex", alignItems: "center" }}
+                    className="mt-2"
                   >
-                    <div className='col-11'>
+                    <div className="col-11">
                       <TextField
                         fullWidth
                         onChange={(e) => {
@@ -1340,13 +1330,13 @@ const VendorProfile = ({ query }) => {
                           dummy.secondNumbers[key] = e.target.value;
                           setForm({ ...dummy });
                         }}
-                        type='number'
+                        type="number"
                         value={data}
                       />
                     </div>
 
                     <div
-                      className='col-1'
+                      className="col-1"
                       style={{ marginTop: -3, marginLeft: 10 }}
                     >
                       <span
@@ -1355,7 +1345,7 @@ const VendorProfile = ({ query }) => {
                           dummy.secondNumbers.splice(key, 1);
                           setForm({ ...dummy });
                         }}
-                        className='fs-5 cursor-pointer'
+                        className="fs-5 cursor-pointer"
                       >
                         <RiDeleteBin6Line />
                       </span>
@@ -1368,7 +1358,7 @@ const VendorProfile = ({ query }) => {
         ) : currStep == 2 ? (
           <div className={Styles.borders}>
             <span>Company Address</span>
-            <div className='col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-2'>
+            <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-2">
               <div className={Styles.category_section}>
                 <br></br>
                 <TextField
@@ -1380,13 +1370,13 @@ const VendorProfile = ({ query }) => {
                   }}
                   value={form?.address}
                   fullWidth
-                  type='text'
-                  label='Address'
+                  type="text"
+                  label="Address"
                 />
               </div>
             </div>
-            <div className='row mb-2'>
-              <div className='col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 '>
+            <div className="row mb-2">
+              <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 ">
                 <div className={Styles.category_section}>
                   <br></br>
                   <TextField
@@ -1398,12 +1388,12 @@ const VendorProfile = ({ query }) => {
                     }}
                     fullWidth
                     value={form?.country}
-                    type='text'
-                    label='Country'
+                    type="text"
+                    label="Country"
                   />
                 </div>
               </div>
-              <div className='col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6'>
+              <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
                 <div className={Styles.category_section}>
                   <br></br>
                   <TextField
@@ -1415,14 +1405,14 @@ const VendorProfile = ({ query }) => {
                       });
                     }}
                     value={form?.state}
-                    type='text'
-                    label='State'
+                    type="text"
+                    label="State"
                   />
                 </div>
               </div>
             </div>
-            <div className='row  mb-2'>
-              <div className='col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 '>
+            <div className="row  mb-2">
+              <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 ">
                 <div className={Styles.category_section}>
                   <br></br>
                   <Select
@@ -1435,10 +1425,7 @@ const VendorProfile = ({ query }) => {
                     }}
                     value={form?.city}
                   >
-                    <MenuItem
-                      selected
-                      disabled
-                    >
+                    <MenuItem selected disabled>
                       ---Select---
                     </MenuItem>
                     {cities?.map((city) => {
@@ -1447,7 +1434,7 @@ const VendorProfile = ({ query }) => {
                   </Select>
                 </div>
               </div>
-              <div className='col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6'>
+              <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
                 <div className={Styles.category_section}>
                   <br></br>
                   <TextField
@@ -1459,8 +1446,8 @@ const VendorProfile = ({ query }) => {
                       });
                     }}
                     value={form?.zipcode}
-                    type='Number'
-                    label='Pincode'
+                    type="Number"
+                    label="Pincode"
                   />
                 </div>
               </div>
@@ -1470,15 +1457,15 @@ const VendorProfile = ({ query }) => {
           <div className={Styles.borders}>
             <span
               style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '5px',
+                display: "flex",
+                alignItems: "center",
+                gap: "5px",
               }}
             >
               Plans / Packages
               <span
                 onClick={() => {
-                  const newArr = { name: '', value: '' };
+                  const newArr = { name: "", value: "" };
                   const dummy = form;
                   dummy.plans.push(newArr);
                   setForm({ ...dummy });
@@ -1488,13 +1475,10 @@ const VendorProfile = ({ query }) => {
                 +
               </span>
             </span>
-            <div className='row  mb-3'>
+            <div className="row  mb-3">
               {form?.plans?.map((data, key) => (
-                <div
-                  className='row mt-2'
-                  key={key}
-                >
-                  <div className='col-8'>
+                <div className="row mt-2" key={key}>
+                  <div className="col-8">
                     <br></br>
                     <TextField
                       fullWidth
@@ -1503,12 +1487,12 @@ const VendorProfile = ({ query }) => {
                         dummy.plans[key].name = e.target.value;
                         setForm({ ...dummy });
                       }}
-                      type='text'
+                      type="text"
                       value={data.name}
-                      label='Plan Name'
+                      label="Plan Name"
                     />
                   </div>
-                  <div className='col-3'>
+                  <div className="col-3">
                     <br></br>
                     <TextField
                       fullWidth
@@ -1518,21 +1502,18 @@ const VendorProfile = ({ query }) => {
                         setForm({ ...dummy });
                       }}
                       value={data.value}
-                      type='text'
-                      label='Value'
+                      type="text"
+                      label="Value"
                     />
                   </div>
-                  <div
-                    className='col-1'
-                    style={{ marginTop: 30 }}
-                  >
+                  <div className="col-1" style={{ marginTop: 30 }}>
                     <span
                       onClick={() => {
                         const dummy = form;
                         dummy.plans.splice(key, 1);
                         setForm({ ...dummy });
                       }}
-                      className='fs-5 cursor-pointer'
+                      className="fs-5 cursor-pointer"
                     >
                       <RiDeleteBin6Line />
                     </span>
@@ -1540,8 +1521,8 @@ const VendorProfile = ({ query }) => {
                 </div>
               ))}
             </div>
-            <div className='row'>
-              <div className='col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12'>
+            <div className="row">
+              <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                 <div className={Styles.category_section}>
                   <br></br>
                   <TextField
@@ -1549,9 +1530,9 @@ const VendorProfile = ({ query }) => {
                     onChange={(e) => {
                       setForm({ ...form, price: e.target.value });
                     }}
-                    type='text'
+                    type="text"
                     value={form?.price}
-                    label='Amenity Price'
+                    label="Amenity Price"
                   />
                 </div>
               </div>
@@ -1561,8 +1542,8 @@ const VendorProfile = ({ query }) => {
           <div className={Styles.borders}>
             <span>Terms & Conditions</span>
 
-            <div className='row'>
-              <div className='col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-3'>
+            <div className="row">
+              <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
                 <div className={Styles.category_section}>
                   <br></br>
                   <TextField
@@ -1576,8 +1557,8 @@ const VendorProfile = ({ query }) => {
                       });
                     }}
                     value={form?.termsandconditions}
-                    type='text'
-                    label='Terms and Conditions'
+                    type="text"
+                    label="Terms and Conditions"
                   ></TextField>
                 </div>
               </div>
@@ -1587,13 +1568,13 @@ const VendorProfile = ({ query }) => {
           <div className={Styles.borders}>
             <span>Images</span>
 
-            <div className='row'>
-              <div className='col-12 mt-4'>
+            <div className="row">
+              <div className="col-12 mt-4">
                 <div className={Styles.category_section1}>
                   <span>Main Image</span>
                   <br></br>
                   <Upload
-                    listType='picture-card'
+                    listType="picture-card"
                     fileList={fileListMain}
                     onPreview={handlePreview}
                     onChange={handleChangeMain}
@@ -1603,13 +1584,13 @@ const VendorProfile = ({ query }) => {
                 </div>
               </div>
             </div>
-            <div className='mt-4'>
+            <div className="mt-4">
               <div className={Styles.category_section1}>
                 <span>Gallery</span>
                 <br></br>
                 <Upload
                   multiple
-                  listType='picture-card'
+                  listType="picture-card"
                   fileList={fileListGallery}
                   onPreview={handlePreview}
                   onChange={handleChangeGallery}
@@ -1618,12 +1599,12 @@ const VendorProfile = ({ query }) => {
                 </Upload>
               </div>
             </div>
-            <div className='col-xl-6 col-lg-6 col-6 col-sm-6 col-6 mt-4'>
+            <div className="col-xl-6 col-lg-6 col-6 col-sm-6 col-6 mt-4">
               <div className={Styles.category_section1}>
                 <span>Brochure</span>
                 <br></br>
                 <Upload
-                  listType='picture-card'
+                  listType="picture-card"
                   fileList={fileListBrochure}
                   onPreview={handlePreview}
                   onChange={handleChangeBrochure}
@@ -1634,17 +1615,17 @@ const VendorProfile = ({ query }) => {
             </div>
             <span
               style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '5px',
+                display: "flex",
+                alignItems: "center",
+                gap: "5px",
               }}
-              className='mt-4'
+              className="mt-4"
             >
               Albums
               <span
                 className={Styles.plus}
                 onClick={() => {
-                  const newitem = { name: '', value: [] };
+                  const newitem = { name: "", value: [] };
                   setFileListAlbum((old) => [...old, newitem]);
                 }}
               >
@@ -1652,23 +1633,20 @@ const VendorProfile = ({ query }) => {
               </span>
             </span>
             <br></br>
-            <div className='row'>
+            <div className="row">
               {fileListAlbum.map((album, key) => (
                 <div key={key}>
-                  <div className='row mt-1 mb-3'>
-                    <div className='col-11'>
+                  <div className="row mt-1 mb-3">
+                    <div className="col-11">
                       <TextField
                         fullWidth
-                        type='text'
+                        type="text"
                         onChange={onChangeAlbumHandler(key)}
-                        label='Album name'
+                        label="Album name"
                         value={album.name}
                       />
                     </div>
-                    <div
-                      className='col-1'
-                      style={{ marginTop: 10 }}
-                    >
+                    <div className="col-1" style={{ marginTop: 10 }}>
                       <span
                         onClick={() => {
                           const newarr = [...fileListAlbum];
@@ -1678,7 +1656,7 @@ const VendorProfile = ({ query }) => {
                           setFileListAlbum(newarr);
                           setAlbumdefault(newarr2);
                         }}
-                        className='fs-5 cursor-pointer'
+                        className="fs-5 cursor-pointer"
                       >
                         <RiDeleteBin6Line />
                       </span>
@@ -1686,7 +1664,7 @@ const VendorProfile = ({ query }) => {
                   </div>
                   <Upload
                     multiple
-                    listType='picture-card'
+                    listType="picture-card"
                     fileList={fileListAlbum[key]?.value}
                     onPreview={handlePreview}
                     onChange={(e) => handleChangeAlbum(e, key)}
@@ -1698,17 +1676,17 @@ const VendorProfile = ({ query }) => {
             </div>
             <span
               style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '5px',
-                marginTop: '20px',
+                display: "flex",
+                alignItems: "center",
+                gap: "5px",
+                marginTop: "20px",
               }}
               className={Styles.label}
             >
               Video Links
               <span
                 onClick={() => {
-                  const newArr = '';
+                  const newArr = "";
                   const dummy = form;
                   dummy.vidLinks.push(newArr);
                   setForm({ ...dummy });
@@ -1718,16 +1696,13 @@ const VendorProfile = ({ query }) => {
                 +
               </span>
             </span>
-            <div className='row'>
-              <div className='col-12 '>
+            <div className="row">
+              <div className="col-12 ">
                 <div className={Styles.category_section}>
                   <br></br>
                   {form?.vidLinks.map((data, key) => (
-                    <div
-                      className='row mb-3'
-                      key={key}
-                    >
-                      <div className='col-11'>
+                    <div className="row mb-3" key={key}>
+                      <div className="col-11">
                         <TextField
                           fullWidth
                           key={key}
@@ -1737,21 +1712,18 @@ const VendorProfile = ({ query }) => {
                             setForm({ ...dummy });
                           }}
                           value={data}
-                          type='text'
-                          placeholder='https://youtu.be/dOKQeqGNJwY'
+                          type="text"
+                          placeholder="https://youtu.be/dOKQeqGNJwY"
                         />
                       </div>
-                      <div
-                        className='col-1'
-                        style={{ marginTop: 10 }}
-                      >
+                      <div className="col-1" style={{ marginTop: 10 }}>
                         <span
                           onClick={() => {
                             const dummy = form;
                             dummy.vidLinks.splice(key, 1);
                             setForm({ ...dummy });
                           }}
-                          className='fs-5 cursor-pointer'
+                          className="fs-5 cursor-pointer"
                         >
                           <RiDeleteBin6Line />
                         </span>
@@ -1785,11 +1757,170 @@ const VendorProfile = ({ query }) => {
             </button>
           )}
           <button onClick={addHandler}>
-            {isLoading ? <Spinner /> : 'Update Profile'}
+            {isLoading ? <Spinner /> : "Update Profile"}
           </button>
         </div>
       </div>
-
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "12px",
+          width: "100%",
+          padding: "20px 0px",
+          margin: "20px 30px",
+        }}
+        onClick={() => {
+          setDeleteAlaert(true);
+        }}
+      >
+        <FontAwesomeIcon
+          style={{
+            height: "24px",
+          }}
+          icon={["fa", "fa-trash"]}
+          color="#BB2131"
+        ></FontAwesomeIcon>
+        <h1
+          style={{
+            fontFamily: "Poppins",
+            fontSize: "16px",
+            fontWeight: "400",
+            lineHeight: "20px",
+            textAlign: "left",
+            color: "#BB2131",
+            padding: "0px",
+            margin: "0px",
+          }}
+        >
+          delete Account
+        </h1>
+      </div>
+      <Dialog
+        open={deleteAlert}
+        onClose={() => {
+          setDeleteAlaert(false);
+        }}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle
+          id="alert-dialog-title"
+          style={{
+            background: " #B6255A",
+            color: "white",
+            textAlign: "center",
+          }}
+        >
+          <span
+            style={{
+              fontFamily: "Poppins",
+              fontSize: "18px",
+              fontWeight: "400",
+              lineHeight: "20px",
+              textAlign: "center",
+              color: "#ffffff",
+              padding: "0px",
+              margin: "0px",
+            }}
+          >
+            Delete Account
+          </span>
+        </DialogTitle>
+        <DialogContent
+          style={{
+            textAlign: "center",
+            marginTop: "10px",
+          }}
+        >
+          <DialogContentText id="alert-dialog-description">
+            <span
+              style={{
+                fontFamily: "Poppins",
+                fontSize: "16px",
+                fontWeight: "600",
+                lineHeight: "20px",
+                textAlign: "center",
+                color: "#000000",
+                padding: "0px",
+                margin: "0px",
+              }}
+            >
+              Are you sure ?
+            </span>
+            <br></br>
+            <span
+              style={{
+                fontFamily: "Poppins",
+                fontSize: "16px",
+                fontWeight: "400",
+                lineHeight: "20px",
+                textAlign: "center",
+                color: "#000000",
+                padding: "0px",
+                margin: "0px",
+              }}
+            >
+              Once you confirm, all of your account data will be permanently
+              deleted.
+            </span>
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            width: "100%",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Button
+            style={{
+              background: " #B6255A",
+              color: "white",
+              textAlign: "center",
+            }}
+            onClick={() => {
+              setDeleteAlaert(false);
+            }}
+            color="primary"
+          >
+            cancel
+          </Button>
+          <Button
+            style={{
+              background: " #B6255A",
+              color: "white",
+              textAlign: "center",
+            }}
+            onClick={async () => {
+              const res = await axios.delete(
+                `${PROXY}/vendoruser/delete/${globleuser.data._id}`,
+                {
+                  headers: {
+                    authorization: globleuser.data.token,
+                  },
+                }
+              );
+              console.log("🚀 ~ onClick={ ~ res:", res);
+              if (res.data.success) {
+                alert("we are sad to let you go\nuser deleted successfully");
+                dispatch(user(undefined));
+                localStorage.removeItem("wedcell");
+                localStorage.removeItem("role");
+                localStorage.setItem("wedcellIsLoged", "");
+                router.push("/");
+              }
+            }}
+            color="primary"
+          >
+            Confirm
+          </Button>
+        </DialogActions>
+      </Dialog>
       <Modal
         open={previewOpen}
         title={previewTitle}
@@ -1797,9 +1928,9 @@ const VendorProfile = ({ query }) => {
         onCancel={handleCancel}
       >
         <img
-          alt='example'
+          alt="example"
           style={{
-            width: '100%',
+            width: "100%",
           }}
           src={previewImage}
         />

@@ -507,7 +507,10 @@ const GuestListCat = ({
               submit(values, key123, aGM);
             }}
           >
-            <img src="/images/delete.png" alt="" />
+            <img
+              src="https://wedcell.s3.ap-south-1.amazonaws.com/vendors/images/delete.png"
+              alt=""
+            />
           </button>
         ) : (
           <></>

@@ -21,7 +21,17 @@ import { PROXY } from "../../config";
 
 import { RiDeleteBin6Line } from "react-icons/ri";
 // import { ImageDelete } from "../Helpers/FileHandlers";
-import { Checkbox, InputLabel, MenuItem, Select } from "@mui/material";
+import {
+  Checkbox,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  InputLabel,
+  MenuItem,
+  Select,
+} from "@mui/material";
 import { Button, TextField } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 
@@ -32,6 +42,7 @@ import { selectUser, user } from "../../redux/reducer/appEssentials";
 import compressAndAppendFiles from "../compressAndAppendFiles";
 import MuiPhoneNumber from "material-ui-phone-number";
 import Steps from "../Steps";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const useStyles = makeStyles((theme) => ({
   chip: {
@@ -179,6 +190,7 @@ const CategotiesListVenue = [
 ];
 
 const VenueProfile = ({ query }) => {
+  const [deleteAlert, setDeleteAlaert] = useState(false);
   const errorr = () => {};
   const [secondNumbers, setSecondNumbers] = useState([""]);
 
@@ -1891,7 +1903,161 @@ const VenueProfile = ({ query }) => {
           </button>
         </div>
       </div>
-
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "12px",
+          width: "100%",
+          padding: "20px 0px",
+          margin: "20px 30px",
+        }}
+        onClick={() => {
+          setDeleteAlaert(true);
+        }}
+      >
+        <FontAwesomeIcon
+          style={{
+            height: "24px",
+          }}
+          icon={["fa", "fa-trash"]}
+          color="#BB2131"
+        ></FontAwesomeIcon>
+        <h1
+          style={{
+            fontFamily: "Poppins",
+            fontSize: "16px",
+            fontWeight: "400",
+            lineHeight: "20px",
+            textAlign: "left",
+            color: "#BB2131",
+            padding: "0px",
+            margin: "0px",
+          }}
+        >
+          delete Account
+        </h1>
+      </div>
+      <Dialog
+        open={deleteAlert}
+        onClose={() => {
+          setDeleteAlaert(false);
+        }}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle
+          id="alert-dialog-title"
+          style={{
+            background: " #B6255A",
+            color: "white",
+            textAlign: "center",
+          }}
+        >
+          <span
+            style={{
+              fontFamily: "Poppins",
+              fontSize: "18px",
+              fontWeight: "400",
+              lineHeight: "20px",
+              textAlign: "center",
+              color: "#ffffff",
+              padding: "0px",
+              margin: "0px",
+            }}
+          >
+            Delete Account
+          </span>
+        </DialogTitle>
+        <DialogContent
+          style={{
+            textAlign: "center",
+            marginTop: "10px",
+          }}
+        >
+          <DialogContentText id="alert-dialog-description">
+            <span
+              style={{
+                fontFamily: "Poppins",
+                fontSize: "16px",
+                fontWeight: "600",
+                lineHeight: "20px",
+                textAlign: "center",
+                color: "#000000",
+                padding: "0px",
+                margin: "0px",
+              }}
+            >
+              Are you sure ?
+            </span>
+            <br></br>
+            <span
+              style={{
+                fontFamily: "Poppins",
+                fontSize: "16px",
+                fontWeight: "400",
+                lineHeight: "20px",
+                textAlign: "center",
+                color: "#000000",
+                padding: "0px",
+                margin: "0px",
+              }}
+            >
+              Once you confirm, all of your account data will be permanently
+              deleted.
+            </span>
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            width: "100%",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Button
+            style={{
+              background: " #B6255A",
+              color: "white",
+              textAlign: "center",
+            }}
+            onClick={() => {
+              setDeleteAlaert(false);
+            }}
+            color="primary"
+          >
+            cancel
+          </Button>
+          <Button
+            style={{
+              background: " #B6255A",
+              color: "white",
+              textAlign: "center",
+            }}
+            onClick={async () => {
+              const res = await axios.delete(
+                `${PROXY}/venueuser/delete/${globleuser?.data?._id} `,
+                config
+              );
+              if (res.data.success) {
+                alert("we are sad to let you go\nuser deleted successfully");
+                dispatch(user(undefined));
+                localStorage.removeItem("wedcell");
+                localStorage.removeItem("role");
+                localStorage.setItem("wedcellIsLoged", "");
+                router.push("/");
+              }
+            }}
+            color="primary"
+          >
+            Confirm
+          </Button>
+        </DialogActions>
+      </Dialog>
       <Modal
         open={previewOpen}
         title={previewTitle}
