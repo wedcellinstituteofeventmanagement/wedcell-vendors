@@ -1,36 +1,22 @@
-import { HeartBroken } from "@mui/icons-material";
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import styles from "../../styles/planning.module.scss";
-import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import {
-  Checkbox,
   IconButton,
   InputAdornment,
   Menu,
   MenuItem,
-  TextField,
   Tooltip,
 } from "@mui/material";
 import useWindowSize from "@rooks/use-window-size";
 import { useDispatch, useSelector } from "react-redux";
-import { selectUser, user } from "../../redux/reducer/appEssentials";
-import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
+import { selectUser } from "../../redux/reducer/appEssentials";
 import SendIcon from "@mui/icons-material/Send";
 import axios from "axios";
 import { PROXY } from "../../config";
-import { green } from "@mui/material/colors";
-import MoreVertSharpIcon from "@mui/icons-material/MoreVertSharp";
 import Layout from "../../Components/Dashboard/layout";
 import { io } from "socket.io-client";
-import Link from "next/link";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import ImageIcon from "@mui/icons-material/Image";
-import MovieIcon from "@mui/icons-material/Movie";
-import DescriptionIcon from "@mui/icons-material/Description";
-import PersonIcon from "@mui/icons-material/Person";
-import GroupsIcon from "@mui/icons-material/Groups";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import ForwardMsg from "../../Components/ForwardMsg";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
@@ -95,17 +81,90 @@ const SingleTodo = ({
   setALLmessages,
   setShowAllMessage,
   setModifiedMsgs,
+  setPage,
+  setTotalPage,
 }) => {
-  console.log(`🚀 ~ file: Message.js:99 ~ uSERLIST:`, uSERLIST);
   const {
     innerWidth: windowWidth,
     innerHeight,
     outerHeight,
     outerWidth,
   } = useWindowSize();
-
+  const globleuser = useSelector(selectUser);
   return (
     <>
+      <div
+        className={styles.listdiv1}
+        style={{
+          gap: "0px",
+          gridGap: "0px",
+          padding: "10px 5%",
+          background:
+            selected && selected._id == globleuser?.data?.adminMessageId
+              ? globleuser?.data?.adminMessageId
+              : "648d3c8efb95751e4d881bee"
+              ? "#ffb9ca29"
+              : "",
+        }}
+      >
+        <div
+          onClick={() => {
+            if (windowWidth < 901) {
+              setShowAllMessage(true);
+              setPage(1);
+              setTotalPage(1);
+            }
+            if (
+              selected && selected._id == globleuser?.data?.adminMessageId
+                ? globleuser?.data?.adminMessageId
+                : "648d3c8efb95751e4d881bee"
+            ) {
+            } else {
+              setALLmessages([]);
+              setModifiedMsgs([]);
+              setSelected({
+                prospectName: "Wedcell Admin",
+                prospectContact: "919910990378",
+                prospectImage:
+                  "https://wedcell.s3.ap-south-1.amazonaws.com/public/images/webp/Group%204.webp ",
+                prospectId: "648d3c8efb95751e4d881bee",
+                vendorId: globleuser?.data?._id,
+                initiatorId: "648d3c8efb95751e4d881bee",
+                _id: globleuser?.data?.adminMessageId
+                  ? globleuser?.data?.adminMessageId
+                  : "648d3c8efb95751e4d881bee",
+              });
+              setPage(1);
+              setTotalPage(1);
+            }
+            // setALLmessages([])
+          }}
+          style={{ display: "flex", gap: "20px", width: "80%" }}
+        >
+          <article style={{ width: "100%", justifyContent: "start" }}>
+            <div className={styles.imgmessagediv}>
+              <img
+                className={styles.imgmessagediv}
+                src={
+                  "https://wedcell.s3.ap-south-1.amazonaws.com/public/images/webp/Group%204.webp"
+                }
+                alt={"A"}
+              />
+            </div>
+            <span className={styles.vendnamemes}>
+              Admin Wedcell <br />
+            </span>
+          </article>
+        </div>
+        <div
+          className={styles.todoBtn}
+          style={{
+            fontSize: "15px",
+            width: windowWidth > 1150 ? "20%" : "25%",
+            justifyContent: "end",
+          }}
+        ></div>
+      </div>
       {uSERLIST?.length ? (
         uSERLIST?.map((values, key) => {
           return (
@@ -124,12 +183,16 @@ const SingleTodo = ({
                 onClick={() => {
                   if (windowWidth < 901) {
                     setShowAllMessage(true);
+                    setPage(1);
+                    setTotalPage(1);
                   }
                   if (selected && selected._id == values._id) {
                   } else {
                     setALLmessages([]);
                     setModifiedMsgs([]);
                     setSelected(values);
+                    setPage(1);
+                    setTotalPage(1);
                   }
                   // setALLmessages([])
                 }}
@@ -204,6 +267,7 @@ const MegaMessage = ({
   back,
 }) => {
   const [anchorEl, setAnchorEl] = useState();
+
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -231,11 +295,11 @@ const MegaMessage = ({
           ) : (
             <div className={styles.mymessagenametime}>
               <div className={styles.mymessageimg}>
-                {message.name.substring(0, 1)}
+                {message?.name?.substring(0, 1)}
               </div>
 
               <span className={styles.mymessagename}>
-                {message.name}
+                {message?.name}
                 <span className={styles.mymessagetime}>{message.time}</span>
               </span>
             </div>
@@ -275,14 +339,14 @@ const MegaMessage = ({
                   >
                     Delete
                   </MenuItem>
-                  <MenuItem
+                  {/* <MenuItem
                     onClick={() => {
                       setFrwdMsg(message);
                       setOpenModalForward(true);
                     }}
                   >
                     Forward
-                  </MenuItem>
+                  </MenuItem> */}
                   <MenuItem
                     onClick={() => {
                       setRplyMsg(message);
@@ -449,22 +513,22 @@ const MegaMessage = ({
                     },
                   }}
                 >
-                  <MenuItem
+                  {/* <MenuItem
                     onClick={() => {
                       setDelMsg(message._id);
                       handleClose1();
                     }}
                   >
                     Delete
-                  </MenuItem>
-                  <MenuItem
+                  </MenuItem> */}
+                  {/* <MenuItem
                     onClick={() => {
                       setFrwdMsg(message);
                       setOpenModalForward(true);
                     }}
                   >
                     Forward
-                  </MenuItem>
+                  </MenuItem> */}
                   <MenuItem
                     onClick={() => {
                       setRplyMsg(message);
@@ -583,47 +647,14 @@ const Message = () => {
   const [frwdMsg, setFrwdMsg] = useState();
   const [rplyMsg, setRplyMsg] = useState(null);
   const [openModalForward, setOpenModalForward] = useState(null);
-  const [adminMsg, setAdminMsg] = useState(null);
-  const [adminMsgId, setAdminMsgId] = useState(null);
+  const messageBodyRef = useRef(null);
+  const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
   useEffect(() => {
     console.log("RUN", delMsg);
     deleteMsg();
   }, [delMsg]);
-  useEffect(() => {
-    const initAdminmsg = async () => {
-      const config = {
-        headers: {
-          authorization: globleuser?.data?.token,
-        },
-      };
-      const abc = await axios.get(
-        `${PROXY}/contacts/getadminmsg`,
 
-        config
-      );
-      console.log("ID", abc.data.messages[abc.data.messages.length - 1]);
-      setAdminMsgId(abc.data._id);
-      setAdminMsg(abc.data.messages[abc.data.messages.length - 1]);
-    };
-    initAdminmsg();
-  }, [globleuser]);
-
-  const getAdminMsg = async () => {
-    const config = {
-      headers: {
-        authorization: globleuser?.data?.token,
-      },
-    };
-    const abc = await axios.get(
-      `${PROXY}/contacts/getadminmsg`,
-
-      config
-    );
-    console.log("ID", abc);
-    setSelected(abc.data);
-    setALLmessages(abc.data.messages);
-    setAdminMsgId(abc.data._id);
-  };
   const deleteMsg = async () => {
     if (delMsg) {
       const config = {
@@ -729,27 +760,27 @@ const Message = () => {
 
       messages.forEach((message) => {
         const messageType =
-          message.senderId == globleuser?.data?._id ? "receiver" : "sender";
+          message?.senderId == globleuser?.data?._id ? "receiver" : "sender";
         const name =
-          message.senderId == globleuser?.data?._id
+          message?.senderId == globleuser?.data?._id
             ? selected.vendorName
-            : message.senderId == selected.prospectId
+            : message?.senderId == selected.prospectId
             ? selected.prospectName
             : "Admin Wedcell";
 
         const transformedMessage = {
-          time: new Date(message.timestamp).toLocaleTimeString([], {
+          time: new Date(message?.timestamp).toLocaleTimeString([], {
             hour: "2-digit",
             minute: "2-digit",
           }),
           type: messageType,
-          textFileType: message.messageType,
+          textFileType: message?.messageType,
           name: name,
           img: "",
-          message: message.message,
-          _id: message._id,
-          forwarded: message.forwarded,
-          replyOf: message.replyOf,
+          message: message?.message,
+          _id: message?._id,
+          forwarded: message?.forwarded,
+          replyOf: message?.replyOf,
         };
 
         transformedMessages.push(transformedMessage);
@@ -772,12 +803,41 @@ const Message = () => {
       `${PROXY}/contacts/getone`,
       {
         id: selected._id,
+        page,
+        type: globleuser?.role,
       },
       config
     );
-    console.log(`🚀 ~ file: Message.js:807 ~ getMsg ~ result:`, result);
+    if (result.data.newUser) {
+      const u = JSON.parse(JSON.stringify(globleuser));
+      u.data.adminMessageId = result.data.data._id;
+      localStorage.setItem("wedcell", JSON.stringify(u));
+      location.reload();
+    }
     console.log("ID", result.data.data.messages);
     setALLmessages(result.data.data.messages);
+    setTotalPage(result.data.totalPages);
+    setPage((val) => ++val);
+  };
+  const getMsgAdd = async () => {
+    setALLmessages([]);
+    setModifiedMsgs([]);
+    const config = {
+      headers: {
+        authorization: globleuser?.data?.token,
+      },
+    };
+    const result = await axios.post(
+      `${PROXY}/contacts/getone`,
+      {
+        id: selected._id,
+        // type: globleuser?.role,
+        page,
+      },
+      config
+    );
+    setALLmessages([...result.data.data.messages, ...AllMEssages]);
+    setPage((val) => ++val);
   };
 
   const scrollTobottom = () => {
@@ -804,14 +864,6 @@ const Message = () => {
     let res;
     if (selected.vendorId) {
       res = await axios.post(`${PROXY}/contacts/addmessage`, msgBody, config);
-    } else {
-      (msgBody.receiverId = selected.adminId),
-        (res = await axios.post(
-          `${PROXY}/contacts/addadminmsg`,
-          msgBody,
-          config
-        ));
-      setAdminMsg(msgBody);
     }
     const newMsg = {
       message: fileurl ? fileurl : message,
@@ -824,7 +876,7 @@ const Message = () => {
         minute: "2-digit",
       }),
       name: globleuser?.data?.name,
-      _id: res.data.data._id,
+      _id: res?.data?.data?._id,
       forwarded: message?.forwarded,
     };
     rplyMsg
@@ -843,7 +895,6 @@ const Message = () => {
     let socketBody = {
       data: res.data.data,
       msgId: res.data.msgId,
-      adminId: selected.adminId,
       messageBody: {
         contactId: selected._id,
         senderId: globleuser?.data?._id,
@@ -858,7 +909,6 @@ const Message = () => {
       },
     };
     !selected.vendorId ? (socketBody.messageBody.receiverId = []) : null;
-
     rplyMsg
       ? (socketBody.replyOf = {
           msgId: rplyMsg._id,
@@ -888,7 +938,9 @@ const Message = () => {
     selected && selected?.vendorId && getMsg();
   }, [selected]);
   useEffect(() => {
-    scrollTobottom();
+    if (AllMEssages.length <= 50) {
+      scrollTobottom();
+    }
   }, [modifiedMsgs, showAllMessage]);
 
   useEffect(() => {
@@ -993,7 +1045,6 @@ const Message = () => {
     if (socketRef.current) {
       socketRef.current.on("message", (data) => {
         setLatest(data);
-        data.msgId == adminMsgId && setAdminMsg(data.msg);
 
         // if(selected._id == data.msgId){
         //   setALLmessages([...AllMEssages, data.msg ])
@@ -1164,59 +1215,6 @@ const Message = () => {
                             height: "100%",
                           }}
                         >
-                          <div
-                            className={styles.listdiv1}
-                            style={{
-                              gap: "0px",
-                              gridGap: "0px",
-                              padding: "10px 5%",
-                            }}
-                          >
-                            <div
-                              onClick={async () => {
-                                if (windowWidth < 901) {
-                                  setShowAllMessage(true);
-                                }
-                                // if (selected && selected._id == values._id) {
-                                // } else {
-                                setALLmessages([]);
-                                setModifiedMsgs([]);
-                                getAdminMsg(); //   setSelected(values);
-                                // }
-                                // setALLmessages([])
-                              }}
-                              style={{
-                                display: "flex",
-                                gap: "20px",
-                                width: "80%",
-                              }}
-                            >
-                              <article
-                                style={{
-                                  width: "100%",
-                                  justifyContent: "start",
-                                }}
-                              >
-                                <div className={styles.imgmessagediv}>
-                                  {"A"}
-                                </div>
-                                <span className={styles.vendnamemes}>
-                                  Admin Wedcell <br />
-                                  <span className={styles.vendcont}>
-                                    {adminMsg ? adminMsg.message : ""}
-                                  </span>
-                                </span>
-                              </article>
-                            </div>
-                            <div
-                              className={styles.todoBtn}
-                              style={{
-                                fontSize: "15px",
-                                width: windowWidth > 1150 ? "20%" : "25%",
-                                justifyContent: "end",
-                              }}
-                            ></div>
-                          </div>
                           <SingleTodo
                             config={config}
                             update={update}
@@ -1227,6 +1225,8 @@ const Message = () => {
                             setShowAllMessage={setShowAllMessage}
                             setModifiedMsgs={setModifiedMsgs}
                             uSERLIST={uSERLIST}
+                            setPage={setPage}
+                            setTotalPage={setTotalPage}
                           ></SingleTodo>
                         </div>
                       </div>
@@ -1323,6 +1323,20 @@ const Message = () => {
                                   height: "100%",
                                   overflow: "scroll",
                                   height: "calc(100vh - 220px)",
+                                }}
+                                ref={messageBodyRef}
+                                onScroll={async () => {
+                                  if (messageBodyRef.current) {
+                                    const { scrollTop, scrollLeft } =
+                                      messageBodyRef.current;
+                                    console.log(
+                                      "🚀 ~ onScroll={ ~ scrollTop:",
+                                      scrollTop
+                                    );
+                                    if (scrollTop == 20 && page <= totalPage) {
+                                      await getMsgAdd();
+                                    }
+                                  }
                                 }}
                               >
                                 {modifiedMsgs?.map((item, key) => {
@@ -1439,63 +1453,54 @@ const Message = () => {
                                     </div>
                                   )}
                                   <div className={styles.messageSenders}>
-                                    <div>
-                                      <Tooltip
-                                        placement="top-start"
-                                        title={
-                                          <div className={styles.labels}>
-                                            <label
-                                              htmlFor="file-input"
-                                              className={styles.fileLabel}
-                                            >
-                                              <input
-                                                type="file"
-                                                id="file-input"
-                                                className={styles.fileInput}
-                                                onChange={(e) =>
-                                                  uploadFile(e.target.files[0])
-                                                }
-                                                accept=".jpg, .jpeg, .png, .gif,.mp4, .mov, .avi"
-                                              />
-                                              <ImageIcon
-                                                sx={{
-                                                  fontSize: "20px",
-                                                  marginRight: "5px",
-                                                  color: "rgba(0,0,0,.3)",
-                                                }}
-                                              />
-                                              Images
-                                            </label>
-                                            <label
-                                              htmlFor="file-input"
-                                              className={styles.fileLabel}
-                                            >
-                                              <input
-                                                type="file"
-                                                id="file-input"
-                                                className={styles.fileInput}
-                                                onChange={(e) =>
-                                                  uploadFile(e.target.files[0])
-                                                }
-                                                accept=".pdf"
-                                              />
-                                              <PictureAsPdfIcon
-                                                sx={{
-                                                  fontSize: "20px",
-                                                  marginRight: "5px",
-                                                  color: "rgba(0,0,0,.3)",
-                                                }}
-                                              />
-                                              Documents
-                                            </label>
-                                          </div>
+                                    <div
+                                      style={{
+                                        width: "20px",
+                                        height: "20px",
+                                        overflow: "hidden",
+                                        position: "relative",
+                                      }}
+                                    >
+                                      <input
+                                        type="file"
+                                        id="file-input"
+                                        className={styles.fileInput}
+                                        onChange={(e) => {
+                                          uploadFile(e.target.files[0]);
+                                        }}
+                                        accept=".jpg, .jpeg, .png, .gif,.mp4, .mov, .avi"
+                                      />
+                                      <ImageIcon
+                                        sx={{
+                                          fontSize: "20px",
+                                          color: "rgba(0,0,0,.3)",
+                                        }}
+                                      />
+                                    </div>
+                                    <div
+                                      style={{
+                                        width: "20px",
+                                        height: "20px",
+                                        // background: "red",
+                                        position: "relative",
+                                        overflow: "hidden",
+                                      }}
+                                    >
+                                      <input
+                                        type="file"
+                                        id="file-input"
+                                        className={styles.fileInput}
+                                        onChange={(e) =>
+                                          uploadFile(e.target.files[0])
                                         }
-                                      >
-                                        <img
-                                          src="https://wedcell.s3.ap-south-1.amazonaws.com/vendors/images/paperclip.png"
-                                          alt=""
-                                        />
-                                      </Tooltip>
+                                        accept=".pdf"
+                                      />
+                                      <PictureAsPdfIcon
+                                        sx={{
+                                          fontSize: "20px",
+                                          color: "rgba(0,0,0,.3)",
+                                        }}
+                                      />
                                     </div>
                                     <input
                                       label=""
@@ -1685,6 +1690,23 @@ const Message = () => {
                                     gap: "10px",
                                     height: "100%",
                                     overflow: "scroll",
+                                  }}
+                                  ref={messageBodyRef}
+                                  onScroll={async () => {
+                                    if (messageBodyRef.current) {
+                                      const { scrollTop, scrollLeft } =
+                                        messageBodyRef.current;
+                                      console.log(
+                                        "🚀 ~ onScroll={ ~ scrollTop:",
+                                        scrollTop
+                                      );
+                                      if (
+                                        scrollTop == 20 &&
+                                        page <= totalPage
+                                      ) {
+                                        // await getMsgAdd();
+                                      }
+                                    }
                                   }}
                                 >
                                   {modifiedMsgs?.map((item, key) => {
@@ -2088,6 +2110,8 @@ const Message = () => {
                               setShowAllMessage={setShowAllMessage}
                               setModifiedMsgs={setModifiedMsgs}
                               uSERLIST={uSERLIST}
+                              setPage={setPage}
+                              setTotalPage={setTotalPage}
                             ></SingleTodo>
                           </div>
                         </div>

@@ -1,73 +1,31 @@
-import { HeartBroken } from "@mui/icons-material";
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import styles from "../../styles/planning.module.scss";
-import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import {
-  Checkbox,
   IconButton,
   InputAdornment,
   Menu,
   MenuItem,
-  TextField,
   Tooltip,
 } from "@mui/material";
 import useWindowSize from "@rooks/use-window-size";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import EditIcon from "@mui/icons-material/Edit";
 
-import { selectUser, user } from "../../redux/reducer/appEssentials";
-import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
+import { selectUser } from "../../redux/reducer/appEssentials";
 import SendIcon from "@mui/icons-material/Send";
 import axios from "axios";
 import { PROXY } from "../../config";
-import { green } from "@mui/material/colors";
-import MoreVertSharpIcon from "@mui/icons-material/MoreVertSharp";
 import Layout from "../../Components/Dashboard/layout";
 import { io } from "socket.io-client";
-import Link from "next/link";
 import ImageIcon from "@mui/icons-material/Image";
-import MovieIcon from "@mui/icons-material/Movie";
-import DescriptionIcon from "@mui/icons-material/Description";
-import PersonIcon from "@mui/icons-material/Person";
-import GroupsIcon from "@mui/icons-material/Groups";
 import EditGroupModal from "../../Components/Dashboard/EditGroupModal";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import ForwardMsg from "../../Components/ForwardMsg";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import { useRouter } from "next/router";
 
-const theme3 = createTheme({
-  palette: {
-    primary: {
-      main: "#B6255A",
-    },
-  },
-  components: {
-    MuiOutlinedInput: {
-      styleOverrides: {
-        root: {
-          "&:hover .MuiOutlinedInput-notchedOutline": {
-            borderRadius: "10px",
-            borderColor: "#b6255a",
-          },
-          ".MuiOutlinedInput-notchedOutline": {
-            borderRadius: "10px",
-            border: "1px solid #b6255a",
-            // paddingRight: '0px',
-            // border: "none",
-          },
-
-          "MuiFormLabel-root": {
-            color: "#b6255a !important",
-          },
-        },
-      },
-    },
-  },
-});
 const theme4 = createTheme({
   palette: {
     primary: {
@@ -277,14 +235,14 @@ const MegaMessage = ({
                   >
                     Delete
                   </MenuItem>
-                  <MenuItem
+                  {/* <MenuItem
                     onClick={() => {
                       setFrwdMsg(message);
                       setOpenModalForward(true);
                     }}
                   >
                     Forward
-                  </MenuItem>
+                  </MenuItem> */}
                   <MenuItem
                     onClick={() => {
                       setRplyMsg(message);
@@ -444,22 +402,22 @@ const MegaMessage = ({
                     },
                   }}
                 >
-                  <MenuItem
+                  {/* <MenuItem
                     onClick={() => {
                       setDelMsg(message._id);
                       handleClose1();
                     }}
                   >
                     Delete
-                  </MenuItem>
-                  <MenuItem
+                  </MenuItem> */}
+                  {/* <MenuItem
                     onClick={() => {
                       setFrwdMsg(message);
                       setOpenModalForward(true);
                     }}
                   >
                     Forward
-                  </MenuItem>
+                  </MenuItem> */}
                   <MenuItem
                     onClick={() => {
                       setRplyMsg(message);
@@ -552,10 +510,6 @@ const GroupMessage = () => {
     headers: { authorization: globleuser?.data?.token },
   };
   const [modifiedMsgs, setModifiedMsgs] = useState([]);
-  console.log(
-    `🚀 ~ file: Group-Message.js:585 ~ GroupMessage ~ modifiedMsgs:`,
-    modifiedMsgs
-  );
   const [AllMEssages, setALLmessages] = useState([]);
   const [check, setcheck] = useState();
   const {
@@ -566,21 +520,21 @@ const GroupMessage = () => {
   } = useWindowSize();
   const [uSERLIST, setUSERLIST] = useState([]);
   const [selected, setSelected] = useState();
-  const dispatch = useDispatch();
-  const [array1, setarray1] = useState(["User Messages"]);
   const [update, setUpdate] = useState(false);
-  const [id, setId] = useState();
   const [message, setMessage] = useState();
   const [showAllMessage, setShowAllMessage] = useState();
   const [latest, setLatest] = useState();
   const [newGrp, setNewGrp] = useState();
   const socketRef = useRef(null);
-  const [openModal, setOpenModal] = useState(false);
   const [delMsg, setDelMsg] = useState(null);
   const [frwdMsg, setFrwdMsg] = useState();
   const [rplyMsg, setRplyMsg] = useState(null);
   const [openModalForward, setOpenModalForward] = useState(null);
   const [openEditModal, setOpenEditModal] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const messageBodyRef = useRef(null);
+  const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
   useEffect(() => {
     console.log("RUN", delMsg);
     deleteMsg();
@@ -720,12 +674,29 @@ const GroupMessage = () => {
       },
     };
     const result = await axios.get(
-      `${PROXY}/contacts/getonegroup?id=${selected._id}`,
+      `${PROXY}/contacts/getonegroup?id=${selected._id}&page=${page}`,
       config
     );
-    console.log(`🚀 ~ file: Group-Message.js:756 ~ getMsg ~ result:`, result);
     console.log("ID", result.data);
-    setALLmessages(result.data.messages);
+    setPage(page + 1);
+    setTotalPage(result.data.totalPages);
+    setALLmessages(result.data.data.messages);
+  };
+  const getMsgAdd = async () => {
+    setALLmessages([]);
+    setModifiedMsgs([]);
+    const config = {
+      headers: {
+        authorization: globleuser?.data?.token,
+      },
+    };
+    const result = await axios.get(
+      `${PROXY}/contacts/getonegroup?id=${selected._id}&page=${page}`,
+      config
+    );
+    console.log("ID", result.data);
+    setPage(page + 1);
+    setALLmessages([...result.data.data.messages, ...AllMEssages]);
   };
 
   const scrollTobottom = () => {
@@ -834,7 +805,9 @@ const GroupMessage = () => {
     selected && getMsg();
   }, [selected]);
   useEffect(() => {
-    scrollTobottom();
+    if (AllMEssages?.length <= 50) {
+      scrollTobottom();
+    }
   }, [modifiedMsgs, showAllMessage]);
 
   useEffect(() => {
@@ -979,13 +952,13 @@ const GroupMessage = () => {
     <Layout>
       <>
         {/* )} */}
-        <ForwardMsg
+        {/* <ForwardMsg
           isOpen={true}
           setOpenModal={setOpenModalForward}
           user={globleuser?.data}
           message={frwdMsg}
           openModal={openModalForward}
-        ></ForwardMsg>
+        ></ForwardMsg> */}
         <div style={{ width: "100%" }} className={styles.MessageDivs}>
           {windowWidth > 900 ? (
             <>
@@ -993,7 +966,7 @@ const GroupMessage = () => {
                 style={{
                   display: "flex",
                   justifyContent: "center",
-                  height: `calc(100vh - ${windowWidth > 900 ? 187 : 60}px)`,
+                  height: `calc(100vh - ${windowWidth > 900 ? 60 : 60}px)`,
                 }}
               >
                 <div
@@ -1003,6 +976,7 @@ const GroupMessage = () => {
                     width: "100%",
                     gap: "0px",
                     justifyContent: "center",
+                    height: "100%",
                   }}
                 >
                   <div
@@ -1186,13 +1160,13 @@ const GroupMessage = () => {
                       className={styles.rightsecbody}
                       style={{ height: "100%" }}
                     >
-                      <ForwardMsg
+                      {/* <ForwardMsg
                         isOpen={true}
                         setOpenModal={setOpenModalForward}
                         message={frwdMsg}
                         user={globleuser?.data}
                         openModal={openModalForward}
-                      ></ForwardMsg>
+                      ></ForwardMsg> */}
                       {openModal ? (
                         <></>
                       ) : openEditModal ? (
@@ -1268,12 +1242,25 @@ const GroupMessage = () => {
                                     height: "100%",
                                     overflow: "scroll",
                                   }}
+                                  ref={messageBodyRef}
+                                  onScroll={async () => {
+                                    if (messageBodyRef.current) {
+                                      const { scrollTop, scrollLeft } =
+                                        messageBodyRef.current;
+
+                                      console.log(
+                                        "🚀 ~ onScroll={ ~ page <= totalPage:",
+                                        page,
+                                        totalPage,
+                                        scrollTop
+                                      );
+                                      if (scrollTop == 0 && page <= totalPage) {
+                                        await getMsgAdd();
+                                      }
+                                    }
+                                  }}
                                 >
                                   {modifiedMsgs?.map((item, key) => {
-                                    console.log(
-                                      `🚀 ~ {modifiedMsgs?.map ~ item:`,
-                                      item
-                                    );
                                     return (
                                       <MegaMessage
                                         message={item}
@@ -1398,67 +1385,54 @@ const GroupMessage = () => {
                                         </div>
                                       )}
                                       <div className={styles.messageSenders}>
-                                        <div>
-                                          <Tooltip
-                                            placement="top-start"
-                                            title={
-                                              <div className={styles.labels}>
-                                                <label
-                                                  htmlFor="file-input"
-                                                  className={styles.fileLabel}
-                                                >
-                                                  <input
-                                                    type="file"
-                                                    id="file-input"
-                                                    className={styles.fileInput}
-                                                    onChange={(e) =>
-                                                      uploadFile(
-                                                        e.target.files[0]
-                                                      )
-                                                    }
-                                                    accept=".jpg, .jpeg, .png, .gif,.mp4, .mov, .avi"
-                                                  />
-                                                  <ImageIcon
-                                                    sx={{
-                                                      fontSize: "20px",
-                                                      marginRight: "5px",
-                                                      color: "rgba(0,0,0,.3)",
-                                                    }}
-                                                  />
-                                                  Images
-                                                </label>
-                                                <label
-                                                  htmlFor="file-input"
-                                                  className={styles.fileLabel}
-                                                >
-                                                  <input
-                                                    type="file"
-                                                    id="file-input"
-                                                    className={styles.fileInput}
-                                                    onChange={(e) =>
-                                                      uploadFile(
-                                                        e.target.files[0]
-                                                      )
-                                                    }
-                                                    accept=".pdf"
-                                                  />
-                                                  <PictureAsPdfIcon
-                                                    sx={{
-                                                      fontSize: "20px",
-                                                      marginRight: "5px",
-                                                      color: "rgba(0,0,0,.3)",
-                                                    }}
-                                                  />
-                                                  Documents
-                                                </label>
-                                              </div>
+                                        <div
+                                          style={{
+                                            width: "20px",
+                                            height: "20px",
+                                            overflow: "hidden",
+                                            position: "relative",
+                                          }}
+                                        >
+                                          <input
+                                            type="file"
+                                            id="file-input"
+                                            className={styles.fileInput}
+                                            onChange={(e) => {
+                                              uploadFile(e.target.files[0]);
+                                            }}
+                                            accept=".jpg, .jpeg, .png, .gif,.mp4, .mov, .avi"
+                                          />
+                                          <ImageIcon
+                                            sx={{
+                                              fontSize: "20px",
+                                              color: "rgba(0,0,0,.3)",
+                                            }}
+                                          />
+                                        </div>
+                                        <div
+                                          style={{
+                                            width: "20px",
+                                            height: "20px",
+                                            // background: "red",
+                                            position: "relative",
+                                            overflow: "hidden",
+                                          }}
+                                        >
+                                          <input
+                                            type="file"
+                                            id="file-input"
+                                            className={styles.fileInput}
+                                            onChange={(e) =>
+                                              uploadFile(e.target.files[0])
                                             }
-                                          >
-                                            <img
-                                              src="https://wedcell.s3.ap-south-1.amazonaws.com/vendors/images/paperclip.png"
-                                              alt=""
-                                            />
-                                          </Tooltip>
+                                            accept=".pdf"
+                                          />
+                                          <PictureAsPdfIcon
+                                            sx={{
+                                              fontSize: "20px",
+                                              color: "rgba(0,0,0,.3)",
+                                            }}
+                                          />
                                         </div>
                                         <input
                                           label=""
@@ -1592,13 +1566,13 @@ const GroupMessage = () => {
                         className={styles.rightsecbody}
                         style={{ height: "100%" }}
                       >
-                        <ForwardMsg
+                        {/* <ForwardMsg
                           isOpen={true}
                           setOpenModal={setOpenModalForward}
                           message={frwdMsg}
                           user={globleuser?.data}
                           openModal={openModalForward}
-                        ></ForwardMsg>
+                        ></ForwardMsg> */}
                         {openModal ? (
                           <></>
                         ) : openEditModal ? (
@@ -1681,12 +1655,28 @@ const GroupMessage = () => {
                                       height: "100%",
                                       overflow: "scroll",
                                     }}
+                                    ref={messageBodyRef}
+                                    onScroll={async () => {
+                                      if (messageBodyRef.current) {
+                                        const { scrollTop, scrollLeft } =
+                                          messageBodyRef.current;
+
+                                        console.log(
+                                          "🚀 ~ onScroll={ ~ page <= totalPage:",
+                                          page,
+                                          totalPage,
+                                          scrollTop
+                                        );
+                                        if (
+                                          scrollTop == 0 &&
+                                          page <= totalPage
+                                        ) {
+                                          await getMsgAdd();
+                                        }
+                                      }
+                                    }}
                                   >
                                     {modifiedMsgs?.map((item, key) => {
-                                      console.log(
-                                        `🚀 ~ {modifiedMsgs?.map ~ item:`,
-                                        item
-                                      );
                                       return (
                                         <MegaMessage
                                           message={item}
