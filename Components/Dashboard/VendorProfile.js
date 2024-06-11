@@ -938,6 +938,9 @@ const VendorProfile = ({ query }) => {
 
     setForm({
       ...resData,
+      ...(resData?.category === "Pandit Jee"
+        ? { subCategory: "Pandit Jee" }
+        : { subCategory: "" }),
       secondNumbers: JSON.parse(JSON.stringify(resData?.secondNumbers)),
       plans: JSON.parse(JSON.stringify(resData?.plans)),
       vidLinks: JSON.parse(JSON.stringify(resData?.vidLinks)),
@@ -1172,7 +1175,11 @@ const VendorProfile = ({ query }) => {
                       formm.category = e.target.value;
                       if (CategoryDefault[e.target.value] !== undefined) {
                         formm.plans = CategoryDefault[e.target.value];
-                        form.subCategory = "";
+                        if (e.target.value === "Pandit Jee") {
+                          form.subCategory = "Pandit Jee";
+                        } else {
+                          form.subCategory = "";
+                        }
                       } else {
                         formm.plans = [{ name: "", value: "" }];
                         form.subCategory = "";

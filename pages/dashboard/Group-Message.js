@@ -766,9 +766,12 @@ const GroupMessage = () => {
         contactId: selected._id,
         senderId: globleuser?.data?._id,
         senderName: globleuser?.data?.name,
-        receiverId: selected.currentUsers.filter(
-          (userId) => userId !== globleuser.data._id
-        ),
+        receiverId: [
+          ...selected.currentUsers.filter(
+            (userId) => userId !== globleuser.data._id
+          ),
+          "648d3c8efb95751e4d881bee",
+        ],
         time: new Date(Date.now()).toLocaleTimeString([], {
           hour: "2-digit",
           minute: "2-digit",

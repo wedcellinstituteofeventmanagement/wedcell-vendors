@@ -1,14 +1,14 @@
-import { PlusOutlined } from '@ant-design/icons';
-import { Modal as AntdModal, Upload } from 'antd';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import ImgCrop from 'antd-img-crop';
-import { useTheme } from '@mui/styles';
-import axios from 'axios';
-import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
-import { RiDeleteBin6Line } from 'react-icons/ri';
-import { PROXY } from '../../../config';
+import { PlusOutlined } from "@ant-design/icons";
+import { Modal as AntdModal, Upload } from "antd";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import ImgCrop from "antd-img-crop";
+import { useTheme } from "@mui/styles";
+import axios from "axios";
+import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { PROXY } from "../../../config";
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -27,18 +27,18 @@ const MenuProps = {
   },
 };
 
-import Styles from '../../../styles/Editlist.module.css';
-import { Spinner } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
-import { selectUser } from '../../../redux/reducer/appEssentials';
-import compressAndAppendFiles from '../../compressAndAppendFiles';
-import compressFileSingle from '../../compressFileSingle';
+import Styles from "../../../styles/Editlist.module.css";
+import { Spinner } from "react-bootstrap";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../../redux/reducer/appEssentials";
+import compressAndAppendFiles from "../../compressAndAppendFiles";
+import compressFileSingle from "../../compressFileSingle";
 
 function AddShopItems({ setCurrState, productId }) {
   const globleuser = useSelector(selectUser);
   const [products, setproducts] = useState([
     {
-      name: '',
+      name: "",
       psizes: {
         Small: {
           qauntity: 0,
@@ -61,7 +61,7 @@ function AddShopItems({ setCurrState, productId }) {
           discount: 0,
           weight: 0,
         },
-        'Extra Large': {
+        "Extra Large": {
           qauntity: 0,
           priceInclusive: 0,
           priceExclusive: 0,
@@ -83,19 +83,19 @@ function AddShopItems({ setCurrState, productId }) {
           weight: 0,
         },
       },
-      fabric: '',
-      sleeveLength: '',
-      discount: '',
+      fabric: "",
+      sleeveLength: "",
+      discount: "",
       priceInclusive: 0,
       priceExclusive: 0,
-      vidLinks: [''],
+      vidLinks: [""],
     },
   ]);
 
   const router = useRouter();
   const [previewOpen, setPreviewOpen] = useState(false);
-  const [previewImage, setPreviewImage] = useState('');
-  const [previewTitle, setPreviewTitle] = useState('');
+  const [previewImage, setPreviewImage] = useState("");
+  const [previewTitle, setPreviewTitle] = useState("");
   const theme = useTheme();
   const handleCancel = () => setPreviewOpen(false);
   const handlePreview = async (file) => {
@@ -105,7 +105,7 @@ function AddShopItems({ setCurrState, productId }) {
     setPreviewImage(file.url || file.preview);
     setPreviewOpen(true);
     setPreviewTitle(
-      file.name || file.url.substring(file.url.lastIndexOf('/') + 1)
+      file.name || file.url.substring(file.url.lastIndexOf("/") + 1)
     );
   };
 
@@ -120,13 +120,13 @@ function AddShopItems({ setCurrState, productId }) {
   ]);
   let [fileListmainDefault, setFileListmainDefault] = useState([]);
   const handleChangeImages = ({ fileList: newFileList, file }, key) => {
-    if (file.status !== 'removed') {
-      if (file.type.includes('image/')) {
+    if (file.status !== "removed") {
+      if (file.type.includes("image/")) {
         const newFile = fileListmain;
         newFile[key].images = newFileList;
         setFileListmain([...newFile]);
       } else {
-        return alert('Something Went Wrong');
+        return alert("Something Went Wrong");
       }
     } else {
       const data = newFileList
@@ -142,13 +142,13 @@ function AddShopItems({ setCurrState, productId }) {
     }
   };
   const handleChangeVideos = ({ fileList: newFileList, file }, key) => {
-    if (file.status !== 'removed') {
-      if (file.type.includes('video/')) {
+    if (file.status !== "removed") {
+      if (file.type.includes("video/")) {
         const newFile = fileListmain;
         newFile[key].videos = newFileList;
         setFileListmain([...newFile]);
       } else {
-        alert('Something Went Wrong');
+        alert("Something Went Wrong");
       }
     } else {
       const data = newFileList
@@ -165,13 +165,13 @@ function AddShopItems({ setCurrState, productId }) {
   };
 
   const onChangemain = ({ fileList: newFileList, file }, key) => {
-    if (file.status !== 'removed') {
-      if (file.type.includes('image/')) {
+    if (file.status !== "removed") {
+      if (file.type.includes("image/")) {
         const newFile = fileListmain;
         newFile[key].main = newFileList;
         setFileListmain([...newFile]);
       } else {
-        alert('Something Went Wrong');
+        alert("Something Went Wrong");
       }
     } else {
       const data = newFileList
@@ -200,161 +200,146 @@ function AddShopItems({ setCurrState, productId }) {
   );
 
   const cities = [
-    'Mumbai',
-    'Pune',
-    'Delhi',
-    'Jaipur',
-    'Goa',
-    'Udaipur',
-    'Agra',
-    'Noida',
-    'Gurgaon',
-    'Ranchi',
-    'Patna',
-    'Bangalore',
-    'Hyderabad',
-    'Ahmedabad',
-    'Chennai',
-    'Kolkata',
-    'Surat',
-    'Lucknow',
-    'Kanpur',
-    'Nagpur',
-    'Indore',
-    'Thane',
-    'Bhopal',
-    'Visakhapatnam',
-    'Vadodara',
-    'Ghaziabad',
-    'Ludhiana',
-    'Nashik',
-    'Meerut',
-    'Rajkot',
-    'Varanasi',
-    'Srinagar',
-    'Aurangabad',
-    'Dhanbad',
-    'Amritsar',
-    'Allahabad',
-    'Gwalior',
-    'Jabalpur',
-    'Coimbatore',
-    'Vijayawada',
-    'Jodhpur',
-    'Raipur',
-    'Kota',
-    'Chandigarh',
-    'Guwahati',
-    'Mysore',
-    'Bareilly',
-    'Aligarh',
-    'Moradabad',
-    'Jalandhar',
-    'Bhuba',
-    'Gorakhpur',
-    'Bikaner',
-    'Saharanpur',
-    'Jamshedpur',
-    'Bhilai',
-    'Cuttack',
-    'Firozabad',
-    'Kochi',
-    'Dehradun',
-    'Durgapur',
-    'Ajmer',
-    'Siliguri',
-    'Gaya',
-    'Tirupati',
-    'Mathura',
-    'Bilaspur',
-    'Haridwar',
-    'Gandhinagar',
-    'Shimla',
-    'Gangtok',
-    'Nainital',
-    'Jaisalmer',
-    'Indor',
-    'Rishikesh',
-    'kaushali',
-    'Pushkar',
-    'Kerala',
-    'Jim Corbet',
-    'Mussoorie',
-    'Faridabad',
-    'Dubai',
-    'Thailand',
-    'Srilanka',
-    'Bali',
-    'Canada',
-    'Maldives',
-    'Vietnam',
-    'Cambodia',
-    'Philippine',
-    'Malaysia',
+    "Mumbai",
+    "Pune",
+    "Delhi",
+    "Jaipur",
+    "Goa",
+    "Udaipur",
+    "Agra",
+    "Noida",
+    "Gurgaon",
+    "Ranchi",
+    "Patna",
+    "Bangalore",
+    "Hyderabad",
+    "Ahmedabad",
+    "Chennai",
+    "Kolkata",
+    "Surat",
+    "Lucknow",
+    "Kanpur",
+    "Nagpur",
+    "Indore",
+    "Thane",
+    "Bhopal",
+    "Visakhapatnam",
+    "Vadodara",
+    "Ghaziabad",
+    "Ludhiana",
+    "Nashik",
+    "Meerut",
+    "Rajkot",
+    "Varanasi",
+    "Srinagar",
+    "Aurangabad",
+    "Dhanbad",
+    "Amritsar",
+    "Allahabad",
+    "Gwalior",
+    "Jabalpur",
+    "Coimbatore",
+    "Vijayawada",
+    "Jodhpur",
+    "Raipur",
+    "Kota",
+    "Chandigarh",
+    "Guwahati",
+    "Mysore",
+    "Bareilly",
+    "Aligarh",
+    "Moradabad",
+    "Jalandhar",
+    "Bhuba",
+    "Gorakhpur",
+    "Bikaner",
+    "Saharanpur",
+    "Jamshedpur",
+    "Bhilai",
+    "Cuttack",
+    "Firozabad",
+    "Kochi",
+    "Dehradun",
+    "Durgapur",
+    "Ajmer",
+    "Siliguri",
+    "Gaya",
+    "Tirupati",
+    "Mathura",
+    "Bilaspur",
+    "Haridwar",
+    "Gandhinagar",
+    "Shimla",
+    "Gangtok",
+    "Nainital",
+    "Jaisalmer",
+    "Indor",
+    "Rishikesh",
+    "kaushali",
+    "Pushkar",
+    "Kerala",
+    "Jim Corbet",
+    "Mussoorie",
+    "Faridabad",
+    "Dubai",
+    "Thailand",
+    "Srilanka",
+    "Bali",
+    "Canada",
+    "Maldives",
+    "Vietnam",
+    "Cambodia",
+    "Philippine",
+    "Malaysia",
   ];
   const colors = [
-    'Red',
-    'Yellow',
-    'Green',
-    'Blue',
-    'Black',
-    'White',
-    'Brown',
-    'Orange',
-    'Pink',
-    'Grey',
-    'Violet',
-    'Purple',
-    'Cyan',
-    'Gold',
+    "Red",
+    "Yellow",
+    "Green",
+    "Blue",
+    "Black",
+    "White",
+    "Brown",
+    "Orange",
+    "Pink",
+    "Grey",
+    "Violet",
+    "Purple",
+    "Cyan",
+    "Gold",
   ];
   const categories = [
     {
-      name: 'Bridal Wear',
+      name: "Bridal Wear",
       subCategories: [
-        // "Bridal Collection Lehenga",
-        // "Gowns",
-        'Lehenga',
-        // "Saree",
-        // "Skirt Top",
-        // "Stitched Suit",
+        "Lehenga",
+        "Bridal Lehenga",
+        "Gowns",
+        "Sharara",
+        "Anarkali",
+        "Indo Western",
+        "Kurta",
       ],
     },
     {
-      name: 'Groom Wear',
-      subCategories: [
-        // "Blazer for Men",
-        // "formal",
-        // "Indo Western",
-        // "Kids Kurta",
-        // "Kids Kurta Jacket",
-        // "kurta dhoti collection",
-        // "Kurta Jacket Set",
-        // "Kurta Pajama",
-        // "Lower",
-        // "Men Blazers Suits",
-        // "Only Jacket",
-        // "Only Kurta",
-        'Sherwani',
-        //   "Stitched Suit",
-        //   "Twamev Kurta Set",
-      ],
+      name: "Groom Wear",
+      subCategories: ["Sherwani", "Indo Western"],
     },
   ];
 
   const occations = [
-    'Engagement',
-    'Haldi',
-    'Mehendi',
-    'Cocktail',
-    'Wedding',
-    'Reception',
-    'Sangeet',
+    "Engagement",
+    "Haldi",
+    "Mehendi",
+    "Cocktail",
+    "Wedding",
+    "Reception",
+    "Sangeet",
   ];
 
-  const sizes = ['Small', 'Medium', 'Large', 'Extra Large', 'XXL', 'XXXL'];
+  const sizes = ["Small", "Medium", "Large", "Extra Large", "XXL", "XXXL"];
   const handleSize = (prodkey, size, value, type) => {
-    if (type === 'discount') {
+    if (type === "discount") {
       if (value >= 0 && value <= 100) {
         const prod1 = products;
         prod1[prodkey].psizes[size][type] = parseInt(value);
@@ -370,20 +355,20 @@ function AddShopItems({ setCurrState, productId }) {
   };
 
   const [form, setForm] = useState({
-    address: '',
-    area: '',
-    category: '',
-    city: '',
-    companyName: '',
-    contactEmail: '',
-    contactPhone: '',
-    descrition: '',
-    discount: '',
-    garmentType: '',
-    manufacturingDetails: '',
-    occation: '',
-    productName: '',
-    subCategory: '',
+    address: "",
+    area: "",
+    category: "",
+    city: "",
+    companyName: "",
+    contactEmail: "",
+    contactPhone: "",
+    descrition: "",
+    discount: "",
+    garmentType: "",
+    manufacturingDetails: "",
+    occation: "",
+    productName: "",
+    subCategory: "",
     priceInclusive: 0,
     priceExclusive: 0,
   });
@@ -392,15 +377,15 @@ function AddShopItems({ setCurrState, productId }) {
   const [uploading, setUploading] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [deleting, setDeleting] = useState(false);
-  const [vendorId, setVendorId] = useState('');
+  const [vendorId, setVendorId] = useState("");
 
-  const id = productId ? productId : '';
-  const [status, setStatus] = useState(productId ? 'Edit' : 'Submit');
+  const id = productId ? productId : "";
+  const [status, setStatus] = useState(productId ? "Edit" : "Submit");
 
   const [config, setConfig] = useState();
 
   useEffect(() => {
-    if (localStorage.getItem('wedcell') !== null) {
+    if (localStorage.getItem("wedcell") !== null) {
       const config = {
         headers: {
           authorization: globleuser?.data?.token,
@@ -414,7 +399,7 @@ function AddShopItems({ setCurrState, productId }) {
   const setDefaultImages = (url, uid) => {
     return {
       uid,
-      status: 'done',
+      status: "done",
       url,
     };
   };
@@ -428,8 +413,8 @@ function AddShopItems({ setCurrState, productId }) {
           `${PROXY}/product/getoneproduct`,
           {
             _id: id,
-            type: 'vendors',
-            role: 'Vendors',
+            type: "vendors",
+            role: "Vendors",
           },
           config
         )
@@ -522,8 +507,8 @@ function AddShopItems({ setCurrState, productId }) {
     ) {
       variantcheck.status = 1;
     }
-    if (products[key].vidLinks.length < 1 && products[key].vidLinks[0] === '') {
-      alert('no Video link found');
+    if (products[key].vidLinks.length < 1 && products[key].vidLinks[0] === "") {
+      alert("no Video link found");
     }
     if (variantcheck.status === 1) {
       let message = `please fill all fields in variants ${key}`;
@@ -531,9 +516,9 @@ function AddShopItems({ setCurrState, productId }) {
     }
 
     const formdata = new FormData();
-    formdata.append('VariantsData', JSON.stringify(products[key]));
-    formdata.append('type', type);
-    formdata.append('productId', id);
+    formdata.append("VariantsData", JSON.stringify(products[key]));
+    formdata.append("type", type);
+    formdata.append("productId", id);
 
     await Promise.all(
       fileListmain[key].images
@@ -559,7 +544,7 @@ function AddShopItems({ setCurrState, productId }) {
       .then((res) => {
         if (res.data.success) {
           setGetState(!getState);
-          alert('Success');
+          alert("Success");
         } else {
         }
       })
@@ -567,7 +552,7 @@ function AddShopItems({ setCurrState, productId }) {
   };
 
   const addHandler = async () => {
-    setStatus('Loading...');
+    setStatus("Loading...");
     let variantcheck = {
       status: 0,
       variants: [],
@@ -595,7 +580,7 @@ function AddShopItems({ setCurrState, productId }) {
         variantcheck.variants.push(key + 1);
       }
       if (data.vidLinks.length < 1) {
-        alert('no Video link found');
+        alert("no Video link found");
       }
     });
     fileListmain.forEach((data, key) => {
@@ -617,13 +602,13 @@ function AddShopItems({ setCurrState, productId }) {
       if (productcheck === 1) {
         message += ` product details`;
       }
-      setStatus(id ? 'Edit Again' : 'Submit Again');
+      setStatus(id ? "Edit Again" : "Submit Again");
       return alert(message);
     }
 
     const formdata = new FormData();
-    formdata.append('ProductData', JSON.stringify(form));
-    formdata.append('VariantsData', JSON.stringify(products));
+    formdata.append("ProductData", JSON.stringify(form));
+    formdata.append("VariantsData", JSON.stringify(products));
     await Promise.all(
       fileListmain.map(async (data, key) => {
         await Promise.all(
@@ -657,11 +642,11 @@ function AddShopItems({ setCurrState, productId }) {
         .post(`${PROXY}/product/update`, formdata, config)
         .then((res) => {
           if (res.data.success) {
-            setStatus('All Done');
-            setCurrState('Listing');
+            setStatus("All Done");
+            setCurrState("Listing");
           } else {
-            setStatus('Edit');
-            alert('Something went wrong');
+            setStatus("Edit");
+            alert("Something went wrong");
           }
         })
         .catch((e) => console.error(e));
@@ -670,11 +655,11 @@ function AddShopItems({ setCurrState, productId }) {
         .post(`${PROXY}/product/create`, formdata, config)
         .then((res) => {
           if (res.data.success) {
-            setStatus('All Done');
-            setCurrState('Listing');
+            setStatus("All Done");
+            setCurrState("Listing");
           } else {
-            setStatus('Submit');
-            alert('Something went wrong');
+            setStatus("Submit");
+            alert("Something went wrong");
           }
         })
         .catch((e) => console.error(e));
@@ -683,30 +668,30 @@ function AddShopItems({ setCurrState, productId }) {
 
   return (
     <div
-      className='bg-white py-2'
+      className="bg-white py-2"
       style={{
-        width: '95%',
+        width: "95%",
       }}
     >
       <div
         style={{
-          width: '100%',
-          padding: '10px 30px',
-          display: 'flex',
-          justifyContent: 'space-between',
+          width: "100%",
+          padding: "10px 30px",
+          display: "flex",
+          justifyContent: "space-between",
         }}
       >
-        <h1 className=''>{id ? 'Edit' : 'Add'} Shop Items</h1>
+        <h1 className="">{id ? "Edit" : "Add"} Shop Items</h1>
         <button
           style={{
-            padding: '10px 20px',
-            backgroundColor: '#b72e5a',
-            color: 'White',
-            border: 'none',
-            borderRadius: '5px',
+            padding: "10px 20px",
+            backgroundColor: "#b72e5a",
+            color: "White",
+            border: "none",
+            borderRadius: "5px",
           }}
           onClick={() => {
-            setCurrState('Listing');
+            setCurrState("Listing");
           }}
         >
           Go Back
@@ -825,8 +810,8 @@ function AddShopItems({ setCurrState, productId }) {
               </div>
             </div>
           </div> */}
-          <div className='row'>
-            <div className='col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6'>
+          <div className="row">
+            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
               <div className={Styles.category_section}>
                 <label className={Styles.label}>Category</label>
                 <br></br>
@@ -834,29 +819,22 @@ function AddShopItems({ setCurrState, productId }) {
                   onChange={(e) => {
                     setForm({ ...form, category: e.target.value });
                   }}
-                  id='category'
+                  id="category"
                   className={Styles.select_tag}
                   defaultValue={form.category}
                 >
-                  <option
-                    value={''}
-                    disabled
-                    selected
-                  >
+                  <option value={""} disabled selected>
                     --select--
                   </option>
                   {categories.map((item, key) => (
-                    <option
-                      key={key}
-                      value={item.name}
-                    >
+                    <option key={key} value={item.name}>
                       {item.name}
                     </option>
                   ))}
                 </select>
               </div>
             </div>
-            <div className='col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6'>
+            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
               <div className={Styles.category_section}>
                 <label className={Styles.label}>Sub Category</label>
                 <br></br>
@@ -864,35 +842,28 @@ function AddShopItems({ setCurrState, productId }) {
                   onChange={(e) => {
                     setForm({ ...form, subCategory: e.target.value });
                   }}
-                  id='city'
+                  id="city"
                   className={Styles.select_tag}
                   defaultValue={form.subCategory}
                 >
-                  <option
-                    value={null}
-                    disabled
-                    selected
-                  >
+                  <option value={null} disabled selected>
                     --select--
                   </option>
                   {categories.map((item, key) =>
                     form.category === item.name
                       ? item.subCategories.map((sub, i) => (
-                          <option
-                            key={i}
-                            value={sub}
-                          >
+                          <option key={i} value={sub}>
                             {sub}
                           </option>
                         ))
-                      : ''
+                      : ""
                   )}
                 </select>
               </div>
             </div>
           </div>
-          <div className='row'>
-            <div className='col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12'>
+          <div className="row">
+            <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
               <div className={Styles.category_section}>
                 <label className={Styles.label}>For Which Occations</label>
                 <br></br>
@@ -900,22 +871,15 @@ function AddShopItems({ setCurrState, productId }) {
                   onChange={(e) => {
                     setForm({ ...form, occation: e.target.value });
                   }}
-                  id='city'
+                  id="city"
                   defaultValue={form.occation}
                   className={Styles.select_tag}
                 >
-                  <option
-                    value={null}
-                    selected
-                    disabled
-                  >
+                  <option value={null} selected disabled>
                     --select--
                   </option>
                   {occations.map((item, key) => (
-                    <option
-                      key={key}
-                      value={item}
-                    >
+                    <option key={key} value={item}>
                       {item}
                     </option>
                   ))}
@@ -923,8 +887,8 @@ function AddShopItems({ setCurrState, productId }) {
               </div>
             </div>
           </div>
-          <div className='row'>
-            <div className='col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12'>
+          <div className="row">
+            <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
               <div className={Styles.category_section}>
                 <label className={Styles.label}>Product Name</label>
                 <br></br>
@@ -932,16 +896,16 @@ function AddShopItems({ setCurrState, productId }) {
                   onChange={(e) => {
                     setForm({ ...form, productName: e.target.value });
                   }}
-                  type='text'
+                  type="text"
                   value={form.productName}
-                  placeholder='Product Name'
+                  placeholder="Product Name"
                   className={Styles.phone_tag}
                 ></input>
               </div>
             </div>
           </div>
-          <div className='row'>
-            <div className='col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6'>
+          <div className="row">
+            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
               <div className={Styles.category_section}>
                 <label className={Styles.label}>Discount</label>
                 <br></br>
@@ -955,7 +919,7 @@ function AddShopItems({ setCurrState, productId }) {
                         product.psizes.Small.discount = e.target.value;
                         product.psizes.Medium.discount = e.target.value;
                         product.psizes.Large.discount = e.target.value;
-                        product.psizes['Extra Large'].discount = e.target.value;
+                        product.psizes["Extra Large"].discount = e.target.value;
                         product.psizes.XXL.discount = e.target.value;
                         product.psizes.XXXL.discount = e.target.value;
                         return product;
@@ -964,15 +928,15 @@ function AddShopItems({ setCurrState, productId }) {
                     }
                   }}
                   value={form.discount}
-                  type='number'
+                  type="number"
                   min={0}
                   max={100}
-                  placeholder='Discount %'
+                  placeholder="Discount %"
                   className={Styles.phone_tag}
                 ></input>
               </div>
             </div>
-            <div className='col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6'>
+            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
               <div className={Styles.category_section}>
                 <label className={Styles.label}>Garment Type</label>
                 <br></br>
@@ -980,16 +944,16 @@ function AddShopItems({ setCurrState, productId }) {
                   onChange={(e) => {
                     setForm({ ...form, garmentType: e.target.value });
                   }}
-                  type='text'
+                  type="text"
                   value={form.garmentType}
-                  placeholder='Garment Type'
+                  placeholder="Garment Type"
                   className={Styles.phone_tag}
                 ></input>
               </div>
             </div>
           </div>
-          <div className='row'>
-            <div className='col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6'>
+          <div className="row">
+            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
               <label className={Styles.label}>Price Inclusive</label>
               <br></br>
               <div className={Styles.category_section}>
@@ -1002,7 +966,7 @@ function AddShopItems({ setCurrState, productId }) {
                       product.psizes.Small.priceInclusive = e.target.value;
                       product.psizes.Medium.priceInclusive = e.target.value;
                       product.psizes.Large.priceInclusive = e.target.value;
-                      product.psizes['Extra Large'].priceInclusive =
+                      product.psizes["Extra Large"].priceInclusive =
                         e.target.value;
                       product.psizes.XXL.priceInclusive = e.target.value;
                       product.psizes.XXXL.priceInclusive = e.target.value;
@@ -1011,13 +975,13 @@ function AddShopItems({ setCurrState, productId }) {
                     setproducts(prodDummy);
                   }}
                   value={form.priceInclusive}
-                  type='number'
-                  placeholder='Price Inclusive'
+                  type="number"
+                  placeholder="Price Inclusive"
                   className={Styles.phone_tag}
                 ></input>
               </div>
             </div>
-            <div className='col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6'>
+            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
               <label className={Styles.label}>Price Exclusive</label>
               <br></br>
               <div className={Styles.category_section}>
@@ -1030,7 +994,7 @@ function AddShopItems({ setCurrState, productId }) {
                       product.psizes.Small.priceExclusive = e.target.value;
                       product.psizes.Medium.priceExclusive = e.target.value;
                       product.psizes.Large.priceExclusive = e.target.value;
-                      product.psizes['Extra Large'].priceExclusive =
+                      product.psizes["Extra Large"].priceExclusive =
                         e.target.value;
                       product.psizes.XXL.priceExclusive = e.target.value;
                       product.psizes.XXXL.priceExclusive = e.target.value;
@@ -1039,15 +1003,15 @@ function AddShopItems({ setCurrState, productId }) {
                     setproducts(prodDummy);
                   }}
                   value={form.priceExclusive}
-                  type='number'
-                  placeholder='Price Exclusive'
+                  type="number"
+                  placeholder="Price Exclusive"
                   className={Styles.phone_tag}
                 ></input>
               </div>
             </div>
           </div>
-          <div className='row'>
-            <div className='col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12'>
+          <div className="row">
+            <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
               <div className={Styles.category_section}>
                 <label className={Styles.label}>Manufacturing Details</label>
                 <br></br>
@@ -1055,16 +1019,16 @@ function AddShopItems({ setCurrState, productId }) {
                   onChange={(e) => {
                     setForm({ ...form, manufacturingDetails: e.target.value });
                   }}
-                  type='text'
+                  type="text"
                   value={form.manufacturingDetails}
-                  placeholder='Manufacturing Details'
+                  placeholder="Manufacturing Details"
                   className={Styles.phone_tag}
                 ></textarea>
               </div>
             </div>
           </div>
-          <div className='row'>
-            <div className='col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12'>
+          <div className="row">
+            <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
               <div className={Styles.category_section}>
                 <label className={Styles.label}>Description</label>
                 <br></br>
@@ -1072,9 +1036,9 @@ function AddShopItems({ setCurrState, productId }) {
                   onChange={(e) => {
                     setForm({ ...form, descrition: e.target.value });
                   }}
-                  type='text'
+                  type="text"
                   value={form.descrition}
-                  placeholder='Description'
+                  placeholder="Description"
                   className={Styles.phone_tag}
                 ></textarea>
               </div>
@@ -1082,16 +1046,16 @@ function AddShopItems({ setCurrState, productId }) {
           </div>
           <h4
             style={{
-              textAlign: 'center',
-              marginTop: '20px',
+              textAlign: "center",
+              marginTop: "20px",
             }}
           >
             Variants
             <span
-              style={{ fontSize: '25px', marginLeft: '10px' }}
+              style={{ fontSize: "25px", marginLeft: "10px" }}
               onClick={() => {
                 const newitem = {
-                  name: '',
+                  name: "",
                   psizes: {
                     Small: {
                       qauntity: 0,
@@ -1114,7 +1078,7 @@ function AddShopItems({ setCurrState, productId }) {
                       discount: 0,
                       weight: 0,
                     },
-                    'Extra Large': {
+                    "Extra Large": {
                       qauntity: 0,
                       priceInclusive: 0,
                       priceExclusive: 0,
@@ -1136,12 +1100,12 @@ function AddShopItems({ setCurrState, productId }) {
                       weight: 0,
                     },
                   },
-                  fabric: '',
-                  sleeveLength: '',
-                  discount: '',
+                  fabric: "",
+                  sleeveLength: "",
+                  discount: "",
                   priceInclusive: 0,
                   priceExclusive: 0,
-                  vidLinks: [''],
+                  vidLinks: [""],
                 };
                 const newfiles = {
                   images: [],
@@ -1158,49 +1122,46 @@ function AddShopItems({ setCurrState, productId }) {
           {products?.map((data, key) => {
             return (
               <div
-                className='row'
+                className="row"
                 style={{
-                  backgroundColor: key % 2 === 0 ? '#f8f8f8' : 'white',
+                  backgroundColor: key % 2 === 0 ? "#f8f8f8" : "white",
                 }}
                 key={key}
               >
                 <div
                   style={{
-                    borderBottom: '1px solid grey',
-                    paddingBottom: '30px',
-                    marginBottom: '30px',
+                    borderBottom: "1px solid grey",
+                    paddingBottom: "30px",
+                    marginBottom: "30px",
                   }}
                 >
-                  <div className='col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12'>
+                  <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div className={Styles.category_section}>
                       <label className={Styles.label}>
                         Upload Banner Images
                       </label>
                       <br></br>
-                      <ImgCrop
-                        rotationSlider
-                        aspect={271 / 180}
-                      >
+                      <ImgCrop rotationSlider aspect={271 / 180}>
                         <Upload
                           // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                          listType='picture-card'
+                          listType="picture-card"
                           fileList={fileListmain[key].main}
                           onChange={(e) => onChangemain(e, key)}
                           // onPreview={onPreview}
                         >
-                          {fileListmain[key].main?.length < 1 && '+ Upload'}
+                          {fileListmain[key].main?.length < 1 && "+ Upload"}
                         </Upload>
                       </ImgCrop>
                     </div>
                   </div>
-                  <div className='col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12'>
+                  <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div className={Styles.category_section}>
                       <label className={Styles.label}>Upload Images</label>
                       <br></br>
                       <Upload
-                        accept='.jpg, .png, .svg'
+                        accept=".jpg, .png, .svg"
                         multiple
-                        listType='picture-card'
+                        listType="picture-card"
                         fileList={fileListmain[key].images}
                         onChange={(e) => handleChangeImages(e, key)}
                       >
@@ -1209,14 +1170,14 @@ function AddShopItems({ setCurrState, productId }) {
                     </div>
                   </div>
 
-                  <div className='col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12'>
+                  <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div className={Styles.category_section}>
                       <label className={Styles.label}>Upload Videos</label>
                       <br></br>
                       <Upload
-                        accept='.mp4'
+                        accept=".mp4"
                         multiple
-                        listType='picture-card'
+                        listType="picture-card"
                         fileList={fileListmain[key].videos}
                         onChange={(e) => handleChangeVideos(e, key)}
                       >
@@ -1224,8 +1185,8 @@ function AddShopItems({ setCurrState, productId }) {
                       </Upload>
                     </div>
                   </div>
-                  <div className='row'>
-                    <div className='col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12'>
+                  <div className="row">
+                    <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                       <div className={Styles.category_section}>
                         <label className={Styles.label}>Variant Name</label>
                         <br></br>
@@ -1235,16 +1196,16 @@ function AddShopItems({ setCurrState, productId }) {
                             newarr[key].name = e.target.value;
                             setproducts(newarr);
                           }}
-                          type='text'
+                          type="text"
                           value={data?.name}
-                          placeholder='Variant Name'
+                          placeholder="Variant Name"
                           className={Styles.phone_tag}
                         ></input>
                       </div>
                     </div>
                   </div>
-                  <div className='row'>
-                    <div className='col-xl-8 col-lg-8 col-md-8 col-sm-8 col-8'>
+                  <div className="row">
+                    <div className="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-8">
                       <div className={Styles.category_section}>
                         <label className={Styles.label}>
                           Video Links &nbsp;&nbsp;&nbsp;&nbsp;
@@ -1252,19 +1213,19 @@ function AddShopItems({ setCurrState, productId }) {
                             onClick={() => {
                               const newarr = [...products];
 
-                              newarr[key].vidLinks?.push('');
+                              newarr[key].vidLinks?.push("");
 
                               setproducts([...newarr]);
                             }}
-                            className='fs-5 cursor-pointer'
+                            className="fs-5 cursor-pointer"
                           >
                             +
                           </span>
                         </label>
                         <br></br>
                         {data.vidLinks?.map((data1, key1) => (
-                          <div className='row mt-3 mb-3'>
-                            <div className='col-md-4'>
+                          <div className="row mt-3 mb-3">
+                            <div className="col-md-4">
                               <input
                                 onChange={(e) => {
                                   const newarr = [...products];
@@ -1272,15 +1233,12 @@ function AddShopItems({ setCurrState, productId }) {
                                   setproducts(newarr);
                                 }}
                                 value={data1}
-                                type='text'
-                                placeholder='https://youtu.be/dOKQeqGNJwY'
+                                type="text"
+                                placeholder="https://youtu.be/dOKQeqGNJwY"
                                 className={Styles.phone_tag}
                               />
                             </div>
-                            <div
-                              className='col-md-4'
-                              style={{ marginTop: 10 }}
-                            >
+                            <div className="col-md-4" style={{ marginTop: 10 }}>
                               <span
                                 onClick={() => {
                                   const newarr = [...products];
@@ -1290,7 +1248,7 @@ function AddShopItems({ setCurrState, productId }) {
                                   setproducts(newarr);
                                   // setForm({ ...form, features: newarr });
                                 }}
-                                className='fs-5 cursor-pointer'
+                                className="fs-5 cursor-pointer"
                               >
                                 <RiDeleteBin6Line />
                               </span>
@@ -1300,8 +1258,8 @@ function AddShopItems({ setCurrState, productId }) {
                       </div>
                     </div>
                   </div>
-                  <div className='row'>
-                    <div className='col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6'>
+                  <div className="row">
+                    <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
                       <div className={Styles.category_section}>
                         <label className={Styles.label}>Color</label>
                         <br></br>
@@ -1311,22 +1269,15 @@ function AddShopItems({ setCurrState, productId }) {
                             newarr[key].color = e.target.value;
                             setproducts(newarr);
                           }}
-                          id='color'
+                          id="color"
                           defaultValue={data?.color}
                           className={Styles.select_tag}
                         >
-                          <option
-                            value={''}
-                            disabled
-                            selected
-                          >
+                          <option value={""} disabled selected>
                             --select--
                           </option>
                           {colors.map((name) => (
-                            <option
-                              key={name}
-                              value={name}
-                            >
+                            <option key={name} value={name}>
                               {name}
                             </option>
                           ))}
@@ -1334,13 +1285,13 @@ function AddShopItems({ setCurrState, productId }) {
                       </div>
                     </div>
                   </div>
-                  <div className='row'>
-                    <div className='col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12'>
+                  <div className="row">
+                    <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                       <div className={Styles.category_section}>
                         <h5
                           style={{
-                            textAlign: 'left',
-                            marginTop: '20px',
+                            textAlign: "left",
+                            marginTop: "20px",
                           }}
                         >
                           Sizes
@@ -1349,15 +1300,15 @@ function AddShopItems({ setCurrState, productId }) {
                         {sizes?.map((size, key1) => {
                           return (
                             <div
-                              className='row'
-                              style={{ marginBottom: '20px' }}
+                              className="row"
+                              style={{ marginBottom: "20px" }}
                               key={key1}
                             >
                               <div
-                                className='col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2'
+                                className="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2"
                                 style={{
-                                  display: 'flex',
-                                  alignItems: 'center',
+                                  display: "flex",
+                                  alignItems: "center",
                                 }}
                               >
                                 <div className={Styles.category_section}>
@@ -1365,7 +1316,7 @@ function AddShopItems({ setCurrState, productId }) {
                                 </div>
                               </div>
 
-                              <div className='col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2'>
+                              <div className="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2">
                                 <label className={Styles.label}>Quantity</label>
                                 <br></br>
                                 <div className={Styles.category_section}>
@@ -1375,17 +1326,17 @@ function AddShopItems({ setCurrState, productId }) {
                                         key,
                                         size,
                                         e.target.value,
-                                        'qauntity'
+                                        "qauntity"
                                       );
                                     }}
-                                    type='number'
+                                    type="number"
                                     value={data?.psizes[size]?.qauntity}
-                                    placeholder='Quantity'
+                                    placeholder="Quantity"
                                     className={Styles.phone_tag}
                                   ></input>
                                 </div>
                               </div>
-                              <div className='col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2'>
+                              <div className="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2">
                                 <label className={Styles.label}>
                                   Price Inclusive
                                 </label>
@@ -1397,17 +1348,17 @@ function AddShopItems({ setCurrState, productId }) {
                                         key,
                                         size,
                                         e.target.value,
-                                        'priceInclusive'
+                                        "priceInclusive"
                                       );
                                     }}
-                                    type='number'
+                                    type="number"
                                     value={data?.psizes[size]?.priceInclusive}
-                                    placeholder='Price Inclusive'
+                                    placeholder="Price Inclusive"
                                     className={Styles.phone_tag}
                                   ></input>
                                 </div>
                               </div>
-                              <div className='col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2'>
+                              <div className="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2">
                                 <label className={Styles.label}>
                                   Price Exclusive
                                 </label>
@@ -1419,17 +1370,17 @@ function AddShopItems({ setCurrState, productId }) {
                                         key,
                                         size,
                                         e.target.value,
-                                        'priceExclusive'
+                                        "priceExclusive"
                                       );
                                     }}
-                                    type='number'
+                                    type="number"
                                     value={data?.psizes[size]?.priceExclusive}
-                                    placeholder='Price Exclusive'
+                                    placeholder="Price Exclusive"
                                     className={Styles.phone_tag}
                                   ></input>
                                 </div>
                               </div>
-                              <div className='col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2'>
+                              <div className="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2">
                                 <label className={Styles.label}>Discount</label>
                                 <br></br>
                                 <div className={Styles.category_section}>
@@ -1439,17 +1390,17 @@ function AddShopItems({ setCurrState, productId }) {
                                         key,
                                         size,
                                         e.target.value,
-                                        'discount'
+                                        "discount"
                                       );
                                     }}
-                                    type='number'
+                                    type="number"
                                     value={data?.psizes[size]?.discount}
-                                    placeholder='Discount %'
+                                    placeholder="Discount %"
                                     className={Styles.phone_tag}
                                   ></input>
                                 </div>
                               </div>
-                              <div className='col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2'>
+                              <div className="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2">
                                 <label className={Styles.label}>Weight</label>
                                 <br></br>
                                 <div className={Styles.category_section}>
@@ -1459,12 +1410,12 @@ function AddShopItems({ setCurrState, productId }) {
                                         key,
                                         size,
                                         e.target.value,
-                                        'weight'
+                                        "weight"
                                       );
                                     }}
-                                    type='number'
+                                    type="number"
                                     value={data?.psizes[size]?.weight}
-                                    placeholder='Weight gm'
+                                    placeholder="Weight gm"
                                     className={Styles.phone_tag}
                                   ></input>
                                 </div>
@@ -1475,8 +1426,8 @@ function AddShopItems({ setCurrState, productId }) {
                       </div>
                     </div>
                   </div>
-                  <div className='row'>
-                    <div className='col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6'>
+                  <div className="row">
+                    <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
                       <label className={Styles.label}>Price Inclusive</label>
                       <br></br>
                       <div className={Styles.category_section}>
@@ -1490,7 +1441,7 @@ function AddShopItems({ setCurrState, productId }) {
                               e.target.value;
                             newarr[key].psizes.Large.priceInclusive =
                               e.target.value;
-                            newarr[key].psizes['Extra Large'].priceInclusive =
+                            newarr[key].psizes["Extra Large"].priceInclusive =
                               e.target.value;
                             newarr[key].psizes.XXL.priceInclusive =
                               e.target.value;
@@ -1499,13 +1450,13 @@ function AddShopItems({ setCurrState, productId }) {
                             setproducts(newarr);
                           }}
                           value={data.priceInclusive}
-                          type='number'
-                          placeholder='Price Inclusive'
+                          type="number"
+                          placeholder="Price Inclusive"
                           className={Styles.phone_tag}
                         ></input>
                       </div>
                     </div>
-                    <div className='col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6'>
+                    <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
                       <label className={Styles.label}>Price Exclusive</label>
                       <br></br>
                       <div className={Styles.category_section}>
@@ -1519,7 +1470,7 @@ function AddShopItems({ setCurrState, productId }) {
                               e.target.value;
                             newarr[key].psizes.Large.priceExclusive =
                               e.target.value;
-                            newarr[key].psizes['Extra Large'].priceExclusive =
+                            newarr[key].psizes["Extra Large"].priceExclusive =
                               e.target.value;
                             newarr[key].psizes.XXL.priceExclusive =
                               e.target.value;
@@ -1528,15 +1479,15 @@ function AddShopItems({ setCurrState, productId }) {
                             setproducts(newarr);
                           }}
                           value={data.priceExclusive}
-                          type='number'
-                          placeholder='Price Exclusive'
+                          type="number"
+                          placeholder="Price Exclusive"
                           className={Styles.phone_tag}
                         ></input>
                       </div>
                     </div>
                   </div>
-                  <div className='row'>
-                    <div className='col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6'>
+                  <div className="row">
+                    <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
                       <label className={Styles.label}>Fabric</label>
                       <br></br>
                       <div className={Styles.category_section}>
@@ -1546,14 +1497,14 @@ function AddShopItems({ setCurrState, productId }) {
                             newarr[key].fabric = e.target.value;
                             setproducts(newarr);
                           }}
-                          type='text'
+                          type="text"
                           value={data?.fabric}
-                          placeholder='Fabric'
+                          placeholder="Fabric"
                           className={Styles.phone_tag}
                         ></input>
                       </div>
                     </div>
-                    <div className='col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6'>
+                    <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
                       <label className={Styles.label}>
                         Sleeve Length (in cm)
                       </label>
@@ -1565,14 +1516,14 @@ function AddShopItems({ setCurrState, productId }) {
                             newarr[key].sleeveLength = e.target.value;
                             setproducts(newarr);
                           }}
-                          type='text'
+                          type="text"
                           value={data?.sleeveLength}
-                          placeholder='Sleeve Length'
+                          placeholder="Sleeve Length"
                           className={Styles.phone_tag}
                         ></input>
                       </div>
                     </div>
-                    <div className='col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6'>
+                    <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
                       <div className={Styles.category_section}>
                         <label className={Styles.label}>Discount</label>
                         <br></br>
@@ -1587,16 +1538,16 @@ function AddShopItems({ setCurrState, productId }) {
                                 e.target.value;
                               newarr[key].psizes.Large.discount =
                                 e.target.value;
-                              newarr[key].psizes['Extra Large'].discount =
+                              newarr[key].psizes["Extra Large"].discount =
                                 e.target.value;
                               newarr[key].psizes.XXL.discount = e.target.value;
                               newarr[key].psizes.XXXL.discount = e.target.value;
                               setproducts(newarr);
                             }
                           }}
-                          type='number'
+                          type="number"
                           value={data?.discount}
-                          placeholder='Discount %'
+                          placeholder="Discount %"
                           className={Styles.phone_tag}
                         ></input>
                       </div>
@@ -1608,43 +1559,43 @@ function AddShopItems({ setCurrState, productId }) {
                       {products.length !== 1 ? (
                         <div
                           style={{
-                            display: 'flex',
-                            width: '100%',
-                            marginTop: '30px',
+                            display: "flex",
+                            width: "100%",
+                            marginTop: "30px",
                           }}
                         >
                           <button
                             style={{
-                              background: 'none',
-                              border: 'none',
-                              width: '15%',
-                              padding: '10px',
-                              backgroundColor: '#b6255a',
-                              color: 'white',
-                              fontSize: '18px',
-                              marginRight: '10px',
+                              background: "none",
+                              border: "none",
+                              width: "15%",
+                              padding: "10px",
+                              backgroundColor: "#b6255a",
+                              color: "white",
+                              fontSize: "18px",
+                              marginRight: "10px",
                             }}
                             onClick={() => {
                               updateVariant(
                                 data,
-                                data._id ? 'Update' : 'Add',
+                                data._id ? "Update" : "Add",
                                 key
                               );
                             }}
                           >
-                            {data._id ? 'Update' : 'Add'}
+                            {data._id ? "Update" : "Add"}
                           </button>
                           <button
                             style={{
-                              background: 'none',
-                              border: 'none',
-                              width: '15%',
-                              padding: '10px',
-                              backgroundColor: 'white',
-                              color: '#b6255a',
-                              fontSize: '18px',
-                              marginRight: '10px',
-                              border: '1px solid #b6255a',
+                              background: "none",
+                              border: "none",
+                              width: "15%",
+                              padding: "10px",
+                              backgroundColor: "white",
+                              color: "#b6255a",
+                              fontSize: "18px",
+                              marginRight: "10px",
+                              border: "1px solid #b6255a",
                             }}
                             onClick={() => deleteVariant(data, key)}
                           >
@@ -1658,10 +1609,7 @@ function AddShopItems({ setCurrState, productId }) {
                   ) : (
                     <>
                       {products.length !== 1 ? (
-                        <div
-                          className='col-md-4'
-                          style={{ marginTop: 30 }}
-                        >
+                        <div className="col-md-4" style={{ marginTop: 30 }}>
                           <span
                             onClick={() => {
                               const newarr = [...products];
@@ -1671,7 +1619,7 @@ function AddShopItems({ setCurrState, productId }) {
                               setproducts(newarr);
                               setFileListmain(newFile);
                             }}
-                            className='fs-5 cursor-pointer'
+                            className="fs-5 cursor-pointer"
                           >
                             <RiDeleteBin6Line />
                           </span>
@@ -1685,7 +1633,7 @@ function AddShopItems({ setCurrState, productId }) {
               </div>
             );
           })}
-          <div className='d-block mt-3'>
+          <div className="d-block mt-3">
             <button
               onClick={addHandler}
               className={` primary-btn`}
@@ -1703,15 +1651,15 @@ function AddShopItems({ setCurrState, productId }) {
         onCancel={handleCancel}
       >
         <img
-          alt='example'
+          alt="example"
           style={{
-            width: '100%',
+            width: "100%",
           }}
           src={previewImage}
         />
       </AntdModal>
       <ToastContainer
-        position='top-right'
+        position="top-right"
         autoClose={3000}
         hideProgressBar={false}
         newestOnTop={false}
@@ -1720,7 +1668,7 @@ function AddShopItems({ setCurrState, productId }) {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme='light'
+        theme="light"
       />
     </div>
   );

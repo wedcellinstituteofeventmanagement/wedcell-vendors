@@ -904,6 +904,11 @@ const VendorModal = ({ openModal }) => {
                             formm.category = e.target.value;
                             if (CategoryDefault[e.target.value] !== undefined) {
                               formm.plans = CategoryDefault[e.target.value];
+                              if (e.target.value === "Pandit Jee") {
+                                form.subCategory = "Pandit Jee";
+                              } else {
+                                form.subCategory = "";
+                              }
                             } else {
                               formm.plans = [{ name: "", value: "" }];
                             }

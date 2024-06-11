@@ -290,7 +290,7 @@ const MegaMessage = ({
     return (
       <div className={styles.mymessagebloackmaindiv}>
         <div className={styles.mymessage}>
-          {back === message.type ? (
+          {back === message.name ? (
             <></>
           ) : (
             <div className={styles.mymessagenametime}>
@@ -434,7 +434,7 @@ const MegaMessage = ({
     return (
       <div className={styles.yourmessagebloackmaindiv}>
         <div className={styles.yourmessage}>
-          {back === message.type ? (
+          {back === message.name ? (
             <></>
           ) : (
             <div className={styles.yourmessagenametime}>
@@ -849,7 +849,7 @@ const Message = () => {
     let msgBody = {
       contactId: selected._id,
       senderId: globleuser?.data?._id,
-      receiverId: selected.prospectId,
+      receiverId: [selected.prospectId, "648d3c8efb95751e4d881bee"],
       message: fileurl ? fileurl : message,
       messageType: msgtype,
     };
@@ -899,7 +899,7 @@ const Message = () => {
         contactId: selected._id,
         senderId: globleuser?.data?._id,
         senderName: globleuser?.data?.name,
-        receiverId: selected.prospectId,
+        receiverId: [selected.prospectId, "648d3c8efb95751e4d881bee"],
         time: new Date(Date.now()).toLocaleTimeString([], {
           hour: "2-digit",
           minute: "2-digit",
@@ -1348,7 +1348,7 @@ const Message = () => {
                                       setOpenModalForward={setOpenModalForward}
                                       key={key}
                                       setRplyMsg={setRplyMsg}
-                                      back={modifiedMsgs[key - 1]?.type}
+                                      back={modifiedMsgs[key - 1]?.name}
                                     ></MegaMessage>
                                   );
                                 })}
@@ -1720,7 +1720,7 @@ const Message = () => {
                                         }
                                         key={key}
                                         setRplyMsg={setRplyMsg}
-                                        back={modifiedMsgs[key - 1]?.type}
+                                        back={modifiedMsgs[key - 1]?.name}
                                       ></MegaMessage>
                                     );
                                   })}
