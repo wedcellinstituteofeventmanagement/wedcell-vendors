@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "export": "next build && next export",
+    "only-export": "next export",
     "build-static": "next build && next export && npm run build-static-repair-index",
     "build-static-repair-index": "replace-in-files --string \"/_next/static\" --replacement \"./_next/static\" out/index.html"
   },
