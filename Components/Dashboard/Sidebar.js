@@ -12,7 +12,7 @@ import { selectUser, user } from "../../redux/reducer/appEssentials";
 import TodayIcon from "@mui/icons-material/Today";
 import React, { useEffect } from "react";
 import { Container, Offcanvas } from "react-bootstrap";
-import LogoutIcon from '@mui/icons-material/Logout';
+import LogoutIcon from "@mui/icons-material/Logout";
 import { useState } from "react";
 function Sidebar({ headerHeight, dashboard, setShow, show }) {
   const closeSidebar = () => setShow(false);
@@ -29,23 +29,19 @@ function Sidebar({ headerHeight, dashboard, setShow, show }) {
   }, [router]);
   useEffect(() => {}, [role]);
   return (
-    <Offcanvas
-      show={show}
-      onHide={closeSidebar}
-      style={{ width: '250px' }}
-    >
+    <Offcanvas show={show} onHide={closeSidebar} style={{ width: "250px" }}>
       <Offcanvas.Header closeButton></Offcanvas.Header>
       <Offcanvas.Body>
-        <div className='sidebar-links-container'>
-          {role === 'Vendor' || role === 'Venue' ? (
+        <div className="sidebar-links-container">
+          {role === "Vendor" || role === "Venue" ? (
             <>
               <div
                 className={
-                  router.pathname === '/dashboard'
+                  router.pathname === "/dashboard"
                     ? `${Styles.sidebar_links_wrapper} ${Styles.active}  d-flex align-items-center cursor-pointer`
                     : `${Styles.sidebar_links_wrapper}   d-flex align-items-center cursor-pointer`
                 }
-                onClick={() => router.push('/dashboard')}
+                onClick={() => router.push("/dashboard")}
               >
                 <span className={`${Styles.sidebar_icon} me-2`}>
                   <AiOutlineCompass />
@@ -68,14 +64,14 @@ function Sidebar({ headerHeight, dashboard, setShow, show }) {
               </div> */}
               <div
                 className={
-                  router.pathname === '/dashboard/event'
+                  router.pathname === "/dashboard/event"
                     ? `${Styles.sidebar_links_wrapper} ${Styles.active}  d-flex align-items-center cursor-pointer`
                     : `${Styles.sidebar_links_wrapper}   d-flex align-items-center cursor-pointer`
                 }
-                onClick={() => router.push('/dashboard/event')}
+                onClick={() => router.push("/dashboard/event")}
               >
                 <span className={`${Styles.sidebar_icon} me-3`}>
-                  <TodayIcon sx={{ fontSize: '20px' }} />
+                  <TodayIcon sx={{ fontSize: "20px" }} />
                 </span>
                 <span>Events</span>
               </div>
@@ -89,13 +85,13 @@ function Sidebar({ headerHeight, dashboard, setShow, show }) {
                 onClick={() =>
                   router.push(
                     `/dashboard/reviews1/${globleuser?.data?._id}?type=${
-                      role === 'Venue' ? 'Venue' : 'Vendor'
+                      role === "Venue" ? "Venue" : "Vendor"
                     }`
                   )
                 }
               >
                 <span className={`${Styles.sidebar_icon} me-3`}>
-                  <TodayIcon sx={{ fontSize: '20px' }} />
+                  <TodayIcon sx={{ fontSize: "20px" }} />
                 </span>
                 <span>Reviews</span>
               </div>
@@ -108,7 +104,7 @@ function Sidebar({ headerHeight, dashboard, setShow, show }) {
                 onClick={() => router.push(`/dashboard/leads`)}
               >
                 <span className={`${Styles.sidebar_icon} me-3`}>
-                  <TodayIcon sx={{ fontSize: '20px' }} />
+                  <TodayIcon sx={{ fontSize: "20px" }} />
                 </span>
                 <span>Leads</span>
               </div>
@@ -121,21 +117,21 @@ function Sidebar({ headerHeight, dashboard, setShow, show }) {
                 onClick={() => router.push(`/dashboard/Message`)}
               >
                 <span className={`${Styles.sidebar_icon} me-3`}>
-                  <TodayIcon sx={{ fontSize: '20px' }} />
+                  <TodayIcon sx={{ fontSize: "20px" }} />
                 </span>
                 <span>Message</span>
               </div>
             </>
           ) : null}
-          {role === 'ShopNow' ? (
+          {role === "ShopNow" ? (
             <>
               <div
                 className={
-                  router.pathname === '/dashboard/sellersdashboard'
+                  router.pathname === "/dashboard/sellersdashboard"
                     ? `${Styles.sidebar_links_wrapper} ${Styles.active}  d-flex align-items-center cursor-pointer`
                     : `${Styles.sidebar_links_wrapper}   d-flex align-items-center cursor-pointer`
                 }
-                onClick={() => router.push('/dashboard/sellersdashboard')}
+                onClick={() => router.push("/dashboard/sellersdashboard")}
               >
                 <span className={`${Styles.sidebar_icon} me-2`}>
                   <AiOutlineCompass />
@@ -151,7 +147,7 @@ function Sidebar({ headerHeight, dashboard, setShow, show }) {
                 onClick={() => router.push(`/dashboard/Message`)}
               >
                 <span className={`${Styles.sidebar_icon} me-3`}>
-                  <TodayIcon sx={{ fontSize: '20px' }} />
+                  <TodayIcon sx={{ fontSize: "20px" }} />
                 </span>
                 <span>Message</span>
               </div>
@@ -160,15 +156,15 @@ function Sidebar({ headerHeight, dashboard, setShow, show }) {
             <></>
           )}
 
-          {role === 'User' ? (
+          {role === "User" ? (
             <>
               <div
                 className={
-                  router.pathname === '/user-dashboard'
+                  router.pathname === "/user-dashboard"
                     ? `${Styles.sidebar_links_wrapper} ${Styles.active}  d-flex align-items-center cursor-pointer`
                     : `${Styles.sidebar_links_wrapper}   d-flex align-items-center cursor-pointer`
                 }
-                onClick={() => router.push('/user-dashboard')}
+                onClick={() => router.push("/user-dashboard")}
               >
                 <span className={`${Styles.sidebar_icon} me-3`}>
                   <FavoriteIcon />
@@ -177,11 +173,11 @@ function Sidebar({ headerHeight, dashboard, setShow, show }) {
               </div>
               <div
                 className={
-                  router.pathname === '/user-dashboard/wishlist'
+                  router.pathname === "/user-dashboard/wishlist"
                     ? `${Styles.sidebar_links_wrapper} ${Styles.active}  d-flex align-items-center cursor-pointer`
                     : `${Styles.sidebar_links_wrapper}   d-flex align-items-center cursor-pointer`
                 }
-                onClick={() => router.push('/user-dashboard/wishlist')}
+                onClick={() => router.push("/user-dashboard/wishlist")}
               >
                 <span className={`${Styles.sidebar_icon} me-3`}>
                   <FavoriteIcon />
@@ -190,11 +186,11 @@ function Sidebar({ headerHeight, dashboard, setShow, show }) {
               </div>
               <div
                 className={
-                  router.pathname === '/user-dashboard/cart'
+                  router.pathname === "/user-dashboard/cart"
                     ? `${Styles.sidebar_links_wrapper} ${Styles.active}  d-flex align-items-center cursor-pointer`
                     : `${Styles.sidebar_links_wrapper}   d-flex align-items-center cursor-pointer`
                 }
-                onClick={() => router.push('/user-dashboard/cart')}
+                onClick={() => router.push("/user-dashboard/cart")}
               >
                 <span className={`${Styles.sidebar_icon} me-3`}>
                   <ShoppingCartIcon />
@@ -203,11 +199,11 @@ function Sidebar({ headerHeight, dashboard, setShow, show }) {
               </div>
               <div
                 className={
-                  router.pathname === '/user-dashboard/orders'
+                  router.pathname === "/user-dashboard/orders"
                     ? `${Styles.sidebar_links_wrapper} ${Styles.active}  d-flex align-items-center cursor-pointer`
                     : `${Styles.sidebar_links_wrapper}   d-flex align-items-center cursor-pointer`
                 }
-                onClick={() => router.push('/user-dashboard/orders')}
+                onClick={() => router.push("/user-dashboard/orders")}
               >
                 <span className={`${Styles.sidebar_icon} me-3`}>
                   <LocalMallIcon />
@@ -217,66 +213,46 @@ function Sidebar({ headerHeight, dashboard, setShow, show }) {
             </>
           ) : null}
 
-          {role === 'Students' ? (
-            <div
-              className={
-                router.pathname === '/dashboard/profile' ||
-                router.pathname === '/student/profile'
-                  ? `${Styles.sidebar_links_wrapper} ${Styles.active}  d-flex align-items-center cursor-pointer`
-                  : `${Styles.sidebar_links_wrapper}   d-flex align-items-center cursor-pointer`
-              }
-              onClick={() =>
-                role === 'Vendor'
-                  ? router.push('/dashboard/profile')
-                  : router.push('/student/profile')
-              }
-            >
-              <span className={`${Styles.sidebar_icon} me-3`}>
-                <AiOutlineContacts />
-              </span>
-              <span>Profile</span>
-            </div>
-          ) : (
-            <div
-              className={
-                router.pathname === '/dashboard/profile' ||
-                router.pathname === '/user-dashboard/profile'
-                  ? `${Styles.sidebar_links_wrapper} ${Styles.active}  d-flex align-items-center cursor-pointer`
-                  : `${Styles.sidebar_links_wrapper}   d-flex align-items-center cursor-pointer`
-              }
-              onClick={() =>
-                role === 'Vendor' || role === 'ShopNow' || role === 'Venue'
-                  ? router.push('/dashboard/profile')
-                  : router.push('/user-dashboard/profile')
-              }
-            >
-              <span className={`${Styles.sidebar_icon} me-3`}>
-                <AiOutlineContacts />
-              </span>
-              <span>Profile</span>
-            </div>
-          )}
+          <div
+            className={
+              router.pathname === "/dashboard/profile" ||
+              router.pathname === "/user-dashboard/profile"
+                ? `${Styles.sidebar_links_wrapper} ${Styles.active}  d-flex align-items-center cursor-pointer`
+                : `${Styles.sidebar_links_wrapper}   d-flex align-items-center cursor-pointer`
+            }
+            onClick={() =>
+              role === "Vendor" || role === "ShopNow" || role === "Venue"  || role === "Product"
+                ? router.push("/dashboard/profile")
+                : router.push("/user-dashboard/profile")
+            }
+          >
+            <span className={`${Styles.sidebar_icon} me-3`}>
+              <AiOutlineContacts />
+            </span>
+            <span>Profile</span>
+          </div>
+
           <div
             style={{
-              position: 'absolute',
-              bottom: '15px',
-              fontSize: '15px',
-              display: 'flex',
-              justifyContent: 'space-between',
-              width: '90%',
-              alignItems: 'center',
+              position: "absolute",
+              bottom: "15px",
+              fontSize: "15px",
+              display: "flex",
+              justifyContent: "space-between",
+              width: "90%",
+              alignItems: "center",
             }}
           >
             <span>Logout</span>
             <button
-              style={{ background: 'none', border: 'none' }}
+              style={{ background: "none", border: "none" }}
               onClick={() => {
                 dispatch(user(undefined));
-                localStorage.removeItem('wedcell');
-                localStorage.removeItem('role');
-                localStorage.setItem('wedcellIsLoged', '');
+                localStorage.removeItem("wedcell");
+                localStorage.removeItem("role");
+                localStorage.setItem("wedcellIsLoged", "");
 
-                router.push('/');
+                router.push("/");
               }}
             >
               <LogoutIcon></LogoutIcon>

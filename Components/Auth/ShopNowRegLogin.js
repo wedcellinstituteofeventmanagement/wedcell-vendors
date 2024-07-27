@@ -1,18 +1,18 @@
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { PROXY } from '../../config';
-import axios from 'axios';
-import { Spinner } from 'react-bootstrap';
-import { user } from '../../redux/reducer/appEssentials';
-import MuiPhoneNumber from 'material-ui-phone-number';
-import Styles from '../../styles/Editlist.module.css';
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { PROXY } from "../../config";
+import axios from "axios";
+import { Spinner } from "react-bootstrap";
+import { user } from "../../redux/reducer/appEssentials";
+import MuiPhoneNumber from "material-ui-phone-number";
+import Styles from "../../styles/Editlist.module.css";
 
-const ProductRegLogin = () => {
+const ShopNowRegLogin = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const [password, setPassword] = useState('');
-  const [mobile, setMobile] = useState('');
+  const [password, setPassword] = useState("");
+const [mobile, setMobile] = useState("");
   const [isLoading, setIsloading] = useState(false);
 
   const handleLogIn = async () => {
@@ -25,14 +25,14 @@ const ProductRegLogin = () => {
         })
         .then((res) => {
           if (res.data.success) {
-            const role = 'ShopNow';
-            localStorage.setItem('wedcell', JSON.stringify(res.data));
+            const role = "ShopNow";
+            localStorage.setItem("wedcell", JSON.stringify(res.data));
             dispatch(user(res.data));
-            localStorage.setItem('wedcellIsLoged', 'true');
-            localStorage.setItem('role', JSON.stringify({ role: role }));
+            localStorage.setItem("wedcellIsLoged", "true");
+            localStorage.setItem("role", JSON.stringify({ role: role }));
             setIsloading(false);
 
-            router.push('/dashboard/sellersdashboard');
+            router.push("/dashboard/sellersdashboard");
           }
         })
         .catch((e) => {
@@ -85,7 +85,7 @@ const ProductRegLogin = () => {
     axios
       .post(`${PROXY}/otp`, {
         mobile: mobile,
-        type: 'ShopNow',
+        type: "ShopNow",
       })
       .then((res) => {
         if (res.data.success) {
@@ -100,7 +100,7 @@ const ProductRegLogin = () => {
     axios
       .post(`${PROXY}/otp`, {
         mobile: mobile,
-        type: 'ShopNow',
+        type: "ShopNow",
       })
       .then((res) => {
         if (res.data.success) {
@@ -133,62 +133,56 @@ const ProductRegLogin = () => {
     };
   }, [isTimerRunning, timer]);
 
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState("");
   const handleChangeNumber = (newValue, country) => {
     setValue(newValue);
     setcurrState(0);
-    setMobile(newValue.replace(/[^\d]/g, ''));
+    setMobile(newValue.replace(/[^\d]/g, ""));
   };
 
   return (
     <>
-      <div className=' mt-3'>
-        <div className='input-field mb-3 d-flex flex-column'>
+      <div className=" mt-3">
+        <div className="input-field mb-3 d-flex flex-column">
           {currState === 0 ? (
             <>
               <label
                 style={{
-                  fontFamily: 'Poppins',
-                  fontSize: '14px',
-                  fontWeight: '400',
-                  marginBottom: '5px',
+                  fontFamily: "Poppins",
+                  fontSize: "14px",
+                  fontWeight: "400",
+                  marginBottom: "5px",
                 }}
               >
                 Mobile No.
               </label>
               <MuiPhoneNumber
                 value={value}
-                id='outlined-basic'
-                variant='outlined'
+                id="outlined-basic"
+                variant="outlined"
                 fullWidth
-                defaultCountry={'in'}
+                defaultCountry={"in"}
                 onChange={handleChangeNumber}
                 onlyCountries={[
-                  'ae',
-                  'in',
-                  'th',
-                  'lk',
-                  'id',
-                  'ca',
-                  'mv',
-                  'vn',
-                  'kh',
-                  'ph',
-                  'my',
+                  "ae",
+                  "in",
+                  "th",
+                  "lk",
+                  "id",
+                  "ca",
+                  "mv",
+                  "vn",
+                  "kh",
+                  "ph",
+                  "my",
                 ]}
               />
             </>
           ) : (
-            <span
-              className='w-100'
-              style={{ fontSize: '14px' }}
-            >
+            <span className="w-100" style={{ fontSize: "14px" }}>
               A Whatsapp Message with Otp is sent to <b>+{mobile}</b> <br />
-              Wrong Number?{' '}
-              <b
-                style={{ cursor: 'pointer' }}
-                onClick={() => setcurrState(0)}
-              >
+              Wrong Number?{" "}
+              <b style={{ cursor: "pointer" }} onClick={() => setcurrState(0)}>
                 Edit
               </b>
             </span>
@@ -197,11 +191,11 @@ const ProductRegLogin = () => {
         {currState === 0 ? (
           <></>
         ) : (
-          <div className='input-field mb-3'>
+          <div className="input-field mb-3">
             <input
-              type='number'
-              placeholder='Enter Otp'
-              className='form-control py-3'
+              type="number"
+              placeholder="Enter Otp"
+              className="form-control py-3"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -209,22 +203,22 @@ const ProductRegLogin = () => {
         )}
         <button
           style={{
-            display: 'flex',
-            width: '100%',
-            fontSize: '15px',
-            justifyContent: 'end',
-            background: 'none',
-            border: 'none',
+            display: "flex",
+            width: "100%",
+            fontSize: "15px",
+            justifyContent: "end",
+            background: "none",
+            border: "none",
           }}
           onClick={handleResendOtpLogin}
         >
           {currState === 0
-            ? ''
+            ? ""
             : isTimerRunning
             ? `Resend in ${timer} seconds`
             : otpSent
-            ? 'Otp Resend Successfully'
-            : 'Resend Otp'}
+            ? "Otp Resend Successfully"
+            : "Resend Otp"}
         </button>
         <button
           className={Styles.submitbtnforLogin}
@@ -233,9 +227,9 @@ const ProductRegLogin = () => {
           {isLoading ? (
             <Spinner />
           ) : currState === 0 ? (
-            'Send Otp'
+            "Send Otp"
           ) : (
-            'Verify Otp'
+            "Verify Otp"
           )}
         </button>
       </div>
@@ -243,4 +237,4 @@ const ProductRegLogin = () => {
   );
 };
 
-export default ProductRegLogin;
+export default ShopNowRegLogin;

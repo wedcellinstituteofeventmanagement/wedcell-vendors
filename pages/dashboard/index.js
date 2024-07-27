@@ -14,6 +14,7 @@ import { PROXY } from "../../config";
 import axios from "axios";
 import VenueModal from "../../Components/Auth/VenueModal";
 import VendorModal from "../../Components/Auth/VendorModal";
+import ShopNowModal from "../../Components/Auth/ShopNowModal";
 const Dashboard = () => {
   const [headerHeight, setHeaderHeight] = useState(0);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -21,6 +22,10 @@ const Dashboard = () => {
   const router = useRouter();
   let [open, setOpen] = useState(false);
   useEffect(() => {
+    console.log(
+      "🚀 ~ file: index.js:26 ~ useEffect ~ globleuser?.data:",
+      globleuser?.data
+    );
     if (!globleuser?.data?.contactEmail) {
       setOpen(true);
     } else {
@@ -31,8 +36,6 @@ const Dashboard = () => {
     !globleuser?.success && router.push("/");
   }, []);
   const [data, setData] = useState();
-  console.log(`🚀 ~ file: index.js:23 ~ Dashboard ~ data:`, data);
-
   useEffect(() => {
     const auth = localStorage.getItem("wedcell");
     const role = localStorage.getItem("role");
@@ -47,14 +50,12 @@ const Dashboard = () => {
     }
   }, []);
   const [dashdata, setDashData] = useState();
-  console.log(`🚀 ~ file: index.js:41 ~ Dashboard ~ dashdata:`, dashdata);
   const getdashboardData = async () => {
     let res;
     if (data?.role === "Venue") {
       res = await axios.get(
         `${PROXY}/venueuser/dashboarddata/${data?.data?._id}`
       );
-      console.log(`🚀 ~ file: index.js:45 ~ getdashboardData ~ res:`, res);
     }
     if (data?.role === "Vendor") {
       res = await axios.get(
@@ -95,8 +96,10 @@ const Dashboard = () => {
     <Layout>
       {globleuser?.role === "Venue" ? (
         <VenueModal openModal={open}></VenueModal>
-      ) : (
+      ) : globleuser?.role === "Vendor" ? (
         <VendorModal openModal={open}></VendorModal>
+      ) : (
+        <ShopNowModal openModal={open}></ShopNowModal>
       )}
       <ThemeProvider>
         {/* <Page title='Dashboard'> */}

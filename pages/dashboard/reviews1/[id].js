@@ -156,6 +156,14 @@ const Reviews1 = () => {
         },
         config
       );
+    } else if (type === "other-product") {
+      res = await axios.post(
+        `${PROXY}/product/get-one-other-products`,
+        {
+          _id: id,
+        },
+        config
+      );
     } else if (type === "Venue") {
       res = await axios.post(`${PROXY}/venueuser/getAll`, {
         _id: id,

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import Styles from "../../styles/Auth/Auth.module.css";
-import ProductRegLogin from "./ProductRegLogin";
 import VenueRegLogin from "./VenueRegLogin";
 import VendorRegLogin from "./VendorRegLogin";
+import ShopNowRegLogin from "./ShopNowRegLogin";
 import { MenuItem, Select } from "@mui/material";
 
 const AuthForm = () => {
@@ -50,6 +50,7 @@ const AuthForm = () => {
             <MenuItem value={"Venue"}>Venue</MenuItem>
             <MenuItem value={"Vendor"}>Vendor</MenuItem>
             <MenuItem value={"ShopNow"}>Product</MenuItem>
+            {/* <MenuItem value={"Product"}></MenuItem> */}
           </Select>
           {/* <span
             className={
@@ -110,7 +111,7 @@ const AuthForm = () => {
         ) : venVendShop === "Vendor" ? (
           <VendorRegLogin active={active} setActive={setActive} />
         ) : venVendShop === "ShopNow" ? (
-          <ProductRegLogin active={active} setActive={setActive} />
+          <ShopNowRegLogin active={active} setActive={setActive} />
         ) : (
           <></>
         )}

@@ -15,17 +15,110 @@ import {
   DialogTitle,
   FormLabel,
   Grid,
+  MenuItem,
   Modal,
+  Select,
   TextField,
 } from "@mui/material";
 import { Upload } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import compressAndAppendFiles from "../compressAndAppendFiles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-const ProductModal = ({ openModal }) => {
+const cities = [
+  "Mumbai",
+  "Pune",
+  "Delhi",
+  "Jaipur",
+  "Goa",
+  "Udaipur",
+  "Agra",
+  "Noida",
+  "Gurgaon",
+  "Ranchi",
+  "Patna",
+  "Bangalore",
+  "Hyderabad",
+  "Ahmedabad",
+  "Chennai",
+  "Kolkata",
+  "Surat",
+  "Lucknow",
+  "Kanpur",
+  "Nagpur",
+  "Indore",
+  "Thane",
+  "Bhopal",
+  "Visakhapatnam",
+  "Vadodara",
+  "Ghaziabad",
+  "Ludhiana",
+  "Nashik",
+  "Meerut",
+  "Rajkot",
+  "Varanasi",
+  "Srinagar",
+  "Aurangabad",
+  "Dhanbad",
+  "Amritsar",
+  "Allahabad",
+  "Gwalior",
+  "Jabalpur",
+  "Coimbatore",
+  "Vijayawada",
+  "Jodhpur",
+  "Raipur",
+  "Kota",
+  "Chandigarh",
+  "Guwahati",
+  "Mysore",
+  "Bareilly",
+  "Aligarh",
+  "Moradabad",
+  "Jalandhar",
+  "Bhuba",
+  "Gorakhpur",
+  "Bikaner",
+  "Saharanpur",
+  "Jamshedpur",
+  "Bhilai",
+  "Cuttack",
+  "Firozabad",
+  "Kochi",
+  "Dehradun",
+  "Durgapur",
+  "Ajmer",
+  "Siliguri",
+  "Gaya",
+  "Tirupati",
+  "Mathura",
+  "Bilaspur",
+  "Haridwar",
+  "Gandhinagar",
+  "Shimla",
+  "Gangtok",
+  "Nainital",
+  "Jaisalmer",
+  "Indor",
+  "Rishikesh",
+  "kaushali",
+  "Pushkar",
+  "Kerala",
+  "Jim Corbet",
+  "Mussoorie",
+  "Faridabad",
+  "Dubai",
+  "Thailand",
+  "Srilanka",
+  "Bali",
+  "Canada",
+  "Maldives",
+  "Vietnam",
+  "Cambodia",
+  "Philippine",
+  "Malaysia",
+];
+const ShopNowModal = ({ openModal }) => {
   const [deleteAlert, setDeleteAlaert] = useState(false);
-
   const dispatch = useDispatch();
   const globleuser = useSelector(selectUser);
   const router = useRouter();
@@ -47,6 +140,7 @@ const ProductModal = ({ openModal }) => {
     pincode: "",
     country: "",
     password: "",
+    categories: "",
     is_email_verified: false,
     is_mobile_verified: false,
   });
@@ -126,6 +220,7 @@ const ProductModal = ({ openModal }) => {
     studentData.pincode && form.append("pincode", studentData.pincode);
     studentData.country && form.append("country", studentData.country);
     studentData.city && form.append("city", studentData.city);
+    studentData.categories && form.append("categories", studentData.categories);
     // axios
     //   .post(`${PROXY}/otp/verify`, {
     //     mobile: studentData.mobile,
@@ -237,6 +332,24 @@ const ProductModal = ({ openModal }) => {
                     });
                   }}
                 />
+                <FormLabel id="currentlyEmployed">Categorie</FormLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={studentData.categories}
+                  onChange={(e) => {
+                    setStudenData({
+                      ...studentData,
+                      categories: e.target.value,
+                    });
+                  }}
+                  fullWidth
+                >
+                  <MenuItem value={"Gifts"}>Invitation Gift</MenuItem>
+                  <MenuItem value={"Cake"}>Cake</MenuItem>
+                  <MenuItem value={"Invites"}>Invitation Card</MenuItem>
+                  <MenuItem value={"Clothes"}>Clothes</MenuItem>
+                </Select>
                 <Grid
                   className="mt-4"
                   container
@@ -402,23 +515,30 @@ const ProductModal = ({ openModal }) => {
                 </div>
                 <div className="row">
                   <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                    <TextField
-                      variant="outlined"
-                      margin="normal"
+                    <Select
                       fullWidth
-                      required
-                      id="address"
-                      textNumSpace
-                      minLength={1}
-                      label="City"
-                      value={studentData?.city}
                       onChange={(text) => {
                         setStudenData({
                           ...studentData,
                           city: text.target.value,
                         });
                       }}
-                    />
+                      displayEmpty
+                      renderValue={
+                        studentData?.city !== ""
+                          ? undefined
+                          : () => (
+                              <span style={{ color: "#0000009c" }}>City</span>
+                            )
+                      }
+                    >
+                      <MenuItem value={null} selected disabled>
+                        ---Select---
+                      </MenuItem>
+                      {cities.map((city) => {
+                        return <MenuItem value={city}>{city}</MenuItem>;
+                      })}
+                    </Select>
                   </div>
                   <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
                     <TextField
@@ -628,4 +748,4 @@ const ProductModal = ({ openModal }) => {
   );
 };
 
-export default ProductModal;
+export default ShopNowModal;

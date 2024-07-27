@@ -44,9 +44,9 @@ const VendorModal = ({ openModal }) => {
   const [previewTitle, setPreviewTitle] = useState("");
   let [fileListMain, setFileListMain] = useState([]);
   const [fileListAlbum, setFileListAlbum] = useState([]);
+  const [albumImageDefault, setAlbumdefault] = useState([]);
   const [fileListBrochure, setFileListBrochure] = useState([]);
   const [fileListGallery, setFileListGallery] = useState([]);
-  const [albumImageDefault, setAlbumdefault] = useState([]);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [form, setForm] = useState({
